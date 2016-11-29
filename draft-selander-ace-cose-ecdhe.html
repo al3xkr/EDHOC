@@ -329,12 +329,12 @@ address {
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.3 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-28" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-29" />
   <meta name="dct.abstract" content="This document specifies authenticated Diffie-Hellman key exchange with ephemeral keys, embedded in messages encoded with CBOR and using the CBOR Object Signing and Encryption (COSE) format." />
   <meta name="description" content="This document specifies authenticated Diffie-Hellman key exchange with ephemeral keys, embedded in messages encoded with CBOR and using the CBOR Object Signing and Encryption (COSE) format." />
 
@@ -358,12 +358,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: June 1, 2017</td>
+  <td class="left">Expires: June 2, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 28, 2016</td>
+  <td class="right">November 29, 2016</td>
 </tr>
 
     	
@@ -383,7 +383,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 1, 2017.</p>
+<p>This Internet-Draft will expire on June 2, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -396,54 +396,54 @@ address {
   <ul class="toc">
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
-<li>1.1.   <a href="#rfc.section.1.1">Terminology</a></li>
-<li>2.   <a href="#rfc.section.2">Protocol Overview</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Terminology</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Protocol Overview</a></li>
 <li>3.   <a href="#rfc.section.3">ECDH Public Keys using COSE_Key</a></li>
 <li>4.   <a href="#rfc.section.4">Asymmetric Keys</a></li>
-<li>4.1.   <a href="#rfc.section.4.1">Message Formatting using COSE</a></li>
-<li>4.1.1.   <a href="#rfc.section.4.1.1">Message 1</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Message Formatting using COSE</a></li>
+<ul><li>4.1.1.   <a href="#rfc.section.4.1.1">Message 1</a></li>
 <li>4.1.2.   <a href="#rfc.section.4.1.2">Message 2</a></li>
 <li>4.1.3.   <a href="#rfc.section.4.1.3">Message 3</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">Key Derivation with Asymmetric Keys</a></li>
+</ul><li>4.2.   <a href="#rfc.section.4.2">Key Derivation with Asymmetric Keys</a></li>
 <li>4.3.   <a href="#rfc.section.4.3">Message Processing</a></li>
-<li>4.3.1.   <a href="#rfc.section.4.3.1">U -&gt; message_1</a></li>
+<ul><li>4.3.1.   <a href="#rfc.section.4.3.1">U -&gt; message_1</a></li>
 <li>4.3.2.   <a href="#rfc.section.4.3.2">message_1 -&gt; V</a></li>
 <li>4.3.3.   <a href="#rfc.section.4.3.3">message_2 &lt;- V</a></li>
 <li>4.3.4.   <a href="#rfc.section.4.3.4">U &lt;- message_2</a></li>
 <li>4.3.5.   <a href="#rfc.section.4.3.5">U -&gt; message_3</a></li>
 <li>4.3.6.   <a href="#rfc.section.4.3.6">message_3 -&gt; V</a></li>
-<li>5.   <a href="#rfc.section.5">Symmetric Keys</a></li>
-<li>5.1.   <a href="#rfc.section.5.1">Message Formatting using COSE</a></li>
-<li>5.1.1.   <a href="#rfc.section.5.1.1">Message 1</a></li>
+</ul></ul><li>5.   <a href="#rfc.section.5">Symmetric Keys</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Message Formatting using COSE</a></li>
+<ul><li>5.1.1.   <a href="#rfc.section.5.1.1">Message 1</a></li>
 <li>5.1.2.   <a href="#rfc.section.5.1.2">Message 2</a></li>
 <li>5.1.3.   <a href="#rfc.section.5.1.3">Message 3</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Key Derivation with Symmetric Keys</a></li>
+</ul><li>5.2.   <a href="#rfc.section.5.2">Key Derivation with Symmetric Keys</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">Message Processing</a></li>
-<li>5.3.1.   <a href="#rfc.section.5.3.1">U -&gt; message_1</a></li>
+<ul><li>5.3.1.   <a href="#rfc.section.5.3.1">U -&gt; message_1</a></li>
 <li>5.3.2.   <a href="#rfc.section.5.3.2">message_1 -&gt; V</a></li>
 <li>5.3.3.   <a href="#rfc.section.5.3.3">message_2 &lt;- V</a></li>
 <li>5.3.4.   <a href="#rfc.section.5.3.4">U &lt;- message_2</a></li>
 <li>5.3.5.   <a href="#rfc.section.5.3.5">U -&gt; message_3</a></li>
 <li>5.3.6.   <a href="#rfc.section.5.3.6">message_3 -&gt; V</a></li>
-<li>6.   <a href="#rfc.section.6">Derive Traffic Secret</a></li>
+</ul></ul><li>6.   <a href="#rfc.section.6">Derive Traffic Secret</a></li>
 <li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
 <li>8.   <a href="#rfc.section.8">Privacy Considerations</a></li>
 <li>9.   <a href="#rfc.section.9">IANA Considerations</a></li>
 <li>10.   <a href="#rfc.section.10">Acknowledgments</a></li>
 <li>11.   <a href="#rfc.references">References</a></li>
-<li>11.1.   <a href="#rfc.references.1">Normative References</a></li>
+<ul><li>11.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>11.2.   <a href="#rfc.references.2">Informative References</a></li>
-<li>Appendix A.   <a href="#rfc.appendix.A">Examples</a></li>
-<li>A.1.   <a href="#rfc.appendix.A.1">ECDH Public Key</a></li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Examples</a></li>
+<ul><li>A.1.   <a href="#rfc.appendix.A.1">ECDH Public Key</a></li>
 <li>A.2.   <a href="#rfc.appendix.A.2">Example with Asymmetric Keys (RPK)</a></li>
-<li>A.2.1.   <a href="#rfc.appendix.A.2.1">Message 1</a></li>
+<ul><li>A.2.1.   <a href="#rfc.appendix.A.2.1">Message 1</a></li>
 <li>A.2.2.   <a href="#rfc.appendix.A.2.2">Message 2</a></li>
 <li>A.2.3.   <a href="#rfc.appendix.A.2.3">Message 3</a></li>
-<li>A.3.   <a href="#rfc.appendix.A.3">Example with Symmetric Keys (PSK)</a></li>
-<li>A.3.1.   <a href="#rfc.appendix.A.3.1">Message 1</a></li>
+</ul><li>A.3.   <a href="#rfc.appendix.A.3">Example with Symmetric Keys (PSK)</a></li>
+<ul><li>A.3.1.   <a href="#rfc.appendix.A.3.1">Message 1</a></li>
 <li>A.3.2.   <a href="#rfc.appendix.A.3.2">Message 2</a></li>
 <li>A.3.3.   <a href="#rfc.appendix.A.3.3">Message 3</a></li>
-<li>Appendix B.   <a href="#rfc.appendix.B">Implementing EDHOC with CoAP and OSCOAP</a></li>
+</ul></ul><li>Appendix B.   <a href="#rfc.appendix.B">Implementing EDHOC with CoAP and OSCOAP</a></li>
 <li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -454,7 +454,7 @@ address {
 <p id="rfc.section.1.p.2">In order for a communication session to provide forward secrecy, the communicating parties can run a Diffie-Hellman (DH) key exchange protocol with ephemeral keys, from which shared key material can be derived. This document specifies authenticated DH protocols using CBOR and COSE objects. The DH key exchange messages may be authenticated using either pre-shared keys (PSK), raw public keys (RPK) or X.509 certificates (Cert). Authentication is based on credentials established out of band, or from a trusted third party, such as an Authorization Server as specified by <a href="#I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</a>. Note that this document focuses on authentication and key establishment: for integration with authorization of resource access, refer to <a href="#I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</a>. This document also specifies the derivation of shared key material.</p>
 <p id="rfc.section.1.p.3">The DH exchange and the key derviation follow <a href="#SIGMA">[SIGMA]</a>, NIST SP-800-56a <a href="#SP-800-56a">[SP-800-56a]</a> and HKDF <a href="#RFC5869">[RFC5869]</a>, and make use of the data structures of COSE which are aligned with these standards.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h1>
-<p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>. These words may also appear in this document in lowercase, absent their normative meanings.</p>
+<p id="rfc.section.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>. These words may also appear in this document in lowercase, absent their normative meanings.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#protocol" id="protocol">Protocol Overview</a></h1>
 <p id="rfc.section.2.p.1">This section gives an overview of EDHOC, together with <a href="#mess-proc">Section 4.3</a> and <a href="#mess-proc-sym">Section 5.3</a>, which explains how the messages are processed, while <a href="#asym">Section 4.1</a> and <a href="#sym">Section 5.1</a> focus on the detailed message formats embedded as CBOR objects, and <a href="#key-der-asym">Section 4.2</a>, <a href="#key-der-sym">Section 5.2</a>, and <a href="#final-key-der">Section 6</a> specify the key derivation.</p>
 <p id="rfc.section.2.p.2">EDHOC is built on the SIGMA family of protocols, with the basic protocol specified in Section 5, here in variant (ii) as in Section 5.4, of <a href="#SIGMA">[SIGMA]</a>, see <a href="#mess-ex0">Figure 1</a>.</p>
@@ -476,7 +476,7 @@ Party U                                                 Party V
                        
 </pre>
 <p class="figure">Figure 1: The basic SIGMA protocol</p>
-<p id="rfc.section.2.p.3">The parties exchanging messages are called &#8220;U&#8221; and &#8220;V&#8221;. U and V exchange identities and ephemeral public keys. They compute the shared secret and derive the keying material. The messages are signed and MAC:ed according to the SIGMA protocol (<a href="#mess-ex0">Figure 1</a>):</p>
+<p id="rfc.section.2.p.3">The parties exchanging messages are called "U" and "V". U and V exchange identities and ephemeral public keys. They compute the shared secret and derive the keying material. The messages are signed and MAC:ed according to the SIGMA protocol (<a href="#mess-ex0">Figure 1</a>):</p>
 <p/>
 
 <ul>
@@ -521,19 +521,19 @@ Party U                                                 Party V
   <li>x:</li>
   <li>y: The value SHOULD be boolean.</li>
 </ul>
-<p id="rfc.section.3.p.4">For the field &#8216;crv&#8217;, refer to Table 22 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The value 1 MUST be supported by party V (NIST P-256 a.k.a. secp256r1 <a href="#RFC4492">[RFC4492]</a>).</p>
+<p id="rfc.section.3.p.4">For the field 'crv', refer to Table 22 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The value 1 MUST be supported by party V (NIST P-256 a.k.a. secp256r1 <a href="#RFC4492">[RFC4492]</a>).</p>
 <p id="rfc.section.3.p.5">TODO: Consider replacing P-256 with Curve25519 as mandatory</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#asym-keys-intro" id="asym-keys-intro">Asymmetric Keys</a></h1>
 <p id="rfc.section.4.p.1">In this section we assume that the protocol messages are authenticated with asymmetric keys. Both the scenarios where the parties use raw public keys (RPK) and X.509 certificates (Cert) are supported.</p>
 <p/>
 
 <ul>
-  <li>Party U&#8217;s public key SHALL be uniquely identified at V by ID_U.</li>
-  <li>Party V&#8217;s public key SHALL be uniquely identified at U by ID_V.</li>
+  <li>Party U's public key SHALL be uniquely identified at V by ID_U.</li>
+  <li>Party V's public key SHALL be uniquely identified at U by ID_V.</li>
 </ul>
 <p id="rfc.section.4.p.3">ID_U and ID_V may be public key certificates <a href="#SIGMA">[SIGMA]</a>, which we then denote as C_U and C_V, respectively.</p>
 <p id="rfc.section.4.p.4">The pre-established credentials may thus be the public keys of U at V, and of V at U. Alternatively, a pre-established public key of a Certificate Authority (CA) may be used as trust anchor for verification of received certificate.</p>
-<p id="rfc.section.4.p.5">The protocol is based on SIGMA-I (<a href="#protocol">Section 2</a>). As described in Appendix B of <a href="#SIGMA">[SIGMA]</a>, in order to create a &#8220;full-fledge&#8221; protocol some additional protocol elements are needed:</p>
+<p id="rfc.section.4.p.5">The protocol is based on SIGMA-I (<a href="#protocol">Section 2</a>). As described in Appendix B of <a href="#SIGMA">[SIGMA]</a>, in order to create a "full-fledge" protocol some additional protocol elements are needed:</p>
 <p/>
 
 <ul>
@@ -709,10 +709,10 @@ payl_3_cert = [
 <p/>
 
 <ul>
-  <li>AlgorithmID SHALL be the algorithm for which the key material will be derived. It&#8217;s value is AEAD (to derive K_UE and K_VE) or MAC (to derive K_UM and K_VM)</li>
+  <li>AlgorithmID SHALL be the algorithm for which the key material will be derived. It's value is AEAD (to derive K_UE and K_VE) or MAC (to derive K_UM and K_VM)</li>
   <li>PartyUInfo SHALL contain: <ul><li>nonce SHALL be equal to N_U</li></ul></li>
   <li>PartyVInfo SHALL contain: <ul><li>nonce SHALL be equal to N_V</li></ul></li>
-  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to &#8216;length&#8217;</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, the COSE Headers of COSE_Encrypt (message_2) and the string &#8220;PartyU&#8221; (resp. &#8220;PartyV&#8221;) to derive K_UE or K_UM (resp. K_VE or K_VM)</li></ul></li>
+  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to 'length'</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, the COSE Headers of COSE_Encrypt (message_2) and the string "PartyU" (resp. "PartyV") to derive K_UE or K_UM (resp. K_VE or K_VM)</li></ul></li>
   <li>SuppPrivInfo SHALL be empty</li>
 </ul>
 <p id="rfc.section.4.2.p.7">The key derivation is done using the following context information COSE_KDF_Context for asymmetric keys:</p>
@@ -746,7 +746,7 @@ payl_3_cert = [
 
 <ul>
   <li>AEAD as Algorithm ID</li>
-  <li>&#8220;PartyU&#8221; as the chosen string in SuppPubInfo other</li>
+  <li>"PartyU" as the chosen string in SuppPubInfo other</li>
 </ul>
 <h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#mess-proc" id="mess-proc">Message Processing</a></h1>
 <p id="rfc.section.4.3.p.1">Party U and V are assumed to have pre-established credentials as described in <a href="#asym-keys-intro">Section 4</a>.</p>
@@ -875,26 +875,26 @@ and   prot_3 = N_V, N_U, E_U, Kid, ID_U, Alg_U
 <ul>
   <li>N_U: nonce</li>
   <li>E_U: the ephemeral public key of Party U</li>
-  <li>KID: identifier of the pre-shared key (it&#8217;s value is kid_psk)</li>
+  <li>KID: identifier of the pre-shared key (it's value is kid_psk)</li>
   <li>ECDH_arr: an array of proposed ECDH-ES w/ HKDF algorithms</li>
   <li>AEAD_arr: an array of proposed AEAD algorithms</li>
   <li>MAC_arr: an array of proposed MAC algorithms</li>
 </ul>
 <pre>
-message_1 = {
+message_1_a = {
   N_U : bstr,
   E_U : COSE_Key,
   KID: bstr,
-  ALG_U : alg_arr
+  ALG_U : alg_arr_a
   }
 
-alg_arr = [
-  ECDH_arr : alg_array, 
-  AEAD_arr : alg_array,
-  MAC_arr : alg_array
+alg_arr_a = [
+  ECDH_arr : alg_array_a, 
+  AEAD_arr : alg_array_a,
+  MAC_arr : alg_array_a
   ]
 
-alg_array = [
+alg_array_a = [
   + alg : bstr/int
   ]
 </pre>
@@ -975,10 +975,10 @@ payl_3_psk = [
 <p/>
 
 <ul>
-  <li>AlgorithmID SHALL be the algorithm for which the key material will be derived. It&#8217;s value is MAC.</li>
+  <li>AlgorithmID SHALL be the algorithm for which the key material will be derived. It's value is MAC.</li>
   <li>PartyUInfo SHALL contain: <ul><li>nonce SHALL be equal to N_U</li></ul></li>
   <li>PartyVInfo SHALL contain: <ul><li>nonce SHALL be equal to N_V</li><li>identity SHALL be equal to ID_V</li></ul></li>
-  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to &#8216;length&#8217;</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, the COSE Headers of message_2 and the string &#8220;PartyU&#8221; (resp. &#8220;PartyV&#8221;) to derive K_UM or K_UMP (resp. K_VM or K_VMP)</li></ul></li>
+  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to 'length'</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, the COSE Headers of message_2 and the string "PartyU" (resp. "PartyV") to derive K_UM or K_UMP (resp. K_VM or K_VMP)</li></ul></li>
   <li>SuppPrivInfo SHALL be empty</li>
 </ul>
 <p id="rfc.section.5.2.p.7">The key derivation is done using the following context information COSE_KDF_Context for symmetric keys:</p>
@@ -1007,7 +1007,7 @@ payl_3_psk = [
     identity: ID_V
     )
 </pre>
-<p id="rfc.section.5.2.p.8">In practice, the difference in deriving K_UM or K_VM is in the SuppPubInfo string: to derive K_UM the context MUST include &#8220;PartyU&#8221;, while to derive K_VM the context MUST include &#8220;PartyV&#8221;.</p>
+<p id="rfc.section.5.2.p.8">In practice, the difference in deriving K_UM or K_VM is in the SuppPubInfo string: to derive K_UM the context MUST include "PartyU", while to derive K_VM the context MUST include "PartyV".</p>
 <h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#mess-proc-sym" id="mess-proc-sym">Message Processing</a></h1>
 <p id="rfc.section.5.3.p.1">Party U and V are assumed to have pre-established credentials as previously described in <a href="#PSK">Section 5</a>.</p>
 <h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#u-message1-1" id="u-message1-1">U -&gt; message_1</a></h1>
@@ -1095,7 +1095,7 @@ payl_3_psk = [
   <li>AlgorithmID SHALL be the AEAD algorithm for which the key material will be derived.</li>
   <li>PartyUInfo SHALL contain: <ul><li>nonce SHALL be equal to N_U</li><li>identity SHALL be ID_U (resp.  C_U) if raw public keys (resp. certificates) are used</li></ul></li>
   <li>PartyVInfo SHALL contain: <ul><li>nonce SHALL be equal to N_V</li><li>identity SHALL be ID_V (resp.  C_V) if raw public keys (resp. certificates) are used</li></ul></li>
-  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to &#8216;length&#8217;</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, message_2 and message_3.</li></ul></li>
+  <li>SuppPubInfo SHALL contain: <ul><li>KeyDataLength SHALL be equal to 'length'</li><li>protected SHALL be a zero length bstr</li><li>other SHALL contain the HMAC (as defined by the agreed HKDF) of the concatenation of message_1, message_2 and message_3.</li></ul></li>
   <li>SuppPrivInfo SHALL be empty</li>
 </ul>
 <p id="rfc.section.6.p.7">The key derivation is done using the following context information COSE_KDF_Context:</p>
@@ -1142,7 +1142,7 @@ payl_3_psk = [
       <td class="reference">
         <b id="I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</b>
       </td>
-      <td class="top"><a>Schaad, J.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-cose-msg-09">CBOR Encoded Message Syntax</a>", Internet-Draft draft-ietf-cose-msg-09, December 2015.</td>
+      <td class="top"><a>Schaad, J.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-cose-msg-24">CBOR Object Signing and Encryption (COSE)</a>", Internet-Draft draft-ietf-cose-msg-24, November 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1183,7 +1183,7 @@ payl_3_psk = [
       <td class="reference">
         <b id="I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</b>
       </td>
-      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-02">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-02, June 2016.</td>
+      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-04">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-04, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1195,7 +1195,7 @@ payl_3_psk = [
       <td class="reference">
         <b id="I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</b>
       </td>
-      <td class="top"><a>Seitz, L.</a>, "<a href="http://tools.ietf.org/html/draft-seitz-ace-oscoap-profile-00">OSCOAP profile of ACE</a>", Internet-Draft draft-seitz-ace-oscoap-profile-00, July 2016.</td>
+      <td class="top"><a>Seitz, L.</a> and <a>F. Palombini</a>, "<a href="http://tools.ietf.org/html/draft-seitz-ace-oscoap-profile-01">OSCOAP profile of ACE</a>", Internet-Draft draft-seitz-ace-oscoap-profile-01, October 2016.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1226,7 +1226,7 @@ payl_3_psk = [
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#examples" id="examples">Examples</a></h1>
 <p id="rfc.section.A.p.1">In this section we give examples of messages used in the protocol for the pre-shared key case and for the raw public keys case. Note that the message size is not optimized, for example the labels could be registered and thereby reducing the overhead.</p>
 <h1 id="rfc.appendix.A.1"><a href="#rfc.appendix.A.1">A.1.</a> <a href="#ecdh-public-key" id="ecdh-public-key">ECDH Public Key</a></h1>
-<p id="rfc.section.A.1.p.1">An example of COSE_Key structure, representing an ECDH public key, is given in <a href="#ex-cose-key">Figure 5</a>, using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.1.p.1">An example of COSE_Key structure, representing an ECDH public key, is given in <a href="#ex-cose-key">Figure 5</a>, using CBOR's diagnostic notation.</p>
 <div id="rfc.figure.5"/>
 <div id="ex-cose-key"/>
 <pre>
@@ -1239,11 +1239,11 @@ payl_3_psk = [
              }
 </pre>
 <p class="figure">Figure 5: Example of an ECDH public key formatted as a COSE_Key</p>
-<p id="rfc.section.A.1.p.2">The equivalent CBOR encoding is: h&#8217;a120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f5&#8217;, which has a size of 44 bytes.</p>
+<p id="rfc.section.A.1.p.2">The equivalent CBOR encoding is: h'a120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f5', which has a size of 44 bytes.</p>
 <h1 id="rfc.appendix.A.2"><a href="#rfc.appendix.A.2">A.2.</a> <a href="#example-with-asymmetric-keys-rpk" id="example-with-asymmetric-keys-rpk">Example with Asymmetric Keys (RPK)</a></h1>
 <p id="rfc.section.A.2.p.1">In this example, the identifier of V is 4 bytes.</p>
 <h1 id="rfc.appendix.A.2.1"><a href="#rfc.appendix.A.2.1">A.2.1.</a> <a href="#ex-rpk1" id="ex-rpk1">Message 1</a></h1>
-<p id="rfc.section.A.2.1.p.1">An example of COSE encoding for message_1 is given in <a href="#message1">Figure 6</a>, using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.2.1.p.1">An example of COSE encoding for message_1 is given in <a href="#message1">Figure 6</a>, using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.2.1.p.2">The message_1 is:</p>
 <div id="rfc.figure.6"/>
 <div id="message1"/>
@@ -1270,9 +1270,9 @@ payl_3_psk = [
 }
 </pre>
 <p class="figure">Figure 6: Example of message_1</p>
-<p id="rfc.section.A.2.1.p.3">The equivalent CBOR encoding of the message_1 is: h&#8217;a3434e5f55485598a57b47db7f2c43455f55582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f545414c475f554a8481381a810c81268104&#8217;, which has a size of 81 bytes.  Note that by registering the labels &#8216;N_U&#8217;, &#8216;E_U&#8217; and &#8216;ALG_U&#8217; to unsigned values the size can be reduced to 70 bytes.</p>
+<p id="rfc.section.A.2.1.p.3">The equivalent CBOR encoding of the message_1 is: h'a3434e5f55485598a57b47db7f2c43455f55582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f545414c475f554a8481381a810c81268104', which has a size of 81 bytes.  Note that by registering the labels 'N_U', 'E_U' and 'ALG_U' to unsigned values the size can be reduced to 70 bytes.</p>
 <h1 id="rfc.appendix.A.2.2"><a href="#rfc.appendix.A.2.2">A.2.2.</a> <a href="#ex-rpk2" id="ex-rpk2">Message 2</a></h1>
-<p id="rfc.section.A.2.2.p.1">An example of COSE encoding for message_2 is given in <a href="#message2">Figure 7</a> using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.2.2.p.1">An example of COSE encoding for message_2 is given in <a href="#message2">Figure 7</a> using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.2.2.p.2">The payload of the COSE_MAC0 is:</p>
 <pre>
 [
@@ -1292,7 +1292,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.2.2.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h&#8217;84485598a57b47db7f2c487ce4cae9c9698bac5832a120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f5440f4907e1&#8217;, which has a size of 70 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.2.2.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h'84485598a57b47db7f2c487ce4cae9c9698bac5832a120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f5440f4907e1', which has a size of 70 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.2.2.p.4">The COSE_MAC0 is:</p>
 <pre>
 [
@@ -1305,7 +1305,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.2.2.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h&#8217;8443a10104a0584684485598a57b47db7f2c487ce4cae9c9698bac5832a120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f5440f4907e148&#8217;||MAC, which has a size of 87 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.2.2.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h'8443a10104a0584684485598a57b47db7f2c487ce4cae9c9698bac5832a120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f5440f4907e148'||MAC, which has a size of 87 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.2.2.p.6">The COSE_Sign1 is:</p>
 <pre>
 [
@@ -1315,7 +1315,7 @@ payl_3_psk = [
   SIG  / 64-byte signature /
 ]
 </pre>
-<p id="rfc.section.A.2.2.p.7">The equivalent CBOR encoding of the COSE_Sign1 is: h&#8217;844ca20126474d41432d616c6704a1044100405840&#8217;||SIG, which has a size of 85 bytes.  Note that by registering the label &#8216;MAC-alg&#8217; to unsigned values the size can be reduced to 78 bytes.</p>
+<p id="rfc.section.A.2.2.p.7">The equivalent CBOR encoding of the COSE_Sign1 is: h'844ca20126474d41432d616c6704a1044100405840'||SIG, which has a size of 85 bytes.  Note that by registering the label 'MAC-alg' to unsigned values the size can be reduced to 78 bytes.</p>
 <p id="rfc.section.A.2.2.p.8">The COSE_Encrypt is:</p>
 <div id="rfc.figure.7"/>
 <div id="message2"/>
@@ -1350,9 +1350,9 @@ payl_3_psk = [
 ]
 </pre>
 <p class="figure">Figure 7: Example of message_2</p>
-<p id="rfc.section.A.2.2.p.9">The equivalent CBOR encoding of the COSE_Encrypt is: h&#8217;8443a1010ca1466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac585b&#8217;||CIPH+TAG||h&#8217;818344a101381aa143455f565832a120a5010202442edb61f92001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f540&#8217;, which has a size of 187 bytes.  Note that by registering the label &#8216;MAC-alg&#8217; and &#8216;E_V&#8217; to unsigned values the size can be reduced to 177 bytes.</p>
+<p id="rfc.section.A.2.2.p.9">The equivalent CBOR encoding of the COSE_Encrypt is: h'8443a1010ca1466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac585b'||CIPH+TAG||h'818344a101381aa143455f565832a120a5010202442edb61f92001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f540', which has a size of 187 bytes.  Note that by registering the label 'MAC-alg' and 'E_V' to unsigned values the size can be reduced to 177 bytes.</p>
 <h1 id="rfc.appendix.A.2.3"><a href="#rfc.appendix.A.2.3">A.2.3.</a> <a href="#ex-rpk3" id="ex-rpk3">Message 3</a></h1>
-<p id="rfc.section.A.2.3.p.1">An example of COSE encoding for message_3 is given in <a href="#message3">Figure 8</a> using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.2.3.p.1">An example of COSE encoding for message_3 is given in <a href="#message3">Figure 8</a> using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.2.3.p.2">The payload of the COSE_MAC0 is:</p>
 <pre>
 [
@@ -1371,7 +1371,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.2.3.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h&#8217;85487ce4cae9c9698bac485598a57b47db7f2c582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f54a8481381a810c81268104440f4907e1&#8217;, which has a size of 81 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.2.3.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h'85487ce4cae9c9698bac485598a57b47db7f2c582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f54a8481381a810c81268104440f4907e1', which has a size of 81 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.2.3.p.4">The COSE_MAC0 is:</p>
 <pre>
 [
@@ -1384,7 +1384,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.2.3.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h&#8217;8443a10104a0585185487ce4cae9c9698bac485598a57b47db7f2c582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f54a8481381a810c81268104440f4907e148&#8217;||MAC, which has a size of 98 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.2.3.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h'8443a10104a0585185487ce4cae9c9698bac485598a57b47db7f2c582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f54a8481381a810c81268104440f4907e148'||MAC, which has a size of 98 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.2.3.p.6">The COSE_Sign1 is:</p>
 <pre>
 [
@@ -1394,7 +1394,7 @@ payl_3_psk = [
   SIG  / 64-byte signature /
 ]
 </pre>
-<p id="rfc.section.A.2.3.p.7">The equivalent CBOR encoding of the COSE_Sign1 is: h&#8217;844ca20126474d41432d616c6704a104440f4907e1405840&#8217;||SIG, which has a size of 88 bytes.  Note that by registering the label &#8216;MAC-alg&#8217; to unsigned values the size can be reduced to 81 bytes.</p>
+<p id="rfc.section.A.2.3.p.7">The equivalent CBOR encoding of the COSE_Sign1 is: h'844ca20126474d41432d616c6704a104440f4907e1405840'||SIG, which has a size of 88 bytes.  Note that by registering the label 'MAC-alg' to unsigned values the size can be reduced to 81 bytes.</p>
 <p id="rfc.section.A.2.3.p.8">The COSE_Encrypt0 is:</p>
 <div id="rfc.figure.8"/>
 <div id="message3"/>
@@ -1410,11 +1410,11 @@ payl_3_psk = [
 ]
 </pre>
 <p class="figure">Figure 8: Example of message_3</p>
-<p id="rfc.section.A.2.3.p.9">The equivalent CBOR encoding of the COSE_Encrypt0 is: h&#8217;8343a1010ca1466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac5860&#8217;||CIPH+TAG, which has a size of 131 bytes.  Note that by registering the labels &#8216;MAC-alg&#8217; and &#8216;nonces&#8217; to unsigned values the size can be reduced to 118 bytes.</p>
+<p id="rfc.section.A.2.3.p.9">The equivalent CBOR encoding of the COSE_Encrypt0 is: h'8343a1010ca1466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac5860'||CIPH+TAG, which has a size of 131 bytes.  Note that by registering the labels 'MAC-alg' and 'nonces' to unsigned values the size can be reduced to 118 bytes.</p>
 <h1 id="rfc.appendix.A.3"><a href="#rfc.appendix.A.3">A.3.</a> <a href="#example-with-symmetric-keys-psk" id="example-with-symmetric-keys-psk">Example with Symmetric Keys (PSK)</a></h1>
 <p id="rfc.section.A.3.p.1">In this example, the identifiers of U and V are 4 bytes.</p>
 <h1 id="rfc.appendix.A.3.1"><a href="#rfc.appendix.A.3.1">A.3.1.</a> <a href="#ex-psk1" id="ex-psk1">Message 1</a></h1>
-<p id="rfc.section.A.3.1.p.1">An example of COSE encoding for message_1 is given in <a href="#message1-psk">Figure 9</a>, using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.3.1.p.1">An example of COSE encoding for message_1 is given in <a href="#message1-psk">Figure 9</a>, using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.3.1.p.2">The message_1 is:</p>
 <div id="rfc.figure.9"/>
 <div id="message1-psk"/>
@@ -1441,9 +1441,9 @@ payl_3_psk = [
 }
 </pre>
 <p class="figure">Figure 9: Example of message_1</p>
-<p id="rfc.section.A.3.1.p.3">The equivalent CBOR encoding of the message_1 is: h&#8217;a4434e5f55485598a57b47db7f2c43455f55582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f5434b494444e19648b545414c475f55488381381a810c8104&#8217;, which has a size of 88 bytes.  Note that by registering the labels &#8216;N_U&#8217;, &#8216;E_U&#8217;, &#8216;KID&#8217; and &#8216;ALG_U&#8217; to unsigned values the size can be reduced to 74 bytes.</p>
+<p id="rfc.section.A.3.1.p.3">The equivalent CBOR encoding of the message_1 is: h'a4434e5f55485598a57b47db7f2c43455f55582ca120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f5434b494444e19648b545414c475f55488381381a810c8104', which has a size of 88 bytes.  Note that by registering the labels 'N_U', 'E_U', 'KID' and 'ALG_U' to unsigned values the size can be reduced to 74 bytes.</p>
 <h1 id="rfc.appendix.A.3.2"><a href="#rfc.appendix.A.3.2">A.3.2.</a> <a href="#ex-psk2" id="ex-psk2">Message 2</a></h1>
-<p id="rfc.section.A.3.2.p.1">An example of COSE encoding for message_2 is given in <a href="#message2-psk">Figure 10</a> using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.3.2.p.1">An example of COSE encoding for message_2 is given in <a href="#message2-psk">Figure 10</a> using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.3.2.p.2">The payload of the COSE_MAC0 is:</p>
 <pre>
 [
@@ -1470,7 +1470,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.3.2.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h&#8217;86485598a57b47db7f2c487ce4cae9c9698bac582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f544e19648b5440f4907e14583381a0c04&#8217;, which has a size of 81 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.3.2.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h'86485598a57b47db7f2c487ce4cae9c9698bac582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f544e19648b5440f4907e14583381a0c04', which has a size of 81 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.3.2.p.4">The COSE_MAC0 is:</p>
 <pre>
 [
@@ -1483,7 +1483,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.3.2.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h&#8217;8443a10104a0585186485598a57b47db7f2c487ce4cae9c9698bac582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f544e19648b5440f4907e14583381a0c0448&#8217;||MAC, which has a size of 98 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.3.2.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h'8443a10104a0585186485598a57b47db7f2c487ce4cae9c9698bac582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f544e19648b5440f4907e14583381a0c0448'||MAC, which has a size of 98 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.3.2.p.6">The COSE_MAC is:</p>
 <div id="rfc.figure.10"/>
 <div id="message2-psk"/>
@@ -1524,9 +1524,9 @@ payl_3_psk = [
 </pre>
 <p class="figure">Figure 10: Example of message_2</p>
 <p id="rfc.section.A.3.2.p.7">The equivalent CBOR encoding of the COSE_MAC is:</p>
-<p id="rfc.section.A.3.2.p.8">h&#8217;8543a10104a4466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac0444e19648b543736964440f4907e148414541442d616c670c4048||MAC||818344a101381aa143455f56582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f540&#8217;, which has a size of 127 bytes.  Note that by registering the labels &#8216;nonces&#8217;, &#8216;sid&#8217;, &#8216;AEAD-alg&#8217; and &#8216;E_V&#8217; to unsigned values the size can be reduced to 107 bytes.</p>
+<p id="rfc.section.A.3.2.p.8">h'8543a10104a4466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac0444e19648b543736964440f4907e148414541442d616c670c4048||MAC||818344a101381aa143455f56582ca120a401022001215820acbee6672a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f540', which has a size of 127 bytes.  Note that by registering the labels 'nonces', 'sid', 'AEAD-alg' and 'E_V' to unsigned values the size can be reduced to 107 bytes.</p>
 <h1 id="rfc.appendix.A.3.3"><a href="#rfc.appendix.A.3.3">A.3.3.</a> <a href="#ex-psk3" id="ex-psk3">Message 3</a></h1>
-<p id="rfc.section.A.3.3.p.1">An example of COSE encoding for message_3 is given in <a href="#message3-psk">Figure 11</a> using CBOR&#8217;s diagnostic notation.</p>
+<p id="rfc.section.A.3.3.p.1">An example of COSE encoding for message_3 is given in <a href="#message3-psk">Figure 11</a> using CBOR's diagnostic notation.</p>
 <p id="rfc.section.A.3.3.p.2">The payload of the COSE_MAC0 is:</p>
 <pre>
 [
@@ -1545,7 +1545,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.3.3.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h&#8217;86485598a57b47db7f2c487ce4cae9c9698bac582fa120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f544e19648b5440f4907e1488381381a810c8104&#8217;, which has a size of 84 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.3.3.p.3">The equivalent CBOR encoding of the payload of the COSE_MAC0 is: h'86485598a57b47db7f2c487ce4cae9c9698bac582fa120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f544e19648b5440f4907e1488381381a810c8104', which has a size of 84 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.3.3.p.4">The COSE_MAC0 is:</p>
 <pre>
 [
@@ -1558,7 +1558,7 @@ payl_3_psk = [
 ]
 
 </pre>
-<p id="rfc.section.A.3.3.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h&#8217;8444a10104a0585486485598a57b47db7f2c487ce4cae9c9698bac582fa120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f544e19648b5440f4907e1488381381a810c810448&#8217;||MAC, which has a size of 101 bytes. Note that these bytes are not sent in the message.</p>
+<p id="rfc.section.A.3.3.p.5">The equivalent CBOR encoding of the COSE_MAC0 is: h'8444a10104a0585486485598a57b47db7f2c487ce4cae9c9698bac582fa120a40102200121582098f50a4ff6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f544e19648b5440f4907e1488381381a810c810448'||MAC, which has a size of 101 bytes. Note that these bytes are not sent in the message.</p>
 <p id="rfc.section.A.3.3.p.6">The COSE_MAC0 is:</p>
 <div id="rfc.figure.11"/>
 <div id="message3-psk"/>
@@ -1579,7 +1579,7 @@ payl_3_psk = [
 ]
 </pre>
 <p class="figure">Figure 11: Example of message_3</p>
-<p id="rfc.section.A.3.3.p.7">The equivalent CBOR encoding of the COSE_MAC0 is: h&#8217;8443a10104a3466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac0444e19648b54373696444dbabb6664048&#8217;||MAC, which has a size of 58 bytes.  Note that by registering the labels &#8216;nonces&#8217; and &#8216;sid&#8217; to unsigned values the size can be reduced to 49 bytes.</p>
+<p id="rfc.section.A.3.3.p.7">The equivalent CBOR encoding of the COSE_MAC0 is: h'8443a10104a3466e6f6e6365735382485598a57b47db7f2c487ce4cae9c9698bac0444e19648b54373696444dbabb6664048'||MAC, which has a size of 58 bytes.  Note that by registering the labels 'nonces' and 'sid' to unsigned values the size can be reduced to 49 bytes.</p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#app-a" id="app-a">Implementing EDHOC with CoAP and OSCOAP</a></h1>
 <p id="rfc.section.B.p.1">The DH key exchange specified in this document can be implemented as a CoAP <a href="#RFC7252">[RFC7252]</a> message exchange with the CoAP client as party U and the CoAP server as party V. EDHOC and OSCOAP <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> could be run in sequence embedded in a 2-round trip message exchange, where the base_key used in OSCOAP is obtained from EDHOC.</p>
 <p id="rfc.section.B.p.2">The process to run EDHOC over CoAP, combined with and followed by OSCOAP is described here and showed in <a href="#edhoc-oscoap">Figure 12</a> and <a href="#edhoc-oscoap-det">Figure 13</a>.</p>
@@ -1631,8 +1631,8 @@ payl_3_psk = [
 
 <ul>
   <li>The request method is POST</li>
-  <li>Content-Format is &#8220;application/cose+cbor&#8221;</li>
-  <li>The Uri-Path is &#8220;edhoc&#8221;</li>
+  <li>Content-Format is "application/cose+cbor"</li>
+  <li>The Uri-Path is "edhoc"</li>
   <li>The Payload is EDHOC message_1, computed as defined in this document</li>
 </ul>
 <p id="rfc.section.B.p.5">The CoAP server performs the first step of the protocol as specified in this document. Then the server provides the following response:</p>
@@ -1655,12 +1655,12 @@ payl_3_psk = [
 <p/>
 
 <ul>
-  <li>Sender ID for the CoAP client is set to &#8216;0&#8217;</li>
-  <li>Recipient ID for the CoAP client is set to &#8216;1&#8217;</li>
+  <li>Sender ID for the CoAP client is set to '0'</li>
+  <li>Recipient ID for the CoAP client is set to '1'</li>
 </ul>
 <p id="rfc.section.B.p.12">With these parameters, the CoAP client can derive the full security context, following section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</p>
-<p id="rfc.section.B.p.13">Finally, the client generates the OSCOAP request, containing the Object-Security option and the COSE_Encrypt0 object as defined in <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. EDHOC message_3 is added to the unprotected part of the COSE_Encrypt0 Headers, with label &#8216;edhoc_m3&#8217;. The OSCOAP request is sent, and includes also EDHOC message_3. Note that this may considerably increase the size of the COSE_Encrypt0 object (see {#ex-rpk3}), so in case the OSCOAP request method does not allow payload, the Object-Security option may become large.</p>
-<p id="rfc.section.B.p.14">The server receives the message and extract the message_3 from the unprotected part of the COSE_Encrypt0 object of the OSCOAP request. If the object does not contain the &#8216;edhoc_m3&#8217; label, or if the &#8216;edhoc_m3&#8217; value does not comply with the specifications, the message is discarded and the communication terminated.  Otherwise, the server process and verifies the EDHOC message_3 as described in this document. If successful, the server derives OSCOAP Common Context (section 3.1 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>) from the messages exchanged:</p>
+<p id="rfc.section.B.p.13">Finally, the client generates the OSCOAP request, containing the Object-Security option and the COSE_Encrypt0 object as defined in <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. EDHOC message_3 is added to the unprotected part of the COSE_Encrypt0 Headers, with label 'edhoc_m3'. The OSCOAP request is sent, and includes also EDHOC message_3. Note that this may considerably increase the size of the COSE_Encrypt0 object (see {#ex-rpk3}), so in case the OSCOAP request method does not allow payload, the Object-Security option may become large.</p>
+<p id="rfc.section.B.p.14">The server receives the message and extract the message_3 from the unprotected part of the COSE_Encrypt0 object of the OSCOAP request. If the object does not contain the 'edhoc_m3' label, or if the 'edhoc_m3' value does not comply with the specifications, the message is discarded and the communication terminated.  Otherwise, the server process and verifies the EDHOC message_3 as described in this document. If successful, the server derives OSCOAP Common Context (section 3.1 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>) from the messages exchanged:</p>
 <p/>
 
 <ul>
@@ -1672,8 +1672,8 @@ payl_3_psk = [
 <p/>
 
 <ul>
-  <li>Sender ID for the CoAP server is set to &#8216;1&#8217;</li>
-  <li>Recipient ID for the CoAP server is set to &#8216;0&#8217;</li>
+  <li>Sender ID for the CoAP server is set to '1'</li>
+  <li>Recipient ID for the CoAP server is set to '0'</li>
 </ul>
 <p id="rfc.section.B.p.18">With these parameters, the CoAP server can derive the full security context, following section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</p>
 <p id="rfc.section.B.p.19">Finally, the client can verify the OSCOAP request using the security context, and act according to <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. Further communication can be protected using OSCOAP.</p>
@@ -1690,7 +1690,7 @@ payl_3_psk = [
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span>Farogatan 6</span>
+	  <span class="vcardline">Farogatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
@@ -1712,7 +1712,7 @@ payl_3_psk = [
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span>Farogatan 6</span>
+	  <span class="vcardline">Farogatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
@@ -1734,7 +1734,7 @@ payl_3_psk = [
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span>Farogatan 6</span>
+	  <span class="vcardline">Farogatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
@@ -1748,5 +1748,6 @@ payl_3_psk = [
   </address>
 </div>
 
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/{SLUG}">Fork me on GitHub</a></div></div>
 </body>
 </html>
