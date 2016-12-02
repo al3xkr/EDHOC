@@ -334,7 +334,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-29" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-12-02" />
   <meta name="dct.abstract" content="This document specifies authenticated Diffie-Hellman key exchange with ephemeral keys, embedded in messages encoded with CBOR and using the CBOR Object Signing and Encryption (COSE) format." />
   <meta name="description" content="This document specifies authenticated Diffie-Hellman key exchange with ephemeral keys, embedded in messages encoded with CBOR and using the CBOR Object Signing and Encryption (COSE) format." />
 
@@ -358,12 +358,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: June 2, 2017</td>
+  <td class="left">Expires: June 5, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 29, 2016</td>
+  <td class="right">December 02, 2016</td>
 </tr>
 
     	
@@ -383,7 +383,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 2, 2017.</p>
+<p>This Internet-Draft will expire on June 5, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -451,13 +451,13 @@ address {
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
 <p id="rfc.section.1.p.1">Security at the application layer provides an attractive option for protecting Internet of Things (IoT) deployments, for example where transport layer security is not sufficient <a href="#I-D.hartke-core-e2e-security-reqs">[I-D.hartke-core-e2e-security-reqs]</a>. IoT devices may be constrained in various ways, including memory, storage, processing capacity, and energy <a href="#RFC7228">[RFC7228]</a>. A method for protecting individual messages at application layer suitable for constrained devices, is provided by COSE <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>), which builds on CBOR <a href="#RFC7049">[RFC7049]</a>.</p>
-<p id="rfc.section.1.p.2">In order for a communication session to provide forward secrecy, the communicating parties can run a Diffie-Hellman (DH) key exchange protocol with ephemeral keys, from which shared key material can be derived. This document specifies authenticated DH protocols using CBOR and COSE objects. The DH key exchange messages may be authenticated using either pre-shared keys (PSK), raw public keys (RPK) or X.509 certificates (Cert). Authentication is based on credentials established out of band, or from a trusted third party, such as an Authorization Server as specified by <a href="#I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</a>. Note that this document focuses on authentication and key establishment: for integration with authorization of resource access, refer to <a href="#I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</a>. This document also specifies the derivation of shared key material.</p>
+<p id="rfc.section.1.p.2">In order for a communication session to provide forward secrecy, the communicating parties can run a Diffie-Hellman (DH) key exchange protocol with ephemeral keys, from which shared key material can be derived. This document specifies authenticated DH protocols using CBOR and COSE objects. The DH key exchange messages may be authenticated using either a pre-shared key (PSK), a raw public key (RPK) or an X.509 certificate (Cert). Authentication is based on credentials established out of band, or from a trusted third party, such as an Authorization Server as specified by <a href="#I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</a>. Note that this document focuses on authentication and key establishment: for integration with authorization of resource access, refer to <a href="#I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</a>. This document also specifies the derivation of shared key material.</p>
 <p id="rfc.section.1.p.3">The DH exchange and the key derviation follow <a href="#SIGMA">[SIGMA]</a>, NIST SP-800-56a <a href="#SP-800-56a">[SP-800-56a]</a> and HKDF <a href="#RFC5869">[RFC5869]</a>, and make use of the data structures of COSE which are aligned with these standards.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h1>
 <p id="rfc.section.1.1.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>. These words may also appear in this document in lowercase, absent their normative meanings.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#protocol" id="protocol">Protocol Overview</a></h1>
 <p id="rfc.section.2.p.1">This section gives an overview of EDHOC, together with <a href="#mess-proc">Section 4.3</a> and <a href="#mess-proc-sym">Section 5.3</a>, which explains how the messages are processed, while <a href="#asym">Section 4.1</a> and <a href="#sym">Section 5.1</a> focus on the detailed message formats embedded as CBOR objects, and <a href="#key-der-asym">Section 4.2</a>, <a href="#key-der-sym">Section 5.2</a>, and <a href="#final-key-der">Section 6</a> specify the key derivation.</p>
-<p id="rfc.section.2.p.2">EDHOC is built on the SIGMA family of protocols, with the basic protocol specified in Section 5, here in variant (ii) as in Section 5.4, of <a href="#SIGMA">[SIGMA]</a>, see <a href="#mess-ex0">Figure 1</a>.</p>
+<p id="rfc.section.2.p.2">EDHOC is built on the SIGMA family of protocols, with the basic protocol specified in Section 5 of <a href="#SIGMA">[SIGMA]</a>. <a href="#mess-ex0">Figure 1</a> shows  variant (ii) specified in Section 5.4 of <a href="#SIGMA">[SIGMA]</a>.</p>
 <div id="rfc.figure.1"/>
 <div id="mess-ex0"/>
 <pre>
@@ -476,7 +476,7 @@ Party U                                                 Party V
                        
 </pre>
 <p class="figure">Figure 1: The basic SIGMA protocol</p>
-<p id="rfc.section.2.p.3">The parties exchanging messages are called "U" and "V". U and V exchange identities and ephemeral public keys. They compute the shared secret and derive the keying material. The messages are signed and MAC:ed according to the SIGMA protocol (<a href="#mess-ex0">Figure 1</a>):</p>
+<p id="rfc.section.2.p.3">The parties exchanging messages are called "U" and "V". U and V exchange identities and ephemeral public keys. They compute the shared secret and derive the keying material. The messages are signed and MAC-ed according to the SIGMA protocol (<a href="#mess-ex0">Figure 1</a>):</p>
 <p/>
 
 <ul>
@@ -794,7 +794,7 @@ payl_3_cert = [
   <li>Party U SHALL verify than the received N_U is identical to the saved nonce N_U.</li>
   <li>Party U SHALL verify that the nonce has not been received before. If the verification fails, the message MUST be discarded. Otherwise, Party U SHALL store a representation of the nonce for future verifications.</li>
   <li>Party U SHALL derive K_UE, K_VE, K_UM and K_VM as defined in <a href="#key-der-asym">Section 4.2</a>.</li>
-  <li>Party U SHALL verify message_2: <ul><li>COSE_Encrypt is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VE.</li><li>If the message contains a certificate, party U SHALL verify the certificate using the pre-established trust anchor and the revokation verification policies relevant for party U. If the verification fails the message is discarded.</li><li>COSE_MAC0 is computed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VM. The result is inserted as payload of the received COSE_Sign1 (which was sent with detached payload);</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using the public key of Party V;</li><li>Note that Party U SHALL verify that the algorithms used in message_2 are taken from the set of proposed algorithms in message_1, else stop processing the message.</li></ul></li>
+  <li>Party U SHALL verify message_2: <ul><li>COSE_Encrypt is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VE.</li><li>If the message contains a certificate, party U SHALL verify the certificate using the pre-established trust anchor and the revokation verification policies relevant for party U. If the verification fails the message is discarded.</li><li>COSE_MAC0 is re-constructed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VM. The result is inserted as payload of the received COSE_Sign1 (which was sent with detached payload);</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using the public key of Party V;</li><li>Note that Party U SHALL verify that the algorithms used in message_2 are taken from the set of proposed algorithms in message_1, else stop processing the message.</li></ul></li>
   <li>If the verification of message_2 fails, the message MUST be discarded and Party U SHALL discontinue the protocol.</li>
 </ul>
 <h1 id="rfc.section.4.3.5"><a href="#rfc.section.4.3.5">4.3.5.</a> <a href="#u-message3" id="u-message3">U -&gt; message_3</a></h1>
@@ -816,7 +816,7 @@ payl_3_cert = [
 
 <ul>
   <li>Party V SHALL verify than the received N_U and N_V are identical to the saved nonces N_U and N_V. If the verification fails, the message MUST be discarded.</li>
-  <li>Party V SHALL verify message_3: <ul><li>COSE_Encrypt0 is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UE.</li><li>If the message contains a certificate, party V SHALL verify the certificate using the pre-established trust anchor and the revokation verification policies relevant for party U. If the verification fails the message is discarded.</li><li>COSE_MAC0 is computed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UM. The result is inserted as payload of the received COSE_Sign1 (which was sent with detached payload);</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using the public key of Party U;</li><li>Note that Party V SHALL verify that the set of algorithms sent in message_3 is the same as sent in message_1, else stop processing the message.</li></ul></li>
+  <li>Party V SHALL verify message_3: <ul><li>COSE_Encrypt0 is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UE.</li><li>If the message contains a certificate, party V SHALL verify the certificate using the pre-established trust anchor and the revokation verification policies relevant for party U. If the verification fails the message is discarded.</li><li>COSE_MAC0 is re-constructed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UM. The result is inserted as payload of the received COSE_Sign1 (which was sent with detached payload);</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using the public key of Party U;</li><li>Note that Party V SHALL verify that the set of algorithms sent in message_3 is the same as sent in message_1, else stop processing the message.</li></ul></li>
   <li>If the verification of message_3 fails, the message MUST be discarded and Party V SHALL discontinue the protocol.</li>
 </ul>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#PSK" id="PSK">Symmetric Keys</a></h1>
@@ -1052,7 +1052,7 @@ payl_3_psk = [
   <li>Party U SHALL verify than the received N_U is identical to the saved nonce N_U.</li>
   <li>Party U SHALL verify that the nonce has not been received before. If the verification fails, the message MUST be discarded. Otherwise, Party U SHALL store a representation of the nonce for future verifications.</li>
   <li>Party U SHALL derive K_UM, K_VM, K_UMP and K_VMP as defined in <a href="#key-der-sym">Section 5.2</a>.</li>
-  <li>Party U SHALL verify message_2: <ul><li>COSE_MAC0 is computed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VM. The result is inserted as payload of the received COSE_MAC (which was sent with detached payload);</li><li>COSE_MAC is verified as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VMP and algorithm MAC;</li><li>Note that Party U SHALL verify that the MAC algorithm used and the AEAD algorithm sent in message_2 are taken from the set of proposed algorithms in message_1, else stop processing the message.</li></ul></li>
+  <li>Party U SHALL verify message_2: <ul><li>COSE_MAC0 is re-constructed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VM. The result is inserted as payload of the received COSE_MAC (which was sent with detached payload);</li><li>COSE_MAC is verified as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_VMP and algorithm MAC;</li><li>Note that Party U SHALL verify that the MAC algorithm used and the AEAD algorithm sent in message_2 are taken from the set of proposed algorithms in message_1, else stop processing the message.</li></ul></li>
   <li>If the verification of message_2 fails, the message MUST be discarded and Party U SHALL discontinue the protocol.</li>
 </ul>
 <h1 id="rfc.section.5.3.5"><a href="#rfc.section.5.3.5">5.3.5.</a> <a href="#u-message3-1" id="u-message3-1">U -&gt; message_3</a></h1>
@@ -1072,7 +1072,7 @@ payl_3_psk = [
 
 <ul>
   <li>Party V SHALL verify than the received N_U and N_V are identical to the saved nonces N_U and N_V. If the verification fails, the message MUST be discarded.</li>
-  <li>Party V SHALL verify message_3: <ul><li>COSE_MAC0 (containing payl_3_psk) is computed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UM. The result is inserted as payload of the received COSE_MAC0 (which was sent with detached payload);</li><li>COSE_MAC0 is verified as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UMP and algorithm MAC;</li><li>Note that by verifying message_3, Party V ensures that message_1 was not modified in transit.</li></ul></li>
+  <li>Party V SHALL verify message_3: <ul><li>COSE_MAC0 (containing payl_3_psk) is re-constructed as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UM. The result is inserted as payload of the received COSE_MAC0 (which was sent with detached payload);</li><li>COSE_MAC0 is verified as defined in section 6.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with key K_UMP and algorithm MAC;</li><li>Note that by verifying message_3, Party V ensures that message_1 was not modified in transit.</li></ul></li>
   <li>If the verification of message_3 fails, the message MUST be discarded and Party V SHALL discontinue the protocol.</li>
 </ul>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#final-key-der" id="final-key-der">Derive Traffic Secret</a></h1>

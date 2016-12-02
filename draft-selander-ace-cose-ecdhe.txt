@@ -5,8 +5,8 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               J. Mattsson
 Intended status: Standards Track                            F. Palombini
-Expires: June 2, 2017                                        Ericsson AB
-                                                       November 29, 2016
+Expires: June 5, 2017                                        Ericsson AB
+                                                       December 02, 2016
 
 
                Ephemeral Diffie-Hellman Over COSE (EDHOC)
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 2, 2017.
+   This Internet-Draft will expire on June 5, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 1]
+Selander, et al.          Expires June 5, 2017                  [Page 1]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 2]
+Selander, et al.          Expires June 5, 2017                  [Page 2]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
        A.3.2.  Message 2 . . . . . . . . . . . . . . . . . . . . . .  37
@@ -135,8 +135,8 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
    protocol with ephemeral keys, from which shared key material can be
    derived.  This document specifies authenticated DH protocols using
    CBOR and COSE objects.  The DH key exchange messages may be
-   authenticated using either pre-shared keys (PSK), raw public keys
-   (RPK) or X.509 certificates (Cert).  Authentication is based on
+   authenticated using either a pre-shared key (PSK), a raw public key
+   (RPK) or an X.509 certificate (Cert).  Authentication is based on
    credentials established out of band, or from a trusted third party,
    such as an Authorization Server as specified by
    [I-D.ietf-ace-oauth-authz].  Note that this document focuses on
@@ -165,17 +165,17 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 3]
+Selander, et al.          Expires June 5, 2017                  [Page 3]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    embedded as CBOR objects, and Section 4.2, Section 5.2, and Section 6
    specify the key derivation.
 
    EDHOC is built on the SIGMA family of protocols, with the basic
-   protocol specified in Section 5, here in variant (ii) as in
-   Section 5.4, of [SIGMA], see Figure 1.
+   protocol specified in Section 5 of [SIGMA].  Figure 1 shows variant
+   (ii) specified in Section 5.4 of [SIGMA].
 
       Party U                                                 Party V
         |                                                       |
@@ -196,7 +196,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
    The parties exchanging messages are called "U" and "V".  U and V
    exchange identities and ephemeral public keys.  They compute the
    shared secret and derive the keying material.  The messages are
-   signed and MAC:ed according to the SIGMA protocol (Figure 1):
+   signed and MAC-ed according to the SIGMA protocol (Figure 1):
 
    o  E_U and E_V are the ECDH ephemeral public keys of U and V,
       respectively.
@@ -221,9 +221,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 4]
+Selander, et al.          Expires June 5, 2017                  [Page 4]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       Party U                                                 Party V
@@ -277,9 +277,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 5]
+Selander, et al.          Expires June 5, 2017                  [Page 5]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  Party V's public key SHALL be uniquely identified at U by ID_V.
@@ -333,9 +333,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 6]
+Selander, et al.          Expires June 5, 2017                  [Page 6]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
     Party U                                                     Party V
@@ -389,9 +389,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 7]
+Selander, et al.          Expires June 5, 2017                  [Page 7]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    message_1 = {
@@ -445,9 +445,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 8]
+Selander, et al.          Expires June 5, 2017                  [Page 8]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    nonce-array = [
@@ -501,9 +501,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                  [Page 9]
+Selander, et al.          Expires June 5, 2017                  [Page 9]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    payl_2_rpk = [
@@ -557,9 +557,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 10]
+Selander, et al.          Expires June 5, 2017                 [Page 10]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  detached payload: as defined below
@@ -613,9 +613,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 11]
+Selander, et al.          Expires June 5, 2017                 [Page 11]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    The key derivation is identical to Section 11.1 of
@@ -669,9 +669,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 12]
+Selander, et al.          Expires June 5, 2017                 [Page 12]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    The key derivation is done using the following context information
@@ -725,9 +725,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 13]
+Selander, et al.          Expires June 5, 2017                 [Page 13]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       of a curve complying with security policies for communicating with
@@ -781,9 +781,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 14]
+Selander, et al.          Expires June 5, 2017                 [Page 14]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  Party V SHALL format message_2 as specified in Section 4.1.2:
@@ -831,15 +831,15 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
          revokation verification policies relevant for party U.  If the
          verification fails the message is discarded.
 
-      *  COSE_MAC0 is computed as defined in section 6.3 of
+      *  COSE_MAC0 is re-constructed as defined in section 6.3 of
          [I-D.ietf-cose-msg], with key K_VM.  The result is inserted as
 
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 15]
+Selander, et al.          Expires June 5, 2017                 [Page 15]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
          payload of the received COSE_Sign1 (which was sent with
@@ -893,9 +893,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 16]
+Selander, et al.          Expires June 5, 2017                 [Page 16]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  COSE_Encrypt0 is decrypted and verified as defined in section
@@ -906,7 +906,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
          revokation verification policies relevant for party U.  If the
          verification fails the message is discarded.
 
-      *  COSE_MAC0 is computed as defined in section 6.3 of
+      *  COSE_MAC0 is re-constructed as defined in section 6.3 of
          [I-D.ietf-cose-msg], with key K_UM.  The result is inserted as
          payload of the received COSE_Sign1 (which was sent with
          detached payload);
@@ -949,9 +949,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 17]
+Selander, et al.          Expires June 5, 2017                 [Page 17]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    Since kid-psk is unique, only one additional pre-established bit is
@@ -1005,9 +1005,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 18]
+Selander, et al.          Expires June 5, 2017                 [Page 18]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
 5.1.  Message Formatting using COSE
@@ -1061,9 +1061,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 19]
+Selander, et al.          Expires June 5, 2017                 [Page 19]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  Headers:
@@ -1117,9 +1117,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 20]
+Selander, et al.          Expires June 5, 2017                 [Page 20]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  unprotected: empty
@@ -1173,9 +1173,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 21]
+Selander, et al.          Expires June 5, 2017                 [Page 21]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
          +  alg: MAC (same value as in COSE_MAC0 structure above)
@@ -1229,9 +1229,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 22]
+Selander, et al.          Expires June 5, 2017                 [Page 22]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  nonce SHALL be equal to N_V
@@ -1285,9 +1285,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 23]
+Selander, et al.          Expires June 5, 2017                 [Page 23]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
 5.3.  Message Processing
@@ -1341,9 +1341,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 24]
+Selander, et al.          Expires June 5, 2017                 [Page 24]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  Party V SHALL generate a fresh ephemeral ECDH key pair as
@@ -1389,7 +1389,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
    o  Party U SHALL verify message_2:
 
-      *  COSE_MAC0 is computed as defined in section 6.3 of
+      *  COSE_MAC0 is re-constructed as defined in section 6.3 of
          [I-D.ietf-cose-msg], with key K_VM.  The result is inserted as
          payload of the received COSE_MAC (which was sent with detached
          payload);
@@ -1397,9 +1397,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 25]
+Selander, et al.          Expires June 5, 2017                 [Page 25]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  COSE_MAC is verified as defined in section 6.3 of
@@ -1441,10 +1441,10 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
    o  Party V SHALL verify message_3:
 
-      *  COSE_MAC0 (containing payl_3_psk) is computed as defined in
-         section 6.3 of [I-D.ietf-cose-msg], with key K_UM.  The result
-         is inserted as payload of the received COSE_MAC0 (which was
-         sent with detached payload);
+      *  COSE_MAC0 (containing payl_3_psk) is re-constructed as defined
+         in section 6.3 of [I-D.ietf-cose-msg], with key K_UM.  The
+         result is inserted as payload of the received COSE_MAC0 (which
+         was sent with detached payload);
 
       *  COSE_MAC0 is verified as defined in section 6.3 of
          [I-D.ietf-cose-msg], with key K_UMP and algorithm MAC;
@@ -1453,9 +1453,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 26]
+Selander, et al.          Expires June 5, 2017                 [Page 26]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  Note that by verifying message_3, Party V ensures that
@@ -1509,9 +1509,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 27]
+Selander, et al.          Expires June 5, 2017                 [Page 27]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
       *  nonce SHALL be equal to N_V
@@ -1565,9 +1565,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 28]
+Selander, et al.          Expires June 5, 2017                 [Page 28]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    The choice of key length used in the different algorithms needs to be
@@ -1621,9 +1621,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 29]
+Selander, et al.          Expires June 5, 2017                 [Page 29]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [SP-800-56a]
@@ -1677,9 +1677,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 30]
+Selander, et al.          Expires June 5, 2017                 [Page 30]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
@@ -1733,9 +1733,9 @@ A.2.1.  Message 1
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 31]
+Selander, et al.          Expires June 5, 2017                 [Page 31]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    {
@@ -1789,9 +1789,9 @@ A.2.2.  Message 2
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 32]
+Selander, et al.          Expires June 5, 2017                 [Page 32]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [
@@ -1845,9 +1845,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 33]
+Selander, et al.          Expires June 5, 2017                 [Page 33]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [
@@ -1901,9 +1901,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 34]
+Selander, et al.          Expires June 5, 2017                 [Page 34]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    72a28340affce41c721901ebd7868231bd1d86e41888a07822214050022f540',
@@ -1957,9 +1957,9 @@ A.2.3.  Message 3
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 35]
+Selander, et al.          Expires June 5, 2017                 [Page 35]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    f6c05861c8860d13a638ea56c3f5ad7590bbfbf054e1c7b4d91d628022f54a8481381
@@ -2013,9 +2013,9 @@ A.3.1.  Message 1
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 36]
+Selander, et al.          Expires June 5, 2017                 [Page 36]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    {
@@ -2069,9 +2069,9 @@ A.3.2.  Message 2
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 37]
+Selander, et al.          Expires June 5, 2017                 [Page 37]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [
@@ -2125,9 +2125,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 38]
+Selander, et al.          Expires June 5, 2017                 [Page 38]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    The COSE_MAC is:
@@ -2181,9 +2181,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 39]
+Selander, et al.          Expires June 5, 2017                 [Page 39]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
 A.3.3.  Message 3
@@ -2237,9 +2237,9 @@ A.3.3.  Message 3
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 40]
+Selander, et al.          Expires June 5, 2017                 [Page 40]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    [
@@ -2293,9 +2293,9 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 41]
+Selander, et al.          Expires June 5, 2017                 [Page 41]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
              Client    Server
@@ -2349,9 +2349,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 42]
+Selander, et al.          Expires June 5, 2017                 [Page 42]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    The client derives OSCOAP Common Context (section 3.1 of
@@ -2405,9 +2405,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 43]
+Selander, et al.          Expires June 5, 2017                 [Page 43]
 
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  November 2016
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  December 2016
 
 
    o  the Algorithm is the AEAD algorithm negotiated during EDHOC
@@ -2461,4 +2461,4 @@ Authors' Addresses
 
 
 
-Selander, et al.          Expires June 2, 2017                 [Page 44]
+Selander, et al.          Expires June 5, 2017                 [Page 44]
