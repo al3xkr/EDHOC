@@ -309,7 +309,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-1-27" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-1-30" />
   <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
   <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
@@ -333,12 +333,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 31, 2017</td>
+  <td class="left">Expires: August 3, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">January 27, 2017</td>
+  <td class="right">January 30, 2017</td>
 </tr>
 
     	
@@ -358,7 +358,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 31, 2017.</p>
+<p>This Internet-Draft will expire on August 3, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -400,7 +400,7 @@ address {
   </ul>
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
-<p id="rfc.section.1.p.1">Security at the application layer provides an attractive option for protecting Internet of Things (IoT) deployments, for example where transport layer security is not sufficient <a href="#I-D.hartke-core-e2e-security-reqs">[I-D.hartke-core-e2e-security-reqs]</a>. IoT devices may be constrained in various ways, including memory, storage, processing capacity, and energy <a href="#RFC7228">[RFC7228]</a>. A method for protecting individual messages at the application layer suitable for constrained devices, is provided by CBOR Object Signing and Encryption (COSE) <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>), which builds on Concise Binary Object Representation (CBOR) <a href="#RFC7049">[RFC7049]</a>.</p>
+<p id="rfc.section.1.p.1">Security at the application layer provides an attractive option for protecting Internet of Things (IoT) deployments, for example where transport layer security is not sufficient <a href="#I-D.hartke-core-e2e-security-reqs">[I-D.hartke-core-e2e-security-reqs]</a>. IoT devices may be constrained in various ways, including memory, storage, processing capacity, and energy <a href="#RFC7228">[RFC7228]</a>. A method for protecting individual messages at the application layer suitable for constrained devices, is provided by CBOR Object Signing and Encryption (COSE) <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>), which builds on the Concise Binary Object Representation (CBOR) <a href="#RFC7049">[RFC7049]</a>.</p>
 <p id="rfc.section.1.p.2">In order for a communication session to provide forward secrecy, the communicating parties can run a Elliptic Curve Diffie-Hellman (ECDH) key exchange protocol with ephemeral keys, from which shared key material can be derived. This document specifies authenticated ECDH protocols using CBOR and COSE objects. The ECDH key exchange messages may be authenticated using pre-shared keys (PSK), raw public keys (RPK), or certificates (Cert). Authentication is based on credentials established out of band, or from a trusted third party, such as an Authorization Server as specified by <a href="#I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</a>. Note that this document focuses on authentication and key establishment: for integration with authorization of resource access, refer to <a href="#I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</a>. This document also specifies the derivation of shared key material.</p>
 <p id="rfc.section.1.p.3">The ECDH exchange and the key derivation follow <a href="#SIGMA">[SIGMA]</a>, NIST SP-800-56a <a href="#SP-800-56a">[SP-800-56a]</a>, and HKDF <a href="#RFC5869">[RFC5869]</a>. CBOR <a href="#RFC7049">[RFC7049]</a> and COSE <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a> are used to implement these standards.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h1>
@@ -417,7 +417,7 @@ Party U                                                 Party V
    |          E_V, Enc(K; ID_V; Sig(V; E_U, E_V))          |
    |&lt;------------------------------------------------------+
    |                                                       |
-   |             Enc(K; ID_U; Sig(U; E_V, E_U)             |
+   |             Enc(K; ID_U; Sig(U; E_V, E_U))            |
    +------------------------------------------------------&gt;|
    |                                                       |
 </pre>
@@ -438,17 +438,17 @@ Party U                                                 Party V
   <li>Explicit nonces/session identifiers N_U, N_V chosen freshly and anew with each session by U and V, respectively.</li>
   <li>Computationally independent keys derived from the ECDH shared secret and used for different directions and operations.</li>
 </ul>
-<p id="rfc.section.2.p.6">EDHOC also makes the following addition:</p>
+<p id="rfc.section.2.p.6">EDHOC also makes the following additions:</p>
 <p/>
 
 <ul>
   <li>Negotiation of key derivation, AEAD, and signature algorithms:  <ul><li>U proposes one or more algorithms of each kind.</li><li>V selects one algorithm of each kind, and additionally proposes an array of signature algorithms.</li><li>U selects and uses one signature algorithm.</li></ul></li>
   <li>Transmission of application defined extensions.</li>
 </ul>
-<p id="rfc.section.2.p.8">EDHOC is designed to encrypt and integrity protect as much information as possible, and all symmetric keys are derived using as much previous information as possible. EDHOC is furthermore designed to be as compact and lightweight as possible, in terms of message sizes, processing, and the ability to reuse already existing CBOR and COSE libraries. EDHOC does not put any requirement on the lower layers and can therefore be used in environments without IP.</p>
-<p id="rfc.section.2.p.9">This paper is organized as follows: <a href="#general">Section 3</a> specifies general aspects of EDHOC, including formatting of the ephemeral public keys and key derivation, <a href="#asym">Section 4</a> specifies EDHOC with asymmetric authentication, <a href="#sym">Section 5</a> specifies EDHOC with symmetric authentication, and <a href="#examples">Appendix A</a> provides a wealth of test vectors to ease implementation and ensure interoperability.</p>
+<p id="rfc.section.2.p.8">EDHOC is designed to encrypt and integrity protect as much information as possible, and all symmetric keys are derived using as much previous information as possible. EDHOC is furthermore designed to be as compact and lightweight as possible, in terms of message sizes, processing, and the ability to reuse already existing CBOR and COSE libraries. EDHOC does not put any requirement on the lower layers and can therefore be also be used e.g. in environments without IP.</p>
+<p id="rfc.section.2.p.9">This paper is organized as follows: <a href="#general">Section 3</a> specifies general properties of EDHOC, including formatting of the ephemeral public keys and key derivation, <a href="#asym">Section 4</a> specifies EDHOC with asymmetric key authentication, <a href="#sym">Section 5</a> specifies EDHOC with symmetric key authentication, and <a href="#examples">Appendix A</a> provides a wealth of test vectors to ease implementation and ensure interoperability.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#general" id="general">EDHOC Overview</a></h1>
-<p id="rfc.section.3.p.1">EDHOC consists of three messages (message_1, message_2, message_3) that maps directly to the three messages in SIGMA-I. All ECDHOC messages consists of an CBOR array where the first element is an int specifying the message type (MSG_TYPE). After creating EDHOC message_3, Party U can derive the traffic key (master secret) and protected application data can therefore be sent in parallel with EDHOC message_3. The application data may e.g. be protected using the negotiated AEAD algorithm. EDHOC may be used with the media type application/edhoc defined in <a href="#iana">Section 6</a>.</p>
+<p id="rfc.section.3.p.1">EDHOC consists of three messages (message_1, message_2, message_3) that maps directly to the three messages in SIGMA-I. All EDHOC messages consists of an CBOR array where the first element is an int specifying the message type (MSG_TYPE). After creating EDHOC message_3, Party U can derive the traffic key (master secret) and protected application data can therefore be sent in parallel with EDHOC message_3. The application data may e.g. be protected using the negotiated AEAD algorithm. EDHOC may be used with the media type application/edhoc defined in <a href="#iana">Section 6</a>.</p>
 <div id="rfc.figure.2"/>
 <div id="fig-flow"/>
 <pre>
@@ -462,8 +462,8 @@ Party U                                                 Party V
    |                                                       |
 </pre>
 <p class="figure">Figure 2: EDHOC message flow</p>
-<p id="rfc.section.3.p.2">The EDHOC message exchange may be authenticated using pre-shared keys (PSK), raw public keys (RPK), or certificates (Cert). EDHOC assumes the existence of mechanisms (certification authority, manual distribution, etc.) for binding identities with authentication keys (public or pre-shared). EDHOC with symmetric authentication is very similar to EDHOC with asymmetric authentication, the differences are that information is only MACed (not signed) and that EDHOC with symmetric authentication offers encryption, integrity protection, and key proof-of-possession already in message_1.</p>
-<p id="rfc.section.3.p.3">EDHOC allows application defined extensions (EXT_1, EXT_2, EXT_3) to be sent in the respective messages. When EDHOC are used with asymmetric authentication, EXT_1 is unprotected, EXT_2 is protected (encrypted and integrity protected), but sent to an unauthenticated party, and EXT_3 is protected and mutually authenticated. When EDHOC is used with symmetric authentication, all extensions are protected and mutually authenticated.</p>
+<p id="rfc.section.3.p.2">The EDHOC message exchange may be authenticated using pre-shared keys (PSK), raw public keys (RPK), or certificates (Cert). EDHOC assumes the existence of mechanisms (certification authority, manual distribution, etc.) for binding identities with authentication keys (public or pre-shared). EDHOC with symmetric key authentication is very similar to EDHOC with asymmetric key authentication, the differences are that information is only MACed (not signed) and that EDHOC with symmetric key authentication offers encryption, integrity protection, and key proof-of-possession already in message_1.</p>
+<p id="rfc.section.3.p.3">EDHOC allows application defined extensions (EXT_1, EXT_2, EXT_3) to be sent in the respective messages. When EDHOC are used with asymmetric key authentication, EXT_1 is unprotected, EXT_2 is protected (encrypted and integrity protected), but sent to an unauthenticated party, and EXT_3 is protected and mutually authenticated. When EDHOC is used with symmetric key authentication, all extensions are protected and mutually authenticated.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#cose_key" id="cose_key">Formatting of the Ephemeral Public Keys</a></h1>
 <p id="rfc.section.3.1.p.1">The ECDH ephemeral public key SHALL be formatted as a COSE_Key of type EC2 or OKP according to section 13.1 and 13.2 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The curve X25519 is mandatory-to-implement. For Elliptic Curve Keys of type EC2, point compression is mandatory-to-implement.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#key-der" id="key-der">Key Derivation</a></h1>
@@ -483,7 +483,7 @@ Party U                                                 Party V
 </pre>
 <p id="rfc.section.3.2.p.3">SuppPrivInfo SHALL only be present in the symmetric case.</p>
 <p id="rfc.section.3.2.p.4">The symmetric key and IV used to protect message_i is called K_i and IV_i etc., and are derived using the structure data_i defined for each EDHOC message that make use of a symmetric key.</p>
-<p id="rfc.section.3.2.p.5">K_1 and IV_1 are only used in EDHOC with symmetric authentication and are derived with the exceptions that secret SHALL be empty and the PRF SHALL be HKDF-256 (or a HKDF decided by the application).</p>
+<p id="rfc.section.3.2.p.5">K_1 and IV_1 are only used in EDHOC with symmetric key authentication and are derived with the exceptions that secret SHALL be empty and the PRF SHALL be HKDF-256 (or a HKDF decided by the application).</p>
 <p id="rfc.section.3.2.p.6">All other keys are derived with the negotiated PRF and with the secret set to the ECDH shared secret.</p>
 <p id="rfc.section.3.2.p.7">Application specific traffic keys and key identifiers are derived using the CBOR array [ message_1, message_2, message_3, label ], where label is any CBOR type. Each application making use of EDHOC defines its own labels and how they are used.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#asym" id="asym">EDHOC Authenticated with Asymmetric Keys</a></h1>
@@ -496,7 +496,7 @@ Party U                                                 Party V
   <li>Party V&#8217;s SHALL be able to uniquely identify Party U&#8217;s public key using ID_U.</li>
 </ul>
 <p id="rfc.section.4.1.p.3">ID_U and ID_V either enable the other party to retrieve the public key (kid, x5t, x5u) or they contain the public key (x5c), see <a href="#I-D.schaad-cose-x509">[I-D.schaad-cose-x509]</a>.</p>
-<p id="rfc.section.4.1.p.4">EDHOC with asymmetric authentication is illustrated in <a href="#fig-asym">Figure 3</a>.</p>
+<p id="rfc.section.4.1.p.4">EDHOC with asymmetric key authentication is illustrated in <a href="#fig-asym">Figure 3</a>.</p>
 <div id="rfc.figure.3"/>
 <div id="fig-asym"/>
 <pre>
@@ -513,7 +513,7 @@ Party U                                                       Party V
 +------------------------------------------------------------------&gt;|
 |                             message_3                             |
 </pre>
-<p class="figure">Figure 3: EDHOC with asymmetric authentication. </p>
+<p class="figure">Figure 3: EDHOC with asymmetric key authentication. </p>
 <h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> <a href="#asym-mti" id="asym-mti">Mandatory to Implement Algorithms</a></h1>
 <p id="rfc.section.4.1.1.p.1">For EDHOC authenticated with asymmetric keys, the COSE algorithms ECDH-SS + HKDF-256, AES-CCM-64-64-128, and EdDSA are mandatory to implement.</p>
 <h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#asym-msg1" id="asym-msg1">EDHOC Message 1</a></h1>
@@ -691,7 +691,7 @@ data_3 = [
   <li>Party V&#8217;s SHALL be able to uniquely identify the PSK using KID.</li>
 </ul>
 <p id="rfc.section.5.1.p.3">KID either enable the other party to retrieve the PSK or contain the PSK (e.g. CBOR Web Token).</p>
-<p id="rfc.section.5.1.p.4">EDHOC with symmetric authentication is illustrated in <a href="#fig-sym">Figure 4</a>.</p>
+<p id="rfc.section.5.1.p.4">EDHOC with symmetric key authentication is illustrated in <a href="#fig-sym">Figure 4</a>.</p>
 <div id="rfc.figure.4"/>
 <div id="fig-sym"/>
 <pre>
@@ -708,7 +708,7 @@ Party U                                                       Party V
 +------------------------------------------------------------------&gt;|
 |                             message_3                             |
 </pre>
-<p class="figure">Figure 4: EDHOC with symmetric authentication. </p>
+<p class="figure">Figure 4: EDHOC with symmetric key authentication. </p>
 <h1 id="rfc.section.5.1.1"><a href="#rfc.section.5.1.1">5.1.1.</a> <a href="#sym-mti" id="sym-mti">Mandatory to Implement Algorithms</a></h1>
 <p id="rfc.section.5.1.1.p.1">For EDHOC authenticated with symmetric keys, the COSE algorithms ECDH-SS + HKDF-256 and AES-CCM-64-64-128 are mandatory to implement.</p>
 <h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#sym-msg1" id="sym-msg1">EDHOC Message 1</a></h1>
@@ -912,7 +912,7 @@ data_3 = [
 <p id="rfc.section.7.p.2">Party U and V must make sure that unprotected data and metadata do not reveal any sensitive information. This also applies for encrypted data sent to an unauthenticated party. In particular, it applies to EXT_1 and EXT_2 in the asymmetrical case, and KID in the symmetrical case. The communicating parties may therefore anonymize KID.</p>
 <p id="rfc.section.7.p.3">Using the same KID or unprotected extension in several EDHOC sessions allows passive eavesdroppers to correlate the different sessions. Another consideration is that the list of supported algorithms may be used to identify the application.</p>
 <p id="rfc.section.7.p.4">Party U and V must make sure that unprotected data does not trigger any harmful actions. In particular, this applies to EXT_1 in the asymmetrical case, and KID in the symmetrical case. Party V should be aware that replays of EDHOC message_1 cannot be detected unless unless previous nonces are stored.</p>
-<p id="rfc.section.7.p.5">The availability of a secure pseudorandom number generator and truly random seeds are essential for the security of ECDHOC. If no true random number generator is available, a truly random seed must be provided from an external source. If ECDSA is supported, &#8220;deterministic ECDSA&#8221; as specified in RFC6979 is RECOMMENDED.</p>
+<p id="rfc.section.7.p.5">The availability of a secure pseudorandom number generator and truly random seeds are essential for the security of EDHOC. If no true random number generator is available, a truly random seed must be provided from an external source. If ECDSA is supported, &#8220;deterministic ECDSA&#8221; as specified in RFC6979 is RECOMMENDED.</p>
 <p id="rfc.section.7.p.6">The referenced processing instructions in <a href="#SP-800-56a">[SP-800-56a]</a> must be complied with, including deleting the intermediate computed values along with any ephemeral ECDH secrets after the key derivation is completed.</p>
 <p id="rfc.section.7.p.7">Party U and V are responsible for verifying the integrity of certificates. The selection of trusted CAs should be done very carefully and certificate revocation should be supported.</p>
 <p id="rfc.section.7.p.8">The choice of key length used in the different algorithms needs to be harmonized, so that a sufficient security level is maintained for certificates, EDHOC, and the protection of application data. Party U and V should enforce a minimum security level.</p>
@@ -1013,8 +1013,8 @@ data_3 = [
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#examples" id="examples">Test Vectors</a></h1>
 <p id="rfc.section.A.p.1">TODO: This section needs to be updated.</p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#app-a" id="app-a">Implementing EDHOC with CoAP and OSCOAP</a></h1>
-<p id="rfc.section.B.p.1">The ECDH key exchange specified in this document can be implemented as a CoAP <a href="#RFC7252">[RFC7252]</a> message exchange with the CoAP client as party U and the CoAP server as party V. Additionally, EDHOC and OSCOAP <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> can be run in sequence embedded into a 2-round trip protocol, where the Context Identifer, Base Key, and AEAD Algorithm used in OSCOAP is obtained from EDHOC. The preferred procedure is presented in this section.</p>
-<p id="rfc.section.B.p.2">The process to run EDHOC over CoAP, followed by and combined with OSCOAP is shown in <a href="#edhoc-oscoap">Figure 5</a> and <a href="#edhoc-oscoap-det">Figure 6</a>.</p>
+<p id="rfc.section.B.p.1">The ECDH key exchange specified in this document can be implemented as an exchange of CoAP <a href="#RFC7252">[RFC7252]</a> messages, with the CoAP client as party U and the CoAP server as party V. Additionally, EDHOC and OSCOAP <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> can be run in sequence embedded into a 2-round trip message exchange, such that the security context input parameters required for OSCOAP (section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>) are obtained from EDHOC.</p>
+<p id="rfc.section.B.p.2">One procedure for running EDHOC over CoAP combined with OSCOAP is presented in this section. The EDHOC protocol is combined with OSCOAP such that the last message of EDHOC is sent together with the OSCOAP request, see <a href="#edhoc-oscoap">Figure 5</a>.</p>
 <div id="rfc.figure.5"/>
 <div id="edhoc-oscoap"/>
 <pre>
@@ -1030,6 +1030,8 @@ data_3 = [
 
 </pre>
 <p class="figure">Figure 5: EDHOC and OSCOAP in two CoAP message exchanges</p>
+<p id="rfc.section.B.p.3">In the first and second message of <a href="#edhoc-oscoap">Figure 5</a>, EDHOC message_1 and EDHOC message_2 is transported in the CoAP payload, as specified below. For the third and fourth messages, the binding to CoAP is defined by OSCOAP, so it suffices to specify how EDHOC message_3 is transported in the OSCOAP request.</p>
+<p id="rfc.section.B.p.4">The CoAP binding is indicated in <a href="#edhoc-oscoap-det">Figure 6</a>. The presence of the Object-Security option <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> signifies the OSCOAP messages.</p>
 <div id="rfc.figure.6"/>
 <div id="edhoc-oscoap-det"/>
 <pre>
@@ -1038,12 +1040,12 @@ data_3 = [
             |          |
             +---------&gt;| Header: POST (Code=0.02)
             | POST     | Uri-Path:"edhoc"
-            |          | Content-Type: application/cbor
+            |          | Content-Type: application/edhoc
             |          | Payload: EDHOC message_1
             |          |
             |&lt;---------+ Header: 2.04 Changed
-            |          | Content-Type: application/cose+cbor
-            | 2.05     | Payload: EDHOC message_2
+            |          | Content-Type: application/edhoc
+            | 2.04     | Payload: EDHOC message_2
             |          |   
             |          |
             +---------&gt;| CoAP message including:
@@ -1059,36 +1061,40 @@ data_3 = [
             |          |  
  
 </pre>
-<p class="figure">Figure 6: Detail of EDHOC and OSCOAP</p>
-<p id="rfc.section.B.p.3">The CoAP client makes the following request:</p>
+<p class="figure">Figure 6: CoAP binding of EDHOC combined with OSCOAP</p>
+<p id="rfc.section.B.p.5">The CoAP binding of EDHOC combined with OSCOAP is now detailed. The client makes the following CoAP request:</p>
 <p/>
 
 <ul>
   <li>The request method is POST</li>
-  <li>Content-Format is &#8220;application/cose+cbor&#8221;</li>
+  <li>Content-Format is &#8220;application/edhoc&#8221;</li>
   <li>The Uri-Path is &#8220;edhoc&#8221;</li>
   <li>The Payload is EDHOC message_1, computed as defined in this document</li>
 </ul>
-<p id="rfc.section.B.p.5">The CoAP server processes message_1 as specified in this document. Unless the protocol is terminated, the server processes message_2 as specified in this document and sends the following response:</p>
+<p id="rfc.section.B.p.7">The CoAP server processes message_1 as specified in this document. If successful, the server processes message_2 as specified in this document and sends the following CoAP response:</p>
 <p/>
 
 <ul>
   <li>The response Code is 2.04 (Changed)</li>
+  <li>Content-Format is &#8220;application/edhoc&#8221;</li>
   <li>The Payload is EDHOC message_2, computed as defined in this document</li>
 </ul>
-<p id="rfc.section.B.p.7">The CoAP client verifies message_2 as specified in this document. If successful, the client processes EDHOC message_3, as specified in this document. The client also derives the OSCOAP Security Context (section 3.1 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>) from the EDHOC messages:</p>
+<p id="rfc.section.B.p.9">The client verifies message_2 as specified in this document. If successful, the client processes EDHOC message_3, as specified in this document.</p>
+<p id="rfc.section.B.p.10">The client also derives the OSCOAP Security Context (section 3.1 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>) from the EDHOC messages:</p>
 <p/>
 
 <ul>
-  <li>The OSCOAP Base Key (master_secret) and Context Identifier (CID) are derived as specified in <a href="#key-der">Section 3.2</a> using the CBOR array [ message_1, message_2, message_3, label ] as &#8216;other&#8217;, where &#8216;label&#8217; is a CBOR encoded text string (major type 3).  <ul><li>For OSCOAP master_secret,  &#8216;label&#8217; is the CBOR encoding of &#8220;OSCOAP_master_secret&#8221;.</li><li>For OSCOAP CID, &#8216;label&#8217; is the CBOR encoding of  &#8220;OSCOAP_CID&#8221;</li></ul></li>
-  <li>The AEAD Algorithm is AEAD_V, as negotiated with EDHOC</li>
-  <li>The Key Derivation Function is HKDF_V, as negotiated with EDHOC</li>
-  <li>For the other input parameters, the default is used as specificed in section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</li>
+  <li>The OSCOAP Master Secret (master_secret) and Context Identifier (CID) are derived as specified in <a href="#key-der">Section 3.2</a> of this document, using the CBOR array [ message_1, message_2, message_3, label ] as &#8216;other&#8217;.  <ul><li>For OSCOAP master_secret, &#8216;label&#8217; is the CBOR encoded text string (major type 3) &#8220;OSCOAP_master_secret&#8221;.</li><li>For OSCOAP CID, &#8216;label&#8217; is the CBOR encoded text string (major type 3) &#8220;OSCOAP_CID&#8221;</li></ul></li>
+  <li>The AEAD Algorithm is AEAD_V, as defined in this document</li>
+  <li>The Key Derivation Function is HKDF_V, as defined in this document</li>
+  <li>For the other OSCOAP security context input parameters, the default is used as specified in section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</li>
 </ul>
-<p id="rfc.section.B.p.9">With these parameters, the CoAP client can derive the OSCOAP security context parameters, following section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</p>
-<p id="rfc.section.B.p.10">Finally, the client generates the OSCOAP request, containing the Object-Security option and the COSE_Encrypt0 object as defined in <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. EDHOC message_3 is added to the unprotected part of the COSE_Encrypt0 Headers, with label &#8216;edhoc_m3&#8217;. Note that this may considerably increase the size of the COSE_Encrypt0 object (see {#ex-rpk3}), so in case the OSCOAP request method does not allow payload, the Object-Security option may become large.</p>
-<p id="rfc.section.B.p.11">The server receives and extracts message_3 from the unprotected part of the COSE_Encrypt0 object of the OSCOAP request. If the object does not contain the &#8216;edhoc_m3&#8217; label, or if the &#8216;edhoc_m3&#8217; value does not comply with the specifications, the message is discarded and the communication terminated.  Otherwise, the server processes and verifies the EDHOC message_3 as described in this document. If successful, the server derives OSCOAP security context parameters following section 3.2 of {{I-D.ietf-core-object-secur Finally, the client can verify the OSCOAP request using the security context, and act according to <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. Further communication can be protected using OSCOAP.</p>
-<p id="rfc.section.B.p.12">Note that embedding EDHOC only in CoAP is a straightforward simplification of this procedure, where message_1 and message_2 are generated and sent as described above, and followed by message_3 sent analogously to message_1.</p>
+<p id="rfc.section.B.p.12">With these parameters, the CoAP client can derive the OSCOAP security context parameters, following section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>.</p>
+<p id="rfc.section.B.p.13">The client builds the intended CoAP request and protects the request with OSCOAP. The request thus contains the Object-Security option and a COSE_Encrypt0 object as defined in <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>. The client adds EDHOC message_3 to the unprotected part of the COSE_Encrypt0 Headers, label &#8216;edhoc_m3&#8217;, and sends the OSCOAP request.</p>
+<p id="rfc.section.B.p.14">TODO: IANA registration of COSE label &#8216;edhoc_m3&#8217;.</p>
+<p id="rfc.section.B.p.15">The server receives and extracts message_3 from the unprotected part of the COSE_Encrypt0 object of the OSCOAP request. If the object does not contain the &#8216;edhoc_m3&#8217; label, or if the &#8216;edhoc_m3&#8217; value does not comply with the specifications, the message is discarded and the communication terminated. Otherwise, the server verifies message_3 as specified in this document. If successful, the server derives the OSCOAP security context parameters following section 3.2 of <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> with input parameters specified in this section. The server processes the OSCOAP request as specified in <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a> and returns the OSCOAP response.</p>
+<p id="rfc.section.B.p.16">Finally, the client can verify the OSCOAP response using the security context, and extract the plaintext CoAP response. Further communication between client and server can be protected using OSCOAP with the established security context.</p>
+<p id="rfc.section.B.p.17">Note that embedding EDHOC only into CoAP is a straightforward simplification of this procedure, where message_1 and message_2 are processed as described above, and followed by message_3 as payload in a CoAP request, analogously to message_1.</p>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>

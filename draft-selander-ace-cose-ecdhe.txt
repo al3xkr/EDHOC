@@ -5,8 +5,8 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               J. Mattsson
 Intended status: Standards Track                            F. Palombini
-Expires: July 31, 2017                                       Ericsson AB
-                                                        January 27, 2017
+Expires: August 3, 2017                                      Ericsson AB
+                                                        January 30, 2017
 
 
                Ephemeral Diffie-Hellman Over COSE (EDHOC)
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2017.
+   This Internet-Draft will expire on August 3, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 1]
+Selander, et al.         Expires August 3, 2017                 [Page 1]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -87,7 +87,7 @@ Table of Contents
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  22
    Appendix A.  Test Vectors . . . . . . . . . . . . . . . . . . . .  22
    Appendix B.  Implementing EDHOC with CoAP and OSCOAP  . . . . . .  22
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
 
 1.  Introduction
 
@@ -99,7 +99,7 @@ Table of Contents
    energy [RFC7228].  A method for protecting individual messages at the
    application layer suitable for constrained devices, is provided by
    CBOR Object Signing and Encryption (COSE) [I-D.ietf-cose-msg]), which
-   builds on Concise Binary Object Representation (CBOR) [RFC7049].
+   builds on the Concise Binary Object Representation (CBOR) [RFC7049].
 
    In order for a communication session to provide forward secrecy, the
    communicating parties can run a Elliptic Curve Diffie-Hellman (ECDH)
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 2]
+Selander, et al.         Expires August 3, 2017                 [Page 2]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -151,7 +151,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
          |          E_V, Enc(K; ID_V; Sig(V; E_U, E_V))          |
          |<------------------------------------------------------+
          |                                                       |
-         |             Enc(K; ID_U; Sig(U; E_V, E_U)             |
+         |             Enc(K; ID_U; Sig(U; E_V, E_U))            |
          +------------------------------------------------------>|
          |                                                       |
 
@@ -165,7 +165,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 3]
+Selander, et al.         Expires August 3, 2017                 [Page 3]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -193,7 +193,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    o  Computationally independent keys derived from the ECDH shared
       secret and used for different directions and operations.
 
-   EDHOC also makes the following addition:
+   EDHOC also makes the following additions:
 
    o  Negotiation of key derivation, AEAD, and signature algorithms:
 
@@ -212,27 +212,28 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    to be as compact and lightweight as possible, in terms of message
    sizes, processing, and the ability to reuse already existing CBOR and
    COSE libraries.  EDHOC does not put any requirement on the lower
-   layers and can therefore be used in environments without IP.
+   layers and can therefore be also be used e.g. in environments without
+   IP.
 
    This paper is organized as follows: Section 3 specifies general
-   aspects of EDHOC, including formatting of the ephemeral public keys
-   and key derivation, Section 4 specifies EDHOC with asymmetric
-   authentication, Section 5 specifies EDHOC with symmetric
+   properties of EDHOC, including formatting of the ephemeral public
+   keys and key derivation, Section 4 specifies EDHOC with asymmetric
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 4]
+Selander, et al.         Expires August 3, 2017                 [Page 4]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
+   key authentication, Section 5 specifies EDHOC with symmetric key
    authentication, and Appendix A provides a wealth of test vectors to
    ease implementation and ensure interoperability.
 
 3.  EDHOC Overview
 
    EDHOC consists of three messages (message_1, message_2, message_3)
-   that maps directly to the three messages in SIGMA-I.  All ECDHOC
+   that maps directly to the three messages in SIGMA-I.  All EDHOC
    messages consists of an CBOR array where the first element is an int
    specifying the message type (MSG_TYPE).  After creating EDHOC
    message_3, Party U can derive the traffic key (master secret) and
@@ -256,19 +257,19 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    (PSK), raw public keys (RPK), or certificates (Cert).  EDHOC assumes
    the existence of mechanisms (certification authority, manual
    distribution, etc.) for binding identities with authentication keys
-   (public or pre-shared).  EDHOC with symmetric authentication is very
-   similar to EDHOC with asymmetric authentication, the differences are
-   that information is only MACed (not signed) and that EDHOC with
-   symmetric authentication offers encryption, integrity protection, and
-   key proof-of-possession already in message_1.
+   (public or pre-shared).  EDHOC with symmetric key authentication is
+   very similar to EDHOC with asymmetric key authentication, the
+   differences are that information is only MACed (not signed) and that
+   EDHOC with symmetric key authentication offers encryption, integrity
+   protection, and key proof-of-possession already in message_1.
 
    EDHOC allows application defined extensions (EXT_1, EXT_2, EXT_3) to
    be sent in the respective messages.  When EDHOC are used with
-   asymmetric authentication, EXT_1 is unprotected, EXT_2 is protected
-   (encrypted and integrity protected), but sent to an unauthenticated
-   party, and EXT_3 is protected and mutually authenticated.  When EDHOC
-   is used with symmetric authentication, all extensions are protected
-   and mutually authenticated.
+   asymmetric key authentication, EXT_1 is unprotected, EXT_2 is
+   protected (encrypted and integrity protected), but sent to an
+   unauthenticated party, and EXT_3 is protected and mutually
+   authenticated.  When EDHOC is used with symmetric key authentication,
+   all extensions are protected and mutually authenticated.
 
 
 
@@ -276,8 +277,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-
-Selander, et al.          Expires July 31, 2017                 [Page 5]
+Selander, et al.         Expires August 3, 2017                 [Page 5]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -321,9 +321,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    IV_i etc., and are derived using the structure data_i defined for
    each EDHOC message that make use of a symmetric key.
 
-   K_1 and IV_1 are only used in EDHOC with symmetric authentication and
-   are derived with the exceptions that secret SHALL be empty and the
-   PRF SHALL be HKDF-256 (or a HKDF decided by the application).
+   K_1 and IV_1 are only used in EDHOC with symmetric key authentication
+   and are derived with the exceptions that secret SHALL be empty and
+   the PRF SHALL be HKDF-256 (or a HKDF decided by the application).
 
    All other keys are derived with the negotiated PRF and with the
    secret set to the ECDH shared secret.
@@ -333,7 +333,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 6]
+Selander, et al.         Expires August 3, 2017                 [Page 6]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -358,7 +358,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    key (kid, x5t, x5u) or they contain the public key (x5c), see
    [I-D.schaad-cose-x509].
 
-   EDHOC with asymmetric authentication is illustrated in Figure 3.
+   EDHOC with asymmetric key authentication is illustrated in Figure 3.
 
    Party U                                                       Party V
    |                       N_U, E_U, ALG_1, EXT_1                      |
@@ -373,7 +373,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    +------------------------------------------------------------------>|
    |                             message_3                             |
 
-              Figure 3: EDHOC with asymmetric authentication.
+            Figure 3: EDHOC with asymmetric key authentication.
 
 4.1.1.  Mandatory to Implement Algorithms
 
@@ -389,7 +389,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 7]
+Selander, et al.         Expires August 3, 2017                 [Page 7]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -445,7 +445,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 8]
+Selander, et al.         Expires August 3, 2017                 [Page 8]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -501,7 +501,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                 [Page 9]
+Selander, et al.         Expires August 3, 2017                 [Page 9]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -557,7 +557,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 10]
+Selander, et al.         Expires August 3, 2017                [Page 10]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -613,7 +613,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 11]
+Selander, et al.         Expires August 3, 2017                [Page 11]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -669,7 +669,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 12]
+Selander, et al.         Expires August 3, 2017                [Page 12]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -716,7 +716,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    KID either enable the other party to retrieve the PSK or contain the
    PSK (e.g.  CBOR Web Token).
 
-   EDHOC with symmetric authentication is illustrated in Figure 4.
+   EDHOC with symmetric key authentication is illustrated in Figure 4.
 
 
 
@@ -725,7 +725,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 13]
+Selander, et al.         Expires August 3, 2017                [Page 13]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -743,7 +743,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    +------------------------------------------------------------------>|
    |                             message_3                             |
 
-              Figure 4: EDHOC with symmetric authentication.
+            Figure 4: EDHOC with symmetric key authentication.
 
 5.1.1.  Mandatory to Implement Algorithms
 
@@ -781,7 +781,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 14]
+Selander, et al.         Expires August 3, 2017                [Page 14]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -837,7 +837,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 15]
+Selander, et al.         Expires August 3, 2017                [Page 15]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -893,7 +893,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 16]
+Selander, et al.         Expires August 3, 2017                [Page 16]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -949,7 +949,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 17]
+Selander, et al.         Expires August 3, 2017                [Page 17]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 18]
+Selander, et al.         Expires August 3, 2017                [Page 18]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 19]
+Selander, et al.         Expires August 3, 2017                [Page 19]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -1096,7 +1096,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
    unless previous nonces are stored.
 
    The availability of a secure pseudorandom number generator and truly
-   random seeds are essential for the security of ECDHOC.  If no true
+   random seeds are essential for the security of EDHOC.  If no true
    random number generator is available, a truly random seed must be
    provided from an external source.  If ECDSA is supported,
    "deterministic ECDSA" as specified in RFC6979 is RECOMMENDED.
@@ -1117,7 +1117,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 20]
+Selander, et al.         Expires August 3, 2017                [Page 20]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -1173,7 +1173,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 21]
+Selander, et al.         Expires August 3, 2017                [Page 21]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
@@ -1223,23 +1223,25 @@ Appendix A.  Test Vectors
 Appendix B.  Implementing EDHOC with CoAP and OSCOAP
 
    The ECDH key exchange specified in this document can be implemented
-   as a CoAP [RFC7252] message exchange with the CoAP client as party U
-   and the CoAP server as party V.  Additionally, EDHOC and OSCOAP
-   [I-D.ietf-core-object-security] can be run in sequence embedded into
+   as an exchange of CoAP [RFC7252] messages, with the CoAP client as
+   party U and the CoAP server as party V.  Additionally, EDHOC and
+   OSCOAP [I-D.ietf-core-object-security] can be run in sequence
 
 
 
-Selander, et al.          Expires July 31, 2017                [Page 22]
+Selander, et al.         Expires August 3, 2017                [Page 22]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
-   a 2-round trip protocol, where the Context Identifer, Base Key, and
-   AEAD Algorithm used in OSCOAP is obtained from EDHOC.  The preferred
-   procedure is presented in this section.
+   embedded into a 2-round trip message exchange, such that the security
+   context input parameters required for OSCOAP (section 3.2 of
+   [I-D.ietf-core-object-security]) are obtained from EDHOC.
 
-   The process to run EDHOC over CoAP, followed by and combined with
-   OSCOAP is shown in Figure 5 and Figure 6.
+   One procedure for running EDHOC over CoAP combined with OSCOAP is
+   presented in this section.  The EDHOC protocol is combined with
+   OSCOAP such that the last message of EDHOC is sent together with the
+   OSCOAP request, see Figure 5.
 
            Client                                        Server
               | ------------- EDHOC message_1 ------------> |
@@ -1254,17 +1256,51 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
          Figure 5: EDHOC and OSCOAP in two CoAP message exchanges
 
+   In the first and second message of Figure 5, EDHOC message_1 and
+   EDHOC message_2 is transported in the CoAP payload, as specified
+   below.  For the third and fourth messages, the binding to CoAP is
+   defined by OSCOAP, so it suffices to specify how EDHOC message_3 is
+   transported in the OSCOAP request.
+
+   The CoAP binding is indicated in Figure 6.  The presence of the
+   Object-Security option [I-D.ietf-core-object-security] signifies the
+   OSCOAP messages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Selander, et al.         Expires August 3, 2017                [Page 23]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
+
+
              Client    Server
                |          |
                |          |
                +--------->| Header: POST (Code=0.02)
                | POST     | Uri-Path:"edhoc"
-               |          | Content-Type: application/cbor
+               |          | Content-Type: application/edhoc
                |          | Payload: EDHOC message_1
                |          |
                |<---------+ Header: 2.04 Changed
-               |          | Content-Type: application/cose+cbor
-               | 2.05     | Payload: EDHOC message_2
+               |          | Content-Type: application/edhoc
+               | 2.04     | Payload: EDHOC message_2
                |          |
                |          |
                +--------->| CoAP message including:
@@ -1280,21 +1316,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
                |          |
 
 
-                   Figure 6: Detail of EDHOC and OSCOAP
+           Figure 6: CoAP binding of EDHOC combined with OSCOAP
 
-
-
-
-Selander, et al.          Expires July 31, 2017                [Page 23]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
-
-
-   The CoAP client makes the following request:
+   The CoAP binding of EDHOC combined with OSCOAP is now detailed.  The
+   client makes the following CoAP request:
 
    o  The request method is POST
 
-   o  Content-Format is "application/cose+cbor"
+   o  Content-Format is "application/edhoc"
 
    o  The Uri-Path is "edhoc"
 
@@ -1302,75 +1331,91 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
       document
 
    The CoAP server processes message_1 as specified in this document.
-   Unless the protocol is terminated, the server processes message_2 as
-   specified in this document and sends the following response:
+   If successful, the server processes message_2 as specified in this
+   document and sends the following CoAP response:
 
    o  The response Code is 2.04 (Changed)
+
+   o  Content-Format is "application/edhoc"
+
+
+
+
+Selander, et al.         Expires August 3, 2017                [Page 24]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
+
 
    o  The Payload is EDHOC message_2, computed as defined in this
       document
 
-   The CoAP client verifies message_2 as specified in this document.  If
+   The client verifies message_2 as specified in this document.  If
    successful, the client processes EDHOC message_3, as specified in
-   this document.  The client also derives the OSCOAP Security Context
-   (section 3.1 of [I-D.ietf-core-object-security]) from the EDHOC
-   messages:
+   this document.
 
-   o  The OSCOAP Base Key (master_secret) and Context Identifier (CID)
-      are derived as specified in Section 3.2 using the CBOR array [
-      message_1, message_2, message_3, label ] as 'other', where 'label'
-      is a CBOR encoded text string (major type 3).
+   The client also derives the OSCOAP Security Context (section 3.1 of
+   [I-D.ietf-core-object-security]) from the EDHOC messages:
 
-      *  For OSCOAP master_secret, 'label' is the CBOR encoding of
-         "OSCOAP_master_secret".
+   o  The OSCOAP Master Secret (master_secret) and Context Identifier
+      (CID) are derived as specified in Section 3.2 of this document,
+      using the CBOR array [ message_1, message_2, message_3, label ] as
+      'other'.
 
-      *  For OSCOAP CID, 'label' is the CBOR encoding of "OSCOAP_CID"
+      *  For OSCOAP master_secret, 'label' is the CBOR encoded text
+         string (major type 3) "OSCOAP_master_secret".
 
-   o  The AEAD Algorithm is AEAD_V, as negotiated with EDHOC
+      *  For OSCOAP CID, 'label' is the CBOR encoded text string (major
+         type 3) "OSCOAP_CID"
 
-   o  The Key Derivation Function is HKDF_V, as negotiated with EDHOC
+   o  The AEAD Algorithm is AEAD_V, as defined in this document
 
-   o  For the other input parameters, the default is used as specificed
-      in section 3.2 of [I-D.ietf-core-object-security].
+   o  The Key Derivation Function is HKDF_V, as defined in this document
+
+   o  For the other OSCOAP security context input parameters, the
+      default is used as specified in section 3.2 of
+      [I-D.ietf-core-object-security].
 
    With these parameters, the CoAP client can derive the OSCOAP security
    context parameters, following section 3.2 of
    [I-D.ietf-core-object-security].
 
+   The client builds the intended CoAP request and protects the request
+   with OSCOAP.  The request thus contains the Object-Security option
+   and a COSE_Encrypt0 object as defined in
+   [I-D.ietf-core-object-security].  The client adds EDHOC message_3 to
+   the unprotected part of the COSE_Encrypt0 Headers, label 'edhoc_m3',
+   and sends the OSCOAP request.
 
-
-
-
-Selander, et al.          Expires July 31, 2017                [Page 24]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
-
-
-   Finally, the client generates the OSCOAP request, containing the
-   Object-Security option and the COSE_Encrypt0 object as defined in
-   [I-D.ietf-core-object-security].  EDHOC message_3 is added to the
-   unprotected part of the COSE_Encrypt0 Headers, with label 'edhoc_m3'.
-   Note that this may considerably increase the size of the
-   COSE_Encrypt0 object (see {#ex-rpk3}), so in case the OSCOAP request
-   method does not allow payload, the Object-Security option may become
-   large.
+   TODO: IANA registration of COSE label 'edhoc_m3'.
 
    The server receives and extracts message_3 from the unprotected part
    of the COSE_Encrypt0 object of the OSCOAP request.  If the object
    does not contain the 'edhoc_m3' label, or if the 'edhoc_m3' value
    does not comply with the specifications, the message is discarded and
-   the communication terminated.  Otherwise, the server processes and
-   verifies the EDHOC message_3 as described in this document.  If
-   successful, the server derives OSCOAP security context parameters
-   following section 3.2 of {{I-D.ietf-core-object-secur Finally, the
-   client can verify the OSCOAP request using the security context, and
-   act according to [I-D.ietf-core-object-security].  Further
-   communication can be protected using OSCOAP.
+   the communication terminated.  Otherwise, the server verifies
+   message_3 as specified in this document.  If successful, the server
 
-   Note that embedding EDHOC only in CoAP is a straightforward
+
+
+Selander, et al.         Expires August 3, 2017                [Page 25]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
+
+
+   derives the OSCOAP security context parameters following section 3.2
+   of [I-D.ietf-core-object-security] with input parameters specified in
+   this section.  The server processes the OSCOAP request as specified
+   in [I-D.ietf-core-object-security] and returns the OSCOAP response.
+
+   Finally, the client can verify the OSCOAP response using the security
+   context, and extract the plaintext CoAP response.  Further
+   communication between client and server can be protected using OSCOAP
+   with the established security context.
+
+   Note that embedding EDHOC only into CoAP is a straightforward
    simplification of this procedure, where message_1 and message_2 are
-   generated and sent as described above, and followed by message_3 sent
-   analogously to message_1.
+   processed as described above, and followed by message_3 as payload in
+   a CoAP request, analogously to message_1.
 
 Authors' Addresses
 
@@ -1392,16 +1437,6 @@ Authors' Addresses
    Email: john.mattsson@ericsson.com
 
 
-
-
-
-
-
-Selander, et al.          Expires July 31, 2017                [Page 25]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
-
-
    Francesca Palombini
    Ericsson AB
    Faerogatan 6
@@ -1418,39 +1453,4 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)   January 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Selander, et al.          Expires July 31, 2017                [Page 26]
+Selander, et al.         Expires August 3, 2017                [Page 26]
