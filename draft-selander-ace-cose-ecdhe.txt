@@ -174,10 +174,10 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          |                          E_U                          |
          +------------------------------------------------------>|
          |                                                       |
-         |         E_V, Enc(K_2; ID_V, Sig(V; E_U, E_V);)         |
+         |         E_V, Enc(K_2; ID_V, Sig(V; E_U, E_V);)        |
          |<------------------------------------------------------+
          |                                                       |
-         |            Enc(K_3; ID_U, Sig(U; E_V, E_U);)           |
+         |            Enc(K_3; ID_U, Sig(U; E_V, E_U);)          |
          +------------------------------------------------------>|
          |                                                       |
 
