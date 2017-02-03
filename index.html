@@ -312,7 +312,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-2-02" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-2-03" />
   <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
   <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
@@ -336,12 +336,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 6, 2017</td>
+  <td class="left">Expires: August 7, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 02, 2017</td>
+  <td class="right">February 03, 2017</td>
 </tr>
 
     	
@@ -361,7 +361,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 6, 2017.</p>
+<p>This Internet-Draft will expire on August 7, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -414,7 +414,7 @@ address {
 <h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#terminology2" id="terminology2">Requirements Language</a></h1>
 <p id="rfc.section.1.2.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>. These words may also appear in this document in lowercase, absent their normative meanings.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#protocol" id="protocol">Protocol Overview</a></h1>
-<p id="rfc.section.2.p.1">SIGMA (SIGn-and-MAc) is a family of theoretical protocols with a large number of variants <a href="#SIGMA">[SIGMA]</a>. Like IKEv2 and TLS 1.3, EDHOC is built on the SIGMA-I protocol, which provides identity protection, and like TLS 1.3, EDHOC implements SIGMA as Sign-then-MAC. The SIGMA-I protocol using an AEAD algorithm is shown in <a href="#fig-sigma">Figure 1</a>.</p>
+<p id="rfc.section.2.p.1">SIGMA (SIGn-and-MAc) is a family of theoretical protocols with a large number of variants <a href="#SIGMA">[SIGMA]</a>. Like IKEv2 and TLS 1.3, EDHOC is built on a variant of the SIGMA protocol which provide identity protection, and like TLS 1.3, EDHOC implements the SIGMA-I variant as Sign-then-MAC. The SIGMA-I protocol using an AEAD algorithm is shown in <a href="#fig-sigma">Figure 1</a>.</p>
 <div id="rfc.figure.1"/>
 <div id="fig-sigma"/>
 <pre>
