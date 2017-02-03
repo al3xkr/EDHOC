@@ -90,7 +90,7 @@ Table of Contents
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  22
    Appendix A.  Test Vectors . . . . . . . . . . . . . . . . . . . .  23
    Appendix B.  Implementing EDHOC with CoAP and OSCOAP  . . . . . .  23
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
 
 1.  Introduction
 
@@ -1075,19 +1075,25 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    | name      | label | value type     | value       | description    |
    |           |       |                | registry    |                |
    +-----------+-------+----------------+-------------+----------------+
-   | edhoc     | TDB   | bstr           |             | EDHOC message  |
+   | edhoc     | TBD   | bstr           |             | EDHOC message  |
    +-----------+-------+----------------+-------------+----------------+
 
 7.  Security Considerations
 
-   EDHOC build on the SIGMA-I family of theoretical protocols that
+   EDHOC builds on the SIGMA-I family of theoretical protocols that
    provides perfect forward secrecy and identity protection with a
-   minimal number of messages.  The security of the SIGMA-I protocol
-   does not depend on the encryption and SIGMA-I is secure as long as
-   the MAC covers the identity of the signer.  EDHOC adds an explicit
-   message type and expands the authentication coverage to additional
-   elements such as algorithms, extensions, and previous messages.
-   EDHOC uses the same Sign-then-MAC approach as TLS 1.3.
+   minimal number of messages.  The encryption algorithm of the SIGMA-I
+   protocol provides identity protection, but the security of the
+   protocol requires the MAC to cover the identity of the signer.  Hence
+   the message authenticating functionality of the authenticated
+   encryption in EDHOC is critical: authenticated encryption MUST NOT be
+   replaced by plain encryption only, even if authentication is provided
+   at another level or through a different mechanism.
+
+   EDHOC adds an explicit message type and expands the authentication
+   coverage to additional elements such as algorithms, extensions, and
+   previous messages.  EDHOC uses the same Sign-then-MAC approach as TLS
+   1.3.
 
    Party U and V must make sure that unprotected data and metadata do
    not reveal any sensitive information.  This also applies for
@@ -1107,12 +1113,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    be aware that replays of EDHOC message_1 cannot be detected unless
    unless previous nonces are stored.
 
-   The availability of a secure pseudorandom number generator and truly
-   random seeds are essential for the security of EDHOC.  If no true
-   random number generator is available, a truly random seed must be
-   provided from an external source.  If ECDSA is supported,
-   "deterministic ECDSA" as specified in RFC6979 is RECOMMENDED.
-
 
 
 
@@ -1121,6 +1121,12 @@ Selander, et al.         Expires August 7, 2017                [Page 20]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   The availability of a secure pseudorandom number generator and truly
+   random seeds are essential for the security of EDHOC.  If no true
+   random number generator is available, a truly random seed must be
+   provided from an external source.  If ECDSA is supported,
+   "deterministic ECDSA" as specified in RFC6979 is RECOMMENDED.
 
    The referenced processing instructions in [SP-800-56a] must be
    complied with, including deleting the intermediate computed values
@@ -1164,12 +1170,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               for carrying and referencing X.509 certificates", draft-
               schaad-cose-x509-00 (work in progress), November 2016.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
-
-
 
 
 
@@ -1177,6 +1177,11 @@ Selander, et al.         Expires August 7, 2017                [Page 21]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
@@ -1218,11 +1223,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               "Object Security of CoAP (OSCOAP)", draft-ietf-core-
               object-security-01 (work in progress), December 2016.
 
-   [I-D.seitz-ace-oscoap-profile]
-              Seitz, L. and F. Palombini, "OSCOAP profile of ACE",
-              draft-seitz-ace-oscoap-profile-01 (work in progress),
-              October 2016.
-
 
 
 
@@ -1233,6 +1233,11 @@ Selander, et al.         Expires August 7, 2017                [Page 22]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   [I-D.seitz-ace-oscoap-profile]
+              Seitz, L. and F. Palombini, "OSCOAP profile of ACE",
+              draft-seitz-ace-oscoap-profile-01 (work in progress),
+              October 2016.
 
    [RFC5869]  Krawczyk, H. and P. Eronen, "HMAC-based Extract-and-Expand
               Key Derivation Function (HKDF)", RFC 5869,
@@ -1267,6 +1272,24 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
    OSCOAP such that EDHOC message_3 is sent together with the OSCOAP
    request, see Figure 5.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Selander, et al.         Expires August 7, 2017                [Page 23]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
            Client                                         Server
               |                                             |
               | ------------- EDHOC message_1 ------------> |
@@ -1279,16 +1302,6 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
               |                                             |
 
          Figure 5: EDHOC and OSCOAP in two CoAP message exchanges
-
-
-
-
-
-
-Selander, et al.         Expires August 7, 2017                [Page 23]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    As specified below and illustrated in Figure 6, EDHOC message_1 and
    message_2 are transported in the CoAP payload, and EDHOC message_3 is
@@ -1325,6 +1338,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Content-Format is "application/edhoc"
 
+
+
+
+Selander, et al.         Expires August 7, 2017                [Page 24]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    o  The Uri-Path is "edhoc"
 
    o  The Payload is EDHOC message_1, computed as defined in this
@@ -1337,14 +1358,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    o  The response Code is 2.04 (Changed)
 
    o  Content-Format is "application/edhoc"
-
-
-
-
-Selander, et al.         Expires August 7, 2017                [Page 24]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    o  The Payload is EDHOC message_2, computed as defined in this
       document
@@ -1381,6 +1394,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    The server extracts and verifies EDHOC message_3 from the unprotected
    part of the COSE_Encrypt0 object in the OSCOAP request.  If
+
+
+
+Selander, et al.         Expires August 7, 2017                [Page 25]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    successful, the server derives the OSCOAP security context parameters
    as in the same way as the client as decsribed above.  The server
    processes the OSCOAP request as specified in
@@ -1390,17 +1411,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    all ECHOC messages as CoAP payloads.
 
 Authors' Addresses
-
-
-
-
-
-
-
-Selander, et al.         Expires August 7, 2017                [Page 25]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    Goeran Selander
    Ericsson AB
@@ -1427,16 +1437,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    Sweden
 
    Email: francesca.palombini@ericsson.com
-
-
-
-
-
-
-
-
-
-
 
 
 
