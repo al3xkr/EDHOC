@@ -199,7 +199,8 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Enc(K; P; A) denotes AEAD encryption of plaintext P and additional
       authenticated data A using the key K derived from the shared
-      secret.
+      secret.  The AEAD MUST NOT be replaced by plain encryption, see
+      Section 7.
 
    As described in Appendix B of [SIGMA], in order to create a "full-
    fledge" protocol some additional protocol elements are needed.  EDHOC
@@ -216,7 +217,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    o  Negotiation of key derivation, AEAD, and signature algorithms:
 
       *  U proposes one or more algorithms of each kind.
-
 
 
 
@@ -588,7 +588,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          of Party V.
 
       *  COSE_Encrypt0 is computed as defined in section 5.3 of
-         [I-D.ietf-cose-msg], with AEAD_V, K_2, and IV_2.
+         [I-D.ietf-cose-msg], with AEAD_V, K_2, and IV_2.  The AEAD
+         algorithm MUST NOT be replaced by plain encryption, see
+         Section 7.
 
 4.3.3.  Party U Processing of Message 2
 
@@ -606,9 +608,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
       *  COSE_Encrypt0 is decrypted defined in section 5.3 of
          [I-D.ietf-cose-msg], with AEAD_V, K_2, and IV_2.
 
-      *  COSE_Sign1 is verified as defined in section 4.4 of
-         [I-D.ietf-cose-msg], using algorithm SIG_V and the public key
-         of Party V.
+
 
 
 
@@ -617,6 +617,10 @@ Selander, et al.         Expires August 7, 2017                [Page 11]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+      *  COSE_Sign1 is verified as defined in section 4.4 of
+         [I-D.ietf-cose-msg], using algorithm SIG_V and the public key
+         of Party V.
 
    If any verification step fails, the message MUST be discarded and the
    protocol discontinued.
@@ -663,16 +667,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  ID_U - identifier for the public key of Party U
 
-   o  EXT_3 - application defined extensions
-
-
-
 
 
 Selander, et al.         Expires August 7, 2017                [Page 12]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   o  EXT_3 - application defined extensions
 
 4.4.2.  Party U Processing of Message 3
 
@@ -687,7 +689,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          of Party U.
 
       *  COSE_Encrypt0 is computed as defined in section 5.3 of
-         [I-D.ietf-cose-msg], with AEAD_V, K_3, and IV_3.
+         [I-D.ietf-cose-msg], with AEAD_V, K_3, and IV_3.  The AEAD
+         algorithm MUST NOT be replaced by plain encryption, see
+         Section 7.
 
 4.4.3.  Party V Processing of Message 3
 
@@ -719,16 +723,15 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Party V's SHALL be able to uniquely identify the PSK using KID.
 
-   KID either enable the other party to retrieve the PSK or contain the
-   PSK (e.g.  CBOR Web Token).
-
-
 
 
 Selander, et al.         Expires August 7, 2017                [Page 13]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   KID either enable the other party to retrieve the PSK or contain the
+   PSK (e.g.  CBOR Web Token).
 
    EDHOC with symmetric key authentication is illustrated in Figure 4.
 
@@ -776,15 +779,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    alg_array = [ + alg : int / tstr ]
 
-   where:
-
-
 
 
 Selander, et al.         Expires August 7, 2017                [Page 14]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   where:
 
    o  MSG_TYPE = 4
 
@@ -832,8 +834,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Verify that at least one of each kind of the proposed algorithms
       are supported.
-
-
 
 
 
