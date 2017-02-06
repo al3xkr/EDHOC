@@ -312,9 +312,9 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-2-03" />
-  <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
-  <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-2-06" />
+  <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
+  <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
 </head>
 
@@ -336,12 +336,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 7, 2017</td>
+  <td class="left">Expires: August 10, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 03, 2017</td>
+  <td class="right">February 06, 2017</td>
 </tr>
 
     	
@@ -354,14 +354,14 @@ address {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a secure, compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries.</p>
+<p>This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 7, 2017.</p>
+<p>This Internet-Draft will expire on August 10, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -443,7 +443,8 @@ Party U                                                 Party V
 <p/>
 
 <ul>
-  <li>Explicit nonces/session identifiers N_U, N_V chosen freshly and anew with each session by U and V, respectively.</li>
+  <li>Explicit session identifiers S_U, S_V chosen by U and V, respectively.</li>
+  <li>Explicit nonces N_U, N_V chosen freshly and anew with each session by U and V, respectively.</li>
   <li>Computationally independent keys derived from the ECDH shared secret and used for different directions and operations.</li>
 </ul>
 <p id="rfc.section.2.p.6">EDHOC also makes the following additions:</p>
@@ -508,18 +509,18 @@ Party U                                                 Party V
 <div id="rfc.figure.3"/>
 <div id="fig-asym"/>
 <pre>
-Party U                                                       Party V
-|                       N_U, E_U, ALG_1, EXT_1                      |
-+------------------------------------------------------------------&gt;|
-|                             message_1                             |
-|                                                                   |
-| N_U, N_V, E_V, ALG_2, Enc(K_2; EXT_2, ID_V, Sig(V; aad_2); aad_2) |
-|&lt;------------------------------------------------------------------+
-|                             message_2                             |
-|                                                                   |
-|      N_V, ALG_3, Enc(K_3; EXT_3, ID_U, Sig(U; aad_3); aad_3)      |
-+------------------------------------------------------------------&gt;|
-|                             message_3                             |
+Party U                                                          Party V
+|                      S_U, N_U, E_U, ALG_1, EXT_1                     |
++---------------------------------------------------------------------&gt;|
+|                               message_1                              |
+|                                                                      |
+|S_U, S_V, N_V, E_V, ALG_2, Enc(K_2; EXT_2, ID_V, Sig(V; aad_2); aad_2)|
+|&lt;---------------------------------------------------------------------+
+|                               message_2                              |
+|                                                                      |
+|        S_V, ALG_3, Enc(K_3; EXT_3, ID_U, Sig(U; aad_3); aad_3)       |
++---------------------------------------------------------------------&gt;|
+|                               message_3                              |
 </pre>
 <p class="figure">Figure 3: EDHOC with asymmetric key authentication. </p>
 <h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> <a href="#asym-mti" id="asym-mti">Mandatory to Implement Algorithms</a></h1>
@@ -530,6 +531,7 @@ Party U                                                       Party V
 <pre>
 message_1 = [
   MSG_TYPE : int,
+  S_U : bstr,  
   N_U : bstr,  
   E_U : COSE_Key,
   HKDFs_U : alg_array,
@@ -545,7 +547,8 @@ alg_array = [ + alg : int / tstr ]
 
 <ul>
   <li>MSG_TYPE = 1</li>
-  <li>N_U - 64-bit random nonce and session identifier</li>
+  <li>S_U - variable length session identifier</li>
+  <li>N_U - 64-bit random nonce</li>
   <li>E_U - the ephemeral public key of Party U</li>
   <li>HKDFs_U - supported ECDH-SS w/ HKDF algorithms</li>
   <li>AEADs_U - supported AEAD algorithms</li>
@@ -558,7 +561,8 @@ alg_array = [ + alg : int / tstr ]
 
 <ul>
   <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> and format the ephemeral public key E_U as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
-  <li>Generate the pseudo-random nonce N_U and store it a session identifier for the length of the protocol.</li>
+  <li>Generate the pseudo-random nonce N_U</li>
+  <li>Chose a session identifier S_U and store it for the length of the protocol.</li>
   <li>Format message_1 as specified in <a href="#asym-msg1-form">Section 4.2.1</a>.</li>
 </ul>
 <h1 id="rfc.section.4.2.3"><a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#asym-msg1-procV" id="asym-msg1-procV">Party V Processing of Message 1</a></h1>
@@ -567,7 +571,6 @@ alg_array = [ + alg : int / tstr ]
 
 <ul>
   <li>Verify (OPTIONAL) that N_U has not been received before.</li>
-  <li>Store the session identifier N_U for the length of the protocol.</li>
   <li>Verify that at least one of each kind of the proposed algorithms are supported.</li>
 </ul>
 <p id="rfc.section.4.2.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
@@ -582,7 +585,8 @@ message_2 = [
 
 data_2 = (
   MSG_TYPE : int,
-  N_U : bstr,
+  S_U : bstr,
+  S_V : bstr,  
   N_V : bstr,
   E_V : COSE_Key,
   HKDF_V : int / tstr,
@@ -598,7 +602,8 @@ aad_2 = message_1 | [ data_2 ]
 
 <ul>
   <li>MSG_TYPE = 2</li>
-  <li>N_V - 64-bit random nonce and session identifier</li>
+  <li>S_V - variable length session identifier</li>
+  <li>N_V - 64-bit random nonce</li>
   <li>E_V - the ephemeral public key of Party V</li>
   <li>HKDF_V - an single chosen algorithm from HKDFs_U</li>
   <li>AEAD_V - an single chosen algorithm from AEADs_U</li>
@@ -616,7 +621,8 @@ aad_2 = message_1 | [ data_2 ]
 
 <ul>
   <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> using same curve as used in E_U. Format the ephemeral public key E_V as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
-  <li>Generate the pseudo-random nonce N_V and store it for the length of the protocol.</li>
+  <li>Generate the pseudo-random nonce N_V</li>
+  <li>Chose a session identifier S_V and store it for the length of the protocol.</li>
   <li>Select HKDF_V, AEAD_V, and SIG_V from the algorithms proposed in HKDFs_U, AEADs_U, and SIGs_U.</li>
   <li>Format message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the private key of Party V.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 7</a>.</li></ul></li>
 </ul>
@@ -625,7 +631,7 @@ aad_2 = message_1 | [ data_2 ]
 <p/>
 
 <ul>
-  <li>Use the session identifier N_U to retrieve the protocol state.</li>
+  <li>Use the session identifier S_U to retrieve the protocol state.</li>
   <li>Verify that HKDF_V, AEAD_V, and SIG_V were proposed in HKDFs_U, AEADs_U, and SIGs_U.</li>
   <li>Verify (OPTIONAL) that E_V has not been received before.</li>
   <li>Verify message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the public key of Party V.</li></ul></li>
@@ -642,6 +648,7 @@ message_3 = [
 
 data_3 = (
   MSG_TYPE : int,
+  S_V : bstr,  
   N_V : bstr,
   SIG_U : int / tstr
 )
@@ -673,7 +680,7 @@ aad_3 = message_1 | message_2 | [ data_3 ]
 <p/>
 
 <ul>
-  <li>Use the session identifier N_V to retrieve the protocol state.</li>
+  <li>Use the session identifier S_V to retrieve the protocol state.</li>
   <li>Verify that SIG_U was proposed in SIGs_V.</li>
   <li>Verify message_3 as specified in <a href="#asym-msg3-form">Section 4.4.1</a>.  <ul><li>COSE_Encrypt0 is decrypted as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3.</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_U and the public key of Party U;</li></ul></li>
 </ul>
@@ -692,15 +699,15 @@ aad_3 = message_1 | message_2 | [ data_3 ]
 <div id="fig-sym"/>
 <pre>
 Party U                                                       Party V
-|            KID, N_U, E_U, ALG_1, Enc(K_1; EXT_1; aad_1)           |
+|         KID, S_U, N_U, E_U, ALG_1, Enc(K_1; EXT_1; aad_1)         |
 +------------------------------------------------------------------&gt;|
 |                             message_1                             |
 |                                                                   |
-|            N_U, N_V, E_V, ALG_2, Enc(K_2; EXT_2; aad_2)           |
+|         S_U, S_V, N_V, E_V, ALG_2, Enc(K_2; EXT_2; aad_2)         |
 |&lt;------------------------------------------------------------------+
 |                             message_2                             |
 |                                                                   |
-|                    N_V, Enc(K_3; EXT_3; aad_3)                    |
+|                    S_V, Enc(K_3; EXT_3; aad_3)                    |
 +------------------------------------------------------------------&gt;|
 |                             message_3                             |
 </pre>
@@ -719,6 +726,7 @@ message_1 = [
 data_1 = (
   MSG_TYPE : int,
   KID : bstr,
+  S_U : bstr,  
   N_U : bstr,    
   E_U : COSE_Key,
   HKDFs_U : alg_array,
@@ -735,7 +743,8 @@ alg_array = [ + alg : int / tstr ]
 <ul>
   <li>MSG_TYPE = 4</li>
   <li>KID - identifier of the pre-shared key</li>
-  <li>N_U - 64-bit random nonce and session identifier</li>
+  <li>S_U - variable length session identifier</li>
+  <li>N_U - 64-bit random nonce</li>
   <li>E_U - the ephemeral public key of Party U</li>
   <li>HKDFs_U - supported ECDH-SS w/ HKDF algorithms</li>
   <li>AEADs_U - supported AEAD algorithms</li>
@@ -748,7 +757,8 @@ alg_array = [ + alg : int / tstr ]
 
 <ul>
   <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> and format the ephemeral public key E_U as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
-  <li>Generate the pseudo-random nonce N_U and store it a session identifier for the length of the protocol.</li>
+  <li>Generate the pseudo-random nonce N_U</li>
+  <li>Chose a session identifier S_U and store it for the length of the protocol.</li>
   <li>Format message_1 as specified in <a href="#sym-msg1-form">Section 5.2.1</a> where COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AES-CCM-64-64-128 (or an AEAD decided by the application), K_1, and IV_1.</li>
 </ul>
 <h1 id="rfc.section.5.2.3"><a href="#rfc.section.5.2.3">5.2.3.</a> <a href="#sym-msg1-procV" id="sym-msg1-procV">Party V Processing of Message 1</a></h1>
@@ -757,7 +767,6 @@ alg_array = [ + alg : int / tstr ]
 
 <ul>
   <li>Verify (OPTIONAL) that N_U has not been received before.</li>
-  <li>Store the session identifier N_U for the length of the protocol.</li>
   <li>Verify that at least one of each kind of the proposed algorithms are supported.</li>
   <li>Verify message_1 as specified in <a href="#sym-msg1-form">Section 5.2.1</a> where COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AES-CCM-64-64-128 (or an AEAD decided by the application), K_1, and IV_1.</li>
 </ul>
@@ -773,7 +782,8 @@ message_2 = [
 
 data_2 = (
   MSG_TYPE : int,
-  N_U : bstr,
+  S_U : bstr,  
+  S_V : bstr,  
   N_V : bstr,
   E_V : COSE_Key,
   HKDF_V : int / tstr,
@@ -787,7 +797,8 @@ aad_2 = message_1 | [ data_2 ]
 
 <ul>
   <li>MSG_TYPE = 5</li>
-  <li>N_V - 64-bit random nonce and session identifier</li>
+  <li>S_V - variable length session identifier</li>
+  <li>N_V - 64-bit random nonce</li>
   <li>E_V - the ephemeral public key of Party V</li>
   <li>HKDF_V - an single chosen algorithm from HKDFs_U</li>
   <li>AEAD_V - an single chosen algorithm from AEADs_U</li>
@@ -800,7 +811,8 @@ aad_2 = message_1 | [ data_2 ]
 
 <ul>
   <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> using same curve as used in E_U. Format the ephemeral public key E_V as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
-  <li>Generate the pseudo-random nonce N_V and store it for the length of the protocol.</li>
+  <li>Generate the pseudo-random nonce N_V</li>
+  <li>Chose a session identifier S_V and store it for the length of the protocol.</li>
   <li>Select HKDF_V and AEAD_V from the algorithms proposed in HKDFs_U and AEADs_U.</li>
   <li>Format message_2 as specified in <a href="#sym-msg2-form">Section 5.3.1</a> where COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li>
 </ul>
@@ -809,7 +821,7 @@ aad_2 = message_1 | [ data_2 ]
 <p/>
 
 <ul>
-  <li>Use the session identifier N_U to retrieve the protocol state.</li>
+  <li>Use the session identifier S_U to retrieve the protocol state.</li>
   <li>Verify message_2 as specified in <a href="#sym-msg2-form">Section 5.3.1</a> where COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li>
 </ul>
 <p id="rfc.section.5.3.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
@@ -824,6 +836,7 @@ message_3 = [
 
 data_3 = (
   MSG_TYPE : int,
+  S_V : bstr,  
   N_V : bstr
 )
 
@@ -849,7 +862,7 @@ aad_3 = message_1 | message_2 | [ data_3 ]
 <p/>
 
 <ul>
-  <li>Use the session identifier N_V to retrieve the protocol state.</li>
+  <li>Use the session identifier S_V to retrieve the protocol state.</li>
   <li>Verify message_3 as specified in <a href="#sym-msg3-form">Section 5.4.1</a> where COSE_Encrypt0 is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3.</li>
 </ul>
 <p id="rfc.section.5.4.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
@@ -1107,7 +1120,7 @@ Client     Server
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span class="vcardline">F&#228;rogatan 6</span>
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
@@ -1129,7 +1142,7 @@ Client     Server
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span class="vcardline">F&#228;rogatan 6</span>
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
@@ -1151,7 +1164,7 @@ Client     Server
 	</span>
 	<span class="org vcardline">Ericsson AB</span>
 	<span class="adr">
-	  <span class="vcardline">F&#228;rogatan 6</span>
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
 
 	  <span class="vcardline">
 		<span class="locality">Kista</span>,  
