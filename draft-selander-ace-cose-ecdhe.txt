@@ -5,8 +5,8 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               J. Mattsson
 Intended status: Standards Track                            F. Palombini
-Expires: August 10, 2017                                     Ericsson AB
-                                                       February 06, 2017
+Expires: August 12, 2017                                     Ericsson AB
+                                                       February 08, 2017
 
 
                Ephemeral Diffie-Hellman Over COSE (EDHOC)
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 10, 2017.
+   This Internet-Draft will expire on August 12, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 1]
+Selander, et al.         Expires August 12, 2017                [Page 1]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -72,7 +72,7 @@ Table of Contents
      4.2.  EDHOC Message 1 . . . . . . . . . . . . . . . . . . . . .   8
      4.3.  EDHOC Message 2 . . . . . . . . . . . . . . . . . . . . .   9
      4.4.  EDHOC Message 3 . . . . . . . . . . . . . . . . . . . . .  12
-   5.  EDHOC Authenticated with Symmetric Keys . . . . . . . . . . .  13
+   5.  EDHOC Authenticated with Symmetric Keys . . . . . . . . . . .  14
      5.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  14
      5.2.  EDHOC Message 1 . . . . . . . . . . . . . . . . . . . . .  14
      5.3.  EDHOC Message 2 . . . . . . . . . . . . . . . . . . . . .  16
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 2]
+Selander, et al.         Expires August 12, 2017                [Page 2]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -165,7 +165,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 3]
+Selander, et al.         Expires August 12, 2017                [Page 3]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -221,7 +221,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 4]
+Selander, et al.         Expires August 12, 2017                [Page 4]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -277,7 +277,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 5]
+Selander, et al.         Expires August 12, 2017                [Page 5]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -313,11 +313,13 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    Key and IV derivation SHALL be done as specified in Section 11.1 of
    [I-D.ietf-cose-msg] with the following input:
 
+   o  The PRF SHALL be the HKDF [RFC5869] in the ECDH-SS w/ HKDF
+      negotiated during the message exchange (HKDF_V).
+
    o  The secret SHALL be the ECDH shared secret as defined in
       Section 12.4.1 of [I-D.ietf-cose-msg].
 
-   o  The PRF SHALL be the HKDF [RFC5869] in the ECDH-SS w/ HKDF
-      negotiated during the message exchange (HKDF_V).
+   o  salt = PSK / nil
 
    o  The context information SHALL be the serialized COSE_KDF_Context
       with the following values:
@@ -331,9 +333,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-Selander, et al.         Expires August 10, 2017                [Page 6]
+Selander, et al.         Expires August 12, 2017                [Page 6]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -341,9 +341,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          +  other = aad_1  / aad_2  / aad_3 /
                     message_1 | message_2 | message_3 | label
 
-      * ? SuppPrivInfo = PSK
-
-   SuppPrivInfo SHALL only be present in the symmetric case.
+   The salt SHALL only be present in the symmetric case.
 
    The symmetric key and IV used to protect message_i is called K_i and
    IV_i etc., and are derived using byte string aad_i defined for each
@@ -389,7 +387,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017                [Page 7]
+
+
+Selander, et al.         Expires August 12, 2017                [Page 7]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -425,12 +425,14 @@ Party U                                                          Party V
      MSG_TYPE : int,
      S_U : bstr,
      N_U : bstr,
-     E_U : COSE_Key,
+     E_U : serialized_COSE_Key,
      HKDFs_U : alg_array,
      AEADs_U : alg_array,
      SIGs_U : alg_array,
      ? EXT_1 : bstr
    ]
+
+   serialized_COSE_Key = bstr .cbor COSE_Key
 
    alg_array = [ + alg : int / tstr ]
 
@@ -440,15 +442,15 @@ Party U                                                          Party V
 
    o  S_U - variable length session identifier
 
-   o  N_U - 64-bit random nonce
 
 
 
-
-Selander, et al.         Expires August 10, 2017                [Page 8]
+Selander, et al.         Expires August 12, 2017                [Page 8]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   o  N_U - 64-bit random nonce
 
    o  E_U - the ephemeral public key of Party U
 
@@ -499,9 +501,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-Selander, et al.         Expires August 10, 2017                [Page 9]
+Selander, et al.         Expires August 12, 2017                [Page 9]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -516,14 +516,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
      S_U : bstr,
      S_V : bstr,
      N_V : bstr,
-     E_V : COSE_Key,
+     E_V : serialized_COSE_Key,
      HKDF_V : int / tstr,
      AEAD_V : int / tstr,
      SIG_V : int / tstr,
      SIGs_V : alg_array
    )
 
-   aad_2 = message_1 | [ data_2 ]
+   aad_2 = message_1 | [ data_2 ] | ? Cert_V
 
    where:
 
@@ -557,7 +557,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 10]
+Selander, et al.         Expires August 12, 2017               [Page 10]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -569,6 +569,8 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    o  ID_V - identifier for the public key of Party V
 
    o  EXT_2 - application defined extensions
+
+   o  Cert_V - The end-entity certificate of Party V encoded as a bstr
 
 4.3.2.  Party V Processing of Message 2
 
@@ -609,14 +611,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Verify (OPTIONAL) that E_V has not been received before.
 
-   o  Verify message_2 as specified in Section 4.3.1:
 
 
-
-Selander, et al.         Expires August 10, 2017               [Page 11]
+Selander, et al.         Expires August 12, 2017               [Page 11]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   o  Verify message_2 as specified in Section 4.3.1:
 
       *  COSE_Encrypt0 is decrypted defined in section 5.3 of
          [I-D.ietf-cose-msg], with AEAD_V, K_2, and IV_2.
@@ -646,7 +648,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
      SIG_U : int / tstr
    )
 
-   aad_3 = message_1 | message_2 | [ data_3 ]
+   aad_3 = message_1 | message_2 | [ data_3 ] | ? Cert_U
 
    where:
 
@@ -665,20 +667,22 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
       *  unprotected = { xyz: ID_U }
 
-      *  detached payload = aad_3
 
 
-
-Selander, et al.         Expires August 10, 2017               [Page 12]
+Selander, et al.         Expires August 12, 2017               [Page 12]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+      *  detached payload = aad_3
 
    o  xyz - any COSE map label that can identify a public key
 
    o  ID_U - identifier for the public key of Party U
 
    o  EXT_3 - application defined extensions
+
+   o  Cert_U - The end-entity certificate of Party U encoded as a bstr
 
 4.4.2.  Party U Processing of Message 3
 
@@ -717,18 +721,16 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    If any verification step fails, the message MUST be discarded and the
    protocol discontinued.
 
-5.  EDHOC Authenticated with Symmetric Keys
 
 
 
 
-
-
-
-Selander, et al.         Expires August 10, 2017               [Page 13]
+Selander, et al.         Expires August 12, 2017               [Page 13]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+5.  EDHOC Authenticated with Symmetric Keys
 
 5.1.  Overview
 
@@ -779,9 +781,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-Selander, et al.         Expires August 10, 2017               [Page 14]
+Selander, et al.         Expires August 12, 2017               [Page 14]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -796,12 +796,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
      KID : bstr,
      S_U : bstr,
      N_U : bstr,
-     E_U : COSE_Key,
+     E_U : serialized_COSE_Key,
      HKDFs_U : alg_array,
      AEADs_U : alg_array
    )
 
    aad_1 = [ data_1 ]
+
+   serialized_COSE_Key = bstr .cbor COSE_Key
 
    alg_array = [ + alg : int / tstr ]
 
@@ -829,18 +831,20 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  EXT_1 - bstr containing application defined extensions
 
-5.2.2.  Party U Processing of Message 1
-
-   Party U SHALL compose message_1 as follows:
 
 
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 15]
+
+Selander, et al.         Expires August 12, 2017               [Page 15]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+5.2.2.  Party U Processing of Message 1
+
+   Party U SHALL compose message_1 as follows:
 
    o  Generate a fresh ephemeral ECDH key pair as specified in Section 5
       of [SP-800-56a] and format the ephemeral public key E_U as a
@@ -889,11 +893,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-
-
-Selander, et al.         Expires August 10, 2017               [Page 16]
+Selander, et al.         Expires August 12, 2017               [Page 16]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -908,7 +908,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
      S_U : bstr,
      S_V : bstr,
      N_V : bstr,
-     E_V : COSE_Key,
+     E_V : serialized_COSE_Key,
      HKDF_V : int / tstr,
      AEAD_V : int / tstr
    )
@@ -949,7 +949,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 17]
+Selander, et al.         Expires August 12, 2017               [Page 17]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 18]
+Selander, et al.         Expires August 12, 2017               [Page 18]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 19]
+Selander, et al.         Expires August 12, 2017               [Page 19]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 20]
+Selander, et al.         Expires August 12, 2017               [Page 20]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1173,7 +1173,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 21]
+Selander, et al.         Expires August 12, 2017               [Page 21]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1229,7 +1229,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 22]
+Selander, et al.         Expires August 12, 2017               [Page 22]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1267,7 +1267,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               Seitz, L., Selander, G., Wahlstroem, E., Erdtman, S., and
               H. Tschofenig, "Authentication and Authorization for
               Constrained Environments (ACE)", draft-ietf-ace-oauth-
-              authz-04 (work in progress), October 2016.
+              authz-05 (work in progress), February 2017.
 
    [I-D.ietf-core-object-security]
               Selander, G., Mattsson, J., Palombini, F., and L. Seitz,
@@ -1285,7 +1285,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 23]
+Selander, et al.         Expires August 12, 2017               [Page 23]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1341,7 +1341,7 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 24]
+Selander, et al.         Expires August 12, 2017               [Page 24]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1397,7 +1397,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 25]
+Selander, et al.         Expires August 12, 2017               [Page 25]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1453,7 +1453,7 @@ Authors' Addresses
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 26]
+Selander, et al.         Expires August 12, 2017               [Page 26]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1509,4 +1509,4 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 10, 2017               [Page 27]
+Selander, et al.         Expires August 12, 2017               [Page 27]

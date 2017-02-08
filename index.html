@@ -312,7 +312,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-2-06" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-2-08" />
   <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
   <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
@@ -336,12 +336,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 10, 2017</td>
+  <td class="left">Expires: August 12, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 06, 2017</td>
+  <td class="right">February 08, 2017</td>
 </tr>
 
     	
@@ -361,7 +361,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 10, 2017.</p>
+<p>This Internet-Draft will expire on August 12, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -480,17 +480,16 @@ Party U                                                 Party V
 <p/>
 
 <ul>
-  <li>The secret SHALL be the ECDH shared secret as defined in Section 12.4.1 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>.</li>
   <li>The PRF SHALL be the HKDF <a href="#RFC5869">[RFC5869]</a> in the ECDH-SS w/ HKDF negotiated during the message exchange (HKDF_V).</li>
+  <li>The secret SHALL be the ECDH shared secret as defined in Section 12.4.1 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>.</li>
+  <li>salt = PSK / nil</li>
   <li>The context information SHALL be the serialized COSE_KDF_Context with the following values:  <ul><li>PartyInfo = ( nil, nil, nil )</li><li>SuppPubInfo SHALL contain:      <ul><li>protected SHALL be a zero length bstr</li></ul></li></ul></li>
 </ul>
 <pre>
       +  other = aad_1  / aad_2  / aad_3 /
                  message_1 | message_2 | message_3 | label
-
-   * ? SuppPrivInfo = PSK
 </pre>
-<p id="rfc.section.3.2.p.3">SuppPrivInfo SHALL only be present in the symmetric case.</p>
+<p id="rfc.section.3.2.p.3">The salt SHALL only be present in the symmetric case.</p>
 <p id="rfc.section.3.2.p.4">The symmetric key and IV used to protect message_i is called K_i and IV_i etc., and are derived using byte string aad_i defined for each EDHOC message that make use of a symmetric key.</p>
 <p id="rfc.section.3.2.p.5">K_1 and IV_1 are only used in EDHOC with symmetric key authentication and are derived with the exceptions that secret SHALL be empty and the PRF SHALL be HKDF-256 (or a HKDF decided by the application).</p>
 <p id="rfc.section.3.2.p.6">All other keys are derived with the negotiated PRF and with the secret set to the ECDH shared secret.</p>
@@ -533,12 +532,14 @@ message_1 = [
   MSG_TYPE : int,
   S_U : bstr,  
   N_U : bstr,  
-  E_U : COSE_Key,
+  E_U : serialized_COSE_Key,
   HKDFs_U : alg_array,
   AEADs_U : alg_array,
   SIGs_U : alg_array,
   ? EXT_1 : bstr
 ]
+
+serialized_COSE_Key = bstr .cbor COSE_Key
 
 alg_array = [ + alg : int / tstr ]
 </pre>
@@ -588,14 +589,14 @@ data_2 = (
   S_U : bstr,
   S_V : bstr,  
   N_V : bstr,
-  E_V : COSE_Key,
+  E_V : serialized_COSE_Key,
   HKDF_V : int / tstr,
   AEAD_V : int / tstr,
   SIG_V : int / tstr,
   SIGs_V : alg_array
 )
 
-aad_2 = message_1 | [ data_2 ]
+aad_2 = message_1 | [ data_2 ] | ? Cert_V
 </pre>
 <p id="rfc.section.4.3.1.p.2">where:</p>
 <p/>
@@ -614,6 +615,7 @@ aad_2 = message_1 | [ data_2 ]
   <li>xyz - any COSE map label that can identify a public key</li>
   <li>ID_V - identifier for the public key of Party V</li>
   <li>EXT_2 - application defined extensions</li>
+  <li>Cert_V - The end-entity certificate of Party V encoded as a bstr</li>
 </ul>
 <h1 id="rfc.section.4.3.2"><a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#asym-msg2-procV" id="asym-msg2-procV">Party V Processing of Message 2</a></h1>
 <p id="rfc.section.4.3.2.p.1">Party V SHALL compose message_2 as follows:</p>
@@ -653,7 +655,7 @@ data_3 = (
   SIG_U : int / tstr
 )
 
-aad_3 = message_1 | message_2 | [ data_3 ]
+aad_3 = message_1 | message_2 | [ data_3 ] | ? Cert_U
 </pre>
 <p id="rfc.section.4.4.1.p.2">where:</p>
 <p/>
@@ -666,6 +668,7 @@ aad_3 = message_1 | message_2 | [ data_3 ]
   <li>xyz - any COSE map label that can identify a public key</li>
   <li>ID_U - identifier for the public key of Party U</li>
   <li>EXT_3 - application defined extensions</li>
+  <li>Cert_U - The end-entity certificate of Party U encoded as a bstr</li>
 </ul>
 <h1 id="rfc.section.4.4.2"><a href="#rfc.section.4.4.2">4.4.2.</a> <a href="#asym-msg3-procU" id="asym-msg3-procU">Party U Processing of Message 3</a></h1>
 <p id="rfc.section.4.4.2.p.1">Party U SHALL compose message_3 as follows:</p>
@@ -728,12 +731,14 @@ data_1 = (
   KID : bstr,
   S_U : bstr,  
   N_U : bstr,    
-  E_U : COSE_Key,
+  E_U : serialized_COSE_Key,
   HKDFs_U : alg_array,
   AEADs_U : alg_array
 )
 
 aad_1 = [ data_1 ]
+
+serialized_COSE_Key = bstr .cbor COSE_Key
 
 alg_array = [ + alg : int / tstr ]
 </pre>
@@ -785,7 +790,7 @@ data_2 = (
   S_U : bstr,  
   S_V : bstr,  
   N_V : bstr,
-  E_V : COSE_Key,
+  E_V : serialized_COSE_Key,
   HKDF_V : int / tstr,
   AEAD_V : int / tstr
 )
@@ -995,7 +1000,7 @@ aad_3 = message_1 | message_2 | [ data_3 ]
       <td class="reference">
         <b id="I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</b>
       </td>
-      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-04">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-04, October 2016.</td>
+      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-05">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-05, February 2017.</td>
     </tr>
     <tr>
       <td class="reference">
