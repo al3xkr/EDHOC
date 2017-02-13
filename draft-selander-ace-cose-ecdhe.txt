@@ -5,8 +5,8 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               J. Mattsson
 Intended status: Standards Track                            F. Palombini
-Expires: August 13, 2017                                     Ericsson AB
-                                                       February 09, 2017
+Expires: August 17, 2017                                     Ericsson AB
+                                                       February 13, 2017
 
 
                Ephemeral Diffie-Hellman Over COSE (EDHOC)
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 13, 2017.
+   This Internet-Draft will expire on August 17, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 1]
+Selander, et al.         Expires August 17, 2017                [Page 1]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -77,17 +77,18 @@ Table of Contents
      5.2.  EDHOC Message 1 . . . . . . . . . . . . . . . . . . . . .  14
      5.3.  EDHOC Message 2 . . . . . . . . . . . . . . . . . . . . .  16
      5.4.  EDHOC Message 3 . . . . . . . . . . . . . . . . . . . . .  18
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-     6.1.  Media Types Registry  . . . . . . . . . . . . . . . . . .  19
-     6.2.  COSE Header Parameters Registry . . . . . . . . . . . . .  20
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
-   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  22
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  22
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  23
+   6.  Error Handling  . . . . . . . . . . . . . . . . . . . . . . .  19
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+     7.1.  Media Types Registry  . . . . . . . . . . . . . . . . . .  19
+     7.2.  COSE Header Parameters Registry . . . . . . . . . . . . .  20
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  22
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  22
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  23
    Appendix A.  Test Vectors . . . . . . . . . . . . . . . . . . . .  24
    Appendix B.  Implementing EDHOC with CoAP and OSCOAP  . . . . . .  24
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
 
 1.  Introduction
 
@@ -105,15 +106,15 @@ Table of Contents
    communicating parties can run a Elliptic Curve Diffie-Hellman (ECDH)
    key exchange protocol with ephemeral keys, from which shared key
    material can be derived.  This document specifies Ephemeral Diffie-
-   Hellman Over COSE (EDHOC), an authenticated ECDH protocol using CBOR
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 2]
+Selander, et al.         Expires August 17, 2017                [Page 2]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
+   Hellman Over COSE (EDHOC), an authenticated ECDH protocol using CBOR
    and COSE objects.  Authentication is based on credentials established
    out of band, e.g. from a trusted third party, such as an
    Authorization Server as specified by [I-D.ietf-ace-oauth-authz].
@@ -164,8 +165,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-Selander, et al.         Expires August 13, 2017                [Page 3]
+Selander, et al.         Expires August 17, 2017                [Page 3]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -200,7 +200,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    o  Enc(K; P; A) denotes AEAD encryption of plaintext P and additional
       authenticated data A using the key K derived from the shared
       secret.  The AEAD MUST NOT be replaced by plain encryption, see
-      Section 7.
+      Section 8.
 
    As described in Appendix B of [SIGMA], in order to create a "full-
    fledge" protocol some additional protocol elements are needed.  EDHOC
@@ -221,7 +221,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 4]
+Selander, et al.         Expires August 17, 2017                [Page 4]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -261,7 +261,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    protected application data can therefore be sent in parallel with
    EDHOC message_3.  The application data may e.g. be protected using
    the negotiated AEAD algorithm.  EDHOC may be used with the media type
-   application/edhoc defined in Section 6.
+   application/edhoc defined in Section 7.
 
       Party U                                                 Party V
          |                                                       |
@@ -277,7 +277,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 5]
+Selander, et al.         Expires August 17, 2017                [Page 5]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -333,7 +333,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 6]
+Selander, et al.         Expires August 17, 2017                [Page 6]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -389,7 +389,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 7]
+Selander, et al.         Expires August 17, 2017                [Page 7]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -445,7 +445,7 @@ Party U                                                          Party V
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 8]
+Selander, et al.         Expires August 17, 2017                [Page 8]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -458,7 +458,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  AEADs_U - supported AEAD algorithms
 
-   o  SIGs_U - signature algorithms that Party U supports signing with
+   o  SIGs_U - signature algorithms that Party U supports verifying with
 
    o  EXT_1 - application defined extensions
 
@@ -501,7 +501,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017                [Page 9]
+Selander, et al.         Expires August 17, 2017                [Page 9]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -541,7 +541,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  SIG_V - an single chosen algorithm from SIGs_U
 
-   o  SIGs_V - signature algorithms that Party V supports signing with
+   o  SIGs_V - signature algorithms that Party V supports verifying with
 
    o  COSE_ENC_2 has the following fields and values:
 
@@ -557,7 +557,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 10]
+Selander, et al.         Expires August 17, 2017               [Page 10]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -598,7 +598,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
       *  COSE_Encrypt0 is computed as defined in section 5.3 of
          [I-D.ietf-cose-msg], with AEAD_V, K_2, and IV_2.  The AEAD
          algorithm MUST NOT be replaced by plain encryption, see
-         Section 7.
+         Section 8.
 
 4.3.3.  Party U Processing of Message 2
 
@@ -613,7 +613,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 11]
+Selander, et al.         Expires August 17, 2017               [Page 11]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -669,7 +669,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 12]
+Selander, et al.         Expires August 17, 2017               [Page 12]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -699,7 +699,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
       *  COSE_Encrypt0 is computed as defined in section 5.3 of
          [I-D.ietf-cose-msg], with AEAD_V, K_3, and IV_3.  The AEAD
          algorithm MUST NOT be replaced by plain encryption, see
-         Section 7.
+         Section 8.
 
 4.4.3.  Party V Processing of Message 3
 
@@ -725,7 +725,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 13]
+Selander, et al.         Expires August 17, 2017               [Page 13]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -781,7 +781,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 14]
+Selander, et al.         Expires August 17, 2017               [Page 14]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -837,7 +837,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 15]
+Selander, et al.         Expires August 17, 2017               [Page 15]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -893,7 +893,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 16]
+Selander, et al.         Expires August 17, 2017               [Page 16]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -949,7 +949,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 17]
+Selander, et al.         Expires August 17, 2017               [Page 17]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 18]
+Selander, et al.         Expires August 17, 2017               [Page 18]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1037,9 +1037,13 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    If any verification step fails, the message MUST be discarded and the
    protocol discontinued.
 
-6.  IANA Considerations
+6.  Error Handling
 
-6.1.  Media Types Registry
+   TODO: One error is e.g. if the ephemeral key is unsupported.
+
+7.  IANA Considerations
+
+7.1.  Media Types Registry
 
    IANA has added the media type 'application/edhoc' to the Media Types
    registry:
@@ -1057,11 +1061,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 19]
+Selander, et al.         Expires August 17, 2017               [Page 19]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1105,7 +1105,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
        Change Controller: IESG
 
-6.2.  COSE Header Parameters Registry
+7.2.  COSE Header Parameters Registry
 
    IANA has added the header parameter 'edhoc' to the COSE Header
    Parameters registry:
@@ -1117,7 +1117,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 20]
+Selander, et al.         Expires August 17, 2017               [Page 20]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1129,7 +1129,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    | edhoc     | TBD   | bstr           |             | EDHOC message  |
    +-----------+-------+----------------+-------------+----------------+
 
-7.  Security Considerations
+8.  Security Considerations
 
    EDHOC builds on the SIGMA-I family of theoretical protocols that
    provides perfect forward secrecy and identity protection with a
@@ -1173,10 +1173,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 13, 2017               [Page 21]
+Selander, et al.         Expires August 17, 2017               [Page 21]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
+
+   Nonces MUST NOT be reused, both parties MUST generate fresh random
+   nonces.  Ephemeral keys SHOULD NOT be reused, both parties SHOULD
+   generate fresh random ephemeral key pairs.
 
    The referenced processing instructions in [SP-800-56a] must be
    complied with, including deleting the intermediate computed values
@@ -1199,7 +1203,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    Implementations should provide countermeasures to side-channel
    attacks such as timing attacks.
 
-8.  Acknowledgments
+9.  Acknowledgments
 
    The authors want to thank Ilari Liusvaara, Jim Schaad, and Ludwig
    Seitz for reviewing previous versions of the draft.
@@ -1207,9 +1211,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    TODO: This section should be after Appendixes and before Author's
    address according to RFC7322.
 
-9.  References
+10.  References
 
-9.1.  Normative References
+10.1.  Normative References
 
    [I-D.ietf-cose-msg]
               Schaad, J., "CBOR Object Signing and Encryption (COSE)",
@@ -1220,19 +1224,20 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               for carrying and referencing X.509 certificates", draft-
               schaad-cose-x509-00 (work in progress), November 2016.
 
+
+
+
+
+
+Selander, et al.         Expires August 17, 2017               [Page 22]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
-
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 22]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
@@ -1250,7 +1255,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               Publication 800-56A Revision 2, May 2013,
               <http://dx.doi.org/10.6028/NIST.SP.800-56Ar2>.
 
-9.2.  Informative References
+10.2.  Informative References
 
    [I-D.greevenbosch-appsawg-cbor-cddl]
               Vigano, C. and H. Birkholz, "CBOR data definition language
@@ -1274,21 +1279,21 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
               "Object Security of CoAP (OSCOAP)", draft-ietf-core-
               object-security-01 (work in progress), December 2016.
 
+
+
+
+
+
+
+Selander, et al.         Expires August 17, 2017               [Page 23]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    [I-D.seitz-ace-oscoap-profile]
               Seitz, L. and F. Palombini, "OSCOAP profile of ACE",
               draft-seitz-ace-oscoap-profile-01 (work in progress),
               October 2016.
-
-
-
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 23]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    [RFC5869]  Krawczyk, H. and P. Eronen, "HMAC-based Extract-and-Expand
               Key Derivation Function (HKDF)", RFC 5869,
@@ -1323,6 +1328,24 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
    OSCOAP such that EDHOC message_3 is sent together with the OSCOAP
    request, see Figure 5.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Selander, et al.         Expires August 17, 2017               [Page 24]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
            Client                                         Server
               |                                             |
               | ------------- EDHOC message_1 ------------> |
@@ -1335,16 +1358,6 @@ Appendix B.  Implementing EDHOC with CoAP and OSCOAP
               |                                             |
 
          Figure 5: EDHOC and OSCOAP in two CoAP message exchanges
-
-
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 24]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    As specified below and illustrated in Figure 6, EDHOC message_1 and
    message_2 are transported in the CoAP payload, and EDHOC message_3 is
@@ -1381,6 +1394,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    o  Content-Format is "application/edhoc"
 
+
+
+
+Selander, et al.         Expires August 17, 2017               [Page 25]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    o  The Uri-Path is "edhoc"
 
    o  The Payload is EDHOC message_1, computed as defined in this
@@ -1393,14 +1414,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    o  The response Code is 2.04 (Changed)
 
    o  Content-Format is "application/edhoc"
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 25]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    o  The Payload is EDHOC message_2, computed as defined in this
       document
@@ -1437,6 +1450,14 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    The server extracts and verifies EDHOC message_3 from the unprotected
    part of the COSE_Encrypt0 object in the OSCOAP request.  If
+
+
+
+Selander, et al.         Expires August 17, 2017               [Page 26]
+
+Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
+
+
    successful, the server derives the OSCOAP security context parameters
    as in the same way as the client as decsribed above.  The server
    processes the OSCOAP request as specified in
@@ -1446,17 +1467,6 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
    all ECHOC messages as CoAP payloads.
 
 Authors' Addresses
-
-
-
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 26]
-
-Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
-
 
    Goeran Selander
    Ericsson AB
@@ -1499,14 +1509,4 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-Selander, et al.         Expires August 13, 2017               [Page 27]
+Selander, et al.         Expires August 17, 2017               [Page 27]
