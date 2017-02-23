@@ -314,7 +314,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-2-22" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-2-23" />
   <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
   <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
@@ -338,12 +338,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 26, 2017</td>
+  <td class="left">Expires: August 27, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 22, 2017</td>
+  <td class="right">February 23, 2017</td>
 </tr>
 
     	
@@ -363,7 +363,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 26, 2017.</p>
+<p>This Internet-Draft will expire on August 27, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -480,7 +480,7 @@ Party U                                                 Party V
 <p id="rfc.section.3.p.2">The EDHOC message exchange may be authenticated using pre-shared keys (PSK), raw public keys (RPK), or certificates (Cert). EDHOC assumes the existence of mechanisms (certification authority, manual distribution, etc.) for binding identities with authentication keys (public or pre-shared). EDHOC with symmetric key authentication is very similar to EDHOC with asymmetric key authentication, the differences are that information is only MACed (not signed) and that EDHOC with symmetric key authentication offers encryption, integrity protection, and key proof-of-possession already in message_1.</p>
 <p id="rfc.section.3.p.3">EDHOC allows application defined extensions (EXT_1, EXT_2, EXT_3) to be sent in the respective messages. When EDHOC are used with asymmetric key authentication, EXT_1 is unprotected, EXT_2 is protected (encrypted and integrity protected), but sent to an unauthenticated party, and EXT_3 is protected and mutually authenticated. When EDHOC is used with symmetric key authentication, all extensions are protected and mutually authenticated.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#cose_key" id="cose_key">Formatting of the Ephemeral Public Keys</a></h1>
-<p id="rfc.section.3.1.p.1">The ECDH ephemeral public key SHALL be formatted as a COSE_Key of type EC2 or OKP according to section 13.1 and 13.2 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The curve X25519 is mandatory-to-implement. For Elliptic Curve Keys of type EC2, point compression is mandatory-to-implement.</p>
+<p id="rfc.section.3.1.p.1">The ECDH ephemeral public key SHALL be formatted as a COSE_Key of type EC2 or OKP according to section 13.1 and 13.2 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The curve X25519 is mandatory to implement. For Elliptic Curve Keys of type EC2, point compression is mandatory to implement.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#key-der" id="key-der">Key Derivation</a></h1>
 <p id="rfc.section.3.2.p.1">Key and IV derivation SHALL be done as specified in Section 11.1 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a> with the following input:</p>
 <p/>
@@ -575,10 +575,11 @@ alg_array = [ + alg : int / tstr ]
   <li>Format message_1 as specified in <a href="#asym-msg1-form">Section 4.2.1</a>.</li>
 </ul>
 <h1 id="rfc.section.4.2.3"><a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#asym-msg1-procV" id="asym-msg1-procV">Party V Processing of Message 1</a></h1>
-<p id="rfc.section.4.2.3.p.1">Party V SHALL process message_1 as follows: d * Verify (OPTIONAL) that N_U has not been received before.</p>
+<p id="rfc.section.4.2.3.p.1">Party V SHALL process message_1 as follows:</p>
 <p/>
 
 <ul>
+  <li>Verify (OPTIONAL) that N_U has not been received before.</li>
   <li>Verify that at least one of each kind of the proposed algorithms are supported.</li>
 </ul>
 <p id="rfc.section.4.2.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
@@ -634,7 +635,7 @@ aad_2 = H(message_1) | [ data_2 ] | ? Cert_V
   <li>Generate the pseudo-random nonce N_V</li>
   <li>Chose a session identifier S_V and store it for the length of the protocol.</li>
   <li>Select HKDF_V, AEAD_V, SIG_V, and SIG_U from the algorithms proposed in HKDFs_U, AEADs_U, SIGs_V, and SIGs_U.</li>
-  <li>Format message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the private key of Party V.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.</li></ul></li>
+  <li>Format message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the private key of Party V.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.      <ul><li>If certificates are used then aad_2 MUST include Cert_V</li></ul></li></ul></li>
 </ul>
 <h1 id="rfc.section.4.3.3"><a href="#rfc.section.4.3.3">4.3.3.</a> <a href="#asym-msg2-procU" id="asym-msg2-procU">Party U Processing of Message 2</a></h1>
 <p id="rfc.section.4.3.3.p.1">Party U SHALL process message_2 as follows:</p>
@@ -680,7 +681,7 @@ aad_3 = H( H(message_1) | message_2 ) | [ data_3 ] | ? Cert_U
 <p/>
 
 <ul>
-  <li>Format message_3 as specified in <a href="#asym-msg3-form">Section 4.4.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_U and the private key of Party U.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.</li></ul></li>
+  <li>Format message_3 as specified in <a href="#asym-msg3-form">Section 4.4.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_U and the private key of Party U.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.      <ul><li>If certificates are used then aad_3 MUST include Cert_U</li></ul></li></ul></li>
 </ul>
 <h1 id="rfc.section.4.4.3"><a href="#rfc.section.4.4.3">4.4.3.</a> <a href="#asym-msg3-procV" id="asym-msg3-procV">Party V Processing of Message 3</a></h1>
 <p id="rfc.section.4.4.3.p.1">Party V SHALL process message_3 as follows:</p>

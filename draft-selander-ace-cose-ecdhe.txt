@@ -5,8 +5,8 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               J. Mattsson
 Intended status: Standards Track                            F. Palombini
-Expires: August 26, 2017                                     Ericsson AB
-                                                       February 22, 2017
+Expires: August 27, 2017                                     Ericsson AB
+                                                       February 23, 2017
 
 
                Ephemeral Diffie-Hellman Over COSE (EDHOC)
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 26, 2017.
+   This Internet-Draft will expire on August 27, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 1]
+Selander, et al.         Expires August 27, 2017                [Page 1]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 2]
+Selander, et al.         Expires August 27, 2017                [Page 2]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -165,7 +165,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 3]
+Selander, et al.         Expires August 27, 2017                [Page 3]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -221,7 +221,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 4]
+Selander, et al.         Expires August 27, 2017                [Page 4]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -277,7 +277,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 5]
+Selander, et al.         Expires August 27, 2017                [Page 5]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -317,9 +317,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
    The ECDH ephemeral public key SHALL be formatted as a COSE_Key of
    type EC2 or OKP according to section 13.1 and 13.2 of
-   [I-D.ietf-cose-msg].  The curve X25519 is mandatory-to-implement.
-   For Elliptic Curve Keys of type EC2, point compression is mandatory-
-   to-implement.
+   [I-D.ietf-cose-msg].  The curve X25519 is mandatory to implement.
+   For Elliptic Curve Keys of type EC2, point compression is mandatory
+   to implement.
 
 3.2.  Key Derivation
 
@@ -333,7 +333,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 6]
+Selander, et al.         Expires August 27, 2017                [Page 6]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -389,7 +389,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 7]
+Selander, et al.         Expires August 27, 2017                [Page 7]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -445,7 +445,7 @@ Party U                                                          Party V
 
 
 
-Selander, et al.         Expires August 26, 2017                [Page 8]
+Selander, et al.         Expires August 27, 2017                [Page 8]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -488,8 +488,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 4.2.3.  Party V Processing of Message 1
 
-   Party V SHALL process message_1 as follows: d * Verify (OPTIONAL)
-   that N_U has not been received before.
+   Party V SHALL process message_1 as follows:
+
+   o  Verify (OPTIONAL) that N_U has not been received before.
 
    o  Verify that at least one of each kind of the proposed algorithms
       are supported.
@@ -500,8 +501,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-Selander, et al.         Expires August 26, 2017                [Page 9]
+Selander, et al.         Expires August 27, 2017                [Page 9]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -557,7 +557,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 10]
+Selander, et al.         Expires August 27, 2017               [Page 10]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -609,11 +609,11 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          algorithm MUST NOT be replaced by plain encryption, see
          Section 8.
 
+         +  If certificates are used then aad_2 MUST include Cert_V
 
 
 
-
-Selander, et al.         Expires August 26, 2017               [Page 11]
+Selander, et al.         Expires August 27, 2017               [Page 11]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -669,7 +669,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 12]
+Selander, et al.         Expires August 27, 2017               [Page 12]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -706,6 +706,8 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
          algorithm MUST NOT be replaced by plain encryption, see
          Section 8.
 
+         +  If certificates are used then aad_3 MUST include Cert_U
+
 4.4.3.  Party V Processing of Message 3
 
    Party V SHALL process message_3 as follows:
@@ -723,9 +725,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-
-
-Selander, et al.         Expires August 26, 2017               [Page 13]
+Selander, et al.         Expires August 27, 2017               [Page 13]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -781,7 +781,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 14]
+Selander, et al.         Expires August 27, 2017               [Page 14]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -837,7 +837,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 15]
+Selander, et al.         Expires August 27, 2017               [Page 15]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -893,7 +893,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 16]
+Selander, et al.         Expires August 27, 2017               [Page 16]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -949,7 +949,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 17]
+Selander, et al.         Expires August 27, 2017               [Page 17]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1005,7 +1005,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 18]
+Selander, et al.         Expires August 27, 2017               [Page 18]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 19]
+Selander, et al.         Expires August 27, 2017               [Page 19]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 20]
+Selander, et al.         Expires August 27, 2017               [Page 20]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1173,7 +1173,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 21]
+Selander, et al.         Expires August 27, 2017               [Page 21]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1229,7 +1229,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 22]
+Selander, et al.         Expires August 27, 2017               [Page 22]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1285,7 +1285,7 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 23]
+Selander, et al.         Expires August 27, 2017               [Page 23]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1341,7 +1341,7 @@ B.2.  Deriving an OSCOAP context from EDHOC
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 24]
+Selander, et al.         Expires August 27, 2017               [Page 24]
 
 Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)  February 2017
 
@@ -1397,4 +1397,4 @@ Authors' Addresses
 
 
 
-Selander, et al.         Expires August 26, 2017               [Page 25]
+Selander, et al.         Expires August 27, 2017               [Page 25]
