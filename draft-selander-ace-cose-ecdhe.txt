@@ -396,9 +396,9 @@ Internet-Draft Ephemeral Diffie-Hellman Over COSE (EDHOC)     March 2017
 
    ID_U and ID_V either enable the other party to retrieve the public
    key (kid, x5t, x5u) or they contain the public key (x5c), see
-   [I-D.schaad-cose-x509].  Party U uses RPK and party V MAY use
-   different type of credentials, e.g. one uses RPK and the other Cert.
-   Party U and party V MAY use different signature algorithms.
+   [I-D.schaad-cose-x509].  Party U and party V MAY use different type
+   of credentials, e.g. one uses RPK and the other Cert.  Party U and
+   party V MAY use different signature algorithms.
 
    EDHOC with asymmetric key authentication is illustrated in Figure 3.
 
