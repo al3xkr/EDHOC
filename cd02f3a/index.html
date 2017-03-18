@@ -1,0 +1,1148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Ephemeral Diffie-Hellman Over COSE (EDHOC)</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+
+@media screen and (min-width: 1024px) {
+  ul.toc, #rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #rfc\.toc {
+    top: 16px;
+  }
+  ul.toc {
+    top: 80px;
+    overflow: auto;
+  }
+
+  body {
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+}
+
+body {
+  font: 15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 130%;
+  margin: 2.5em auto;
+  max-width: 724px;
+}
+
+.title, .filename, h1, h2, h3, h4 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: 500;
+  color: #333;
+  line-height: 100%;
+  margin: 0.8em 0 0.3em;
+}
+.title { font-size: 36px; }
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3, h4 { font-size: 18px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+ul.toc li {
+  list-style: none;
+  text-indent: -2.5em;
+  padding-left: 2.5em;
+  padding-bottom: 5px;
+  margin: 0;
+}
+ul.toc ul {
+  margin: 0;
+}
+/* xml2rfc nests ul directly inside ul which messes with the style badly */
+ul.toc, ul.toc>ul, ul.toc ul>ul {
+  margin: 0 0 0 1.5em;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header {
+  width: 100%;
+}
+table.header td {
+  border: none;
+  background-color: transparent;
+  color: black;
+}
+.filename {
+  color: rgb(119, 119, 119);
+  font-size: 23px;
+  font-weight: normal;
+  height: auto;
+  line-height: 100%;
+}
+#rfc\.abstract+p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+samp, tt, code, pre {
+  font: 11pt consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure {
+  font-style: italic;
+  margin: 0 1.5em;
+}
+
+address {
+  margin: 10px 0 0;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn {
+  font-weight: bold;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+ol, ul, li, p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+li, p {
+  margin-left: 0;
+}
+address {
+  font-style: normal;
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+  /*]]>*/</style>
+
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Terminology"/>
+<link href="#rfc.section.1.2" rel="Chapter" title="1.2 Requirements Language"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Protocol Overview"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 EDHOC Overview"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Formatting of the Ephemeral Public Keys"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Key Derivation"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 EDHOC Authenticated with Asymmetric Keys"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Overview"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 EDHOC Message 1"/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 EDHOC Message 2"/>
+<link href="#rfc.section.4.4" rel="Chapter" title="4.4 EDHOC Message 3"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 EDHOC Authenticated with Symmetric Keys"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Overview"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 EDHOC Message 1"/>
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 EDHOC Message 2"/>
+<link href="#rfc.section.5.4" rel="Chapter" title="5.4 EDHOC Message 3"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Error Handling"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
+<link href="#rfc.section.7.1" rel="Chapter" title="7.1 Media Types Registry"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations"/>
+<link href="#rfc.section.9" rel="Chapter" title="9 Acknowledgments"/>
+<link href="#rfc.references" rel="Chapter" title="10 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="10.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="10.2 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Test Vectors"/>
+<link href="#rfc.appendix.B" rel="Chapter" title="B EDHOC with CoAP and OSCOAP"/>
+<link href="#rfc.appendix.B.1" rel="Chapter" title="B.1 Transferring EDHOC in CoAP"/>
+<link href="#rfc.appendix.B.2" rel="Chapter" title="B.2 Deriving an OSCOAP context from EDHOC"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-3-18" />
+  <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
+  <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">ACE Working Group</td>
+  <td class="right">G. Selander</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">J. Mattsson</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">F. Palombini</td>
+</tr>
+<tr>
+  <td class="left">Expires: September 19, 2017</td>
+  <td class="right">Ericsson AB</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">March 18, 2017</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Ephemeral Diffie-Hellman Over COSE (EDHOC)<br />
+  <span class="filename">draft-selander-ace-cose-ecdhe-latest</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 19, 2017.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Terminology</a></li>
+<li>1.2.   <a href="#rfc.section.1.2">Requirements Language</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Protocol Overview</a></li>
+<li>3.   <a href="#rfc.section.3">EDHOC Overview</a></li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Formatting of the Ephemeral Public Keys</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Key Derivation</a></li>
+</ul><li>4.   <a href="#rfc.section.4">EDHOC Authenticated with Asymmetric Keys</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Overview</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">EDHOC Message 1</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">EDHOC Message 2</a></li>
+<li>4.4.   <a href="#rfc.section.4.4">EDHOC Message 3</a></li>
+</ul><li>5.   <a href="#rfc.section.5">EDHOC Authenticated with Symmetric Keys</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Overview</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">EDHOC Message 1</a></li>
+<li>5.3.   <a href="#rfc.section.5.3">EDHOC Message 2</a></li>
+<li>5.4.   <a href="#rfc.section.5.4">EDHOC Message 3</a></li>
+</ul><li>6.   <a href="#rfc.section.6">Error Handling</a></li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
+<ul><li>7.1.   <a href="#rfc.section.7.1">Media Types Registry</a></li>
+</ul><li>8.   <a href="#rfc.section.8">Security Considerations</a></li>
+<li>9.   <a href="#rfc.section.9">Acknowledgments</a></li>
+<li>10.   <a href="#rfc.references">References</a></li>
+<ul><li>10.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>10.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Test Vectors</a></li>
+<li>Appendix B.   <a href="#rfc.appendix.B">EDHOC with CoAP and OSCOAP</a></li>
+<ul><li>B.1.   <a href="#rfc.appendix.B.1">Transferring EDHOC in CoAP</a></li>
+<li>B.2.   <a href="#rfc.appendix.B.2">Deriving an OSCOAP context from EDHOC</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
+<p id="rfc.section.1.p.1">Security at the application layer provides an attractive option for protecting Internet of Things (IoT) deployments, for example where transport layer security is not sufficient <a href="#I-D.hartke-core-e2e-security-reqs">[I-D.hartke-core-e2e-security-reqs]</a>. IoT devices may be constrained in various ways, including memory, storage, processing capacity, and energy <a href="#RFC7228">[RFC7228]</a>. A method for protecting individual messages at the application layer suitable for constrained devices, is provided by CBOR Object Signing and Encryption (COSE) <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>), which builds on the Concise Binary Object Representation (CBOR) <a href="#RFC7049">[RFC7049]</a>.</p>
+<p id="rfc.section.1.p.2">In order for a communication session to provide forward secrecy, the communicating parties can run a Elliptic Curve Diffie-Hellman (ECDH) key exchange protocol with ephemeral keys, from which shared key material can be derived. This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), an authenticated ECDH protocol using CBOR and COSE objects. Authentication is based on credentials established out of band, e.g. from a trusted third party, such as an Authorization Server as specified by <a href="#I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</a>. EDHOC supports authentication using pre-shared keys (PSK), raw public keys (RPK), and certificates (Cert).  Note that this document focuses on authentication and key establishment: for integration with authorization of resource access, refer to <a href="#I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</a>. This document also specifies the derivation of shared key material.</p>
+<p id="rfc.section.1.p.3">The ECDH exchange and the key derivation follow <a href="#SIGMA">[SIGMA]</a>, NIST SP-800-56a <a href="#SP-800-56a">[SP-800-56a]</a>, and HKDF <a href="#RFC5869">[RFC5869]</a>. CBOR <a href="#RFC7049">[RFC7049]</a> and COSE <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a> are used to implement these standards.</p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#terminology" id="terminology">Terminology</a></h1>
+<p id="rfc.section.1.1.p.1">This document use the same informational CBOR Data Definition Language (CDDL) <a href="#I-D.greevenbosch-appsawg-cbor-cddl">[I-D.greevenbosch-appsawg-cbor-cddl]</a> grammar as COSE (see Section 1.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>). A vertical bar | denotes byte string concatenation.</p>
+<h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#terminology2" id="terminology2">Requirements Language</a></h1>
+<p id="rfc.section.1.2.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>. These words may also appear in this document in lowercase, absent their normative meanings.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#protocol" id="protocol">Protocol Overview</a></h1>
+<p id="rfc.section.2.p.1">SIGMA (SIGn-and-MAc) is a family of theoretical protocols with a large number of variants <a href="#SIGMA">[SIGMA]</a>. Like IKEv2 and TLS 1.3, EDHOC is built on a variant of the SIGMA protocol which provide identity protection, and like TLS 1.3, EDHOC implements the SIGMA-I variant as Sign-then-MAC. The SIGMA-I protocol using an AEAD algorithm is shown in <a href="#fig-sigma">Figure 1</a>.</p>
+<div id="rfc.figure.1"/>
+<div id="fig-sigma"/>
+<pre>
+Party U                                                 Party V
+   |                          E_U                          |
+   +------------------------------------------------------&gt;|
+   |                                                       |
+   |         E_V, Enc(K_2; ID_V, Sig(V; E_U, E_V);)        |
+   |&lt;------------------------------------------------------+
+   |                                                       |
+   |            Enc(K_3; ID_U, Sig(U; E_V, E_U);)          |
+   +------------------------------------------------------&gt;|
+   |                                                       |
+</pre>
+<p class="figure">Figure 1: AEAD variant of the SIGMA-I protocol</p>
+<p id="rfc.section.2.p.2">The parties exchanging messages are called &#8220;U&#8221; and &#8220;V&#8221;. They exchange identities and ephemeral public keys, compute the shared secret, and derive the keying material. The messages are signed, MACed, and encrypted.</p>
+<p/>
+
+<ul>
+  <li>E_U and E_V are the ECDH ephemeral public keys of U and V, respectively.</li>
+  <li>ID_U and ID_V are identifiers for the public keys of U and V, respectively.</li>
+  <li>Sig(U; . ) and S(V; . ) denote signatures made with the private key of U and V, respectively.</li>
+  <li>Enc(K; P; A) denotes AEAD encryption of plaintext P and additional authenticated data A using the key K derived from the shared secret. The AEAD MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.</li>
+</ul>
+<p id="rfc.section.2.p.4">As described in Appendix B of <a href="#SIGMA">[SIGMA]</a>, in order to create a &#8220;full-fledge&#8221; protocol some additional protocol elements are needed. EDHOC adds:</p>
+<p/>
+
+<ul>
+  <li>Explicit session identifiers S_U, S_V chosen by U and V, respectively.</li>
+  <li>Explicit nonces N_U, N_V chosen freshly and anew with each session by U and V, respectively.</li>
+  <li>Computationally independent keys derived from the ECDH shared secret and used for encryption of different messages.</li>
+</ul>
+<p id="rfc.section.2.p.6">EDHOC also makes the following additions:</p>
+<p/>
+
+<ul>
+  <li>Negotiation of key derivation, encryption, and signature algorithms:  <ul><li>U proposes one or more algorithms of the following kinds: <ul><li>HKDF</li><li>AEAD</li><li>Signature verification</li><li>Signature generation</li></ul></li><li>V selects one algorithm of each kind</li></ul></li>
+  <li>Transmission of application defined extensions.</li>
+</ul>
+<p id="rfc.section.2.p.8">EDHOC is designed to encrypt and integrity protect as much information as possible, and all symmetric keys are derived using as much previous information as possible. EDHOC is furthermore designed to be as compact and lightweight as possible, in terms of message sizes, processing, and the ability to reuse already existing CBOR and COSE libraries. EDHOC does not put any requirement on the lower layers and can therefore be also be used e.g. in environments without IP.</p>
+<p id="rfc.section.2.p.9">This paper is organized as follows: <a href="#general">Section 3</a> specifies general properties of EDHOC, including formatting of the ephemeral public keys and key derivation, <a href="#asym">Section 4</a> specifies EDHOC with asymmetric key authentication, <a href="#sym">Section 5</a> specifies EDHOC with symmetric key authentication, and <a href="#examples">Appendix A</a> provides a wealth of test vectors to ease implementation and ensure interoperability.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#general" id="general">EDHOC Overview</a></h1>
+<p id="rfc.section.3.p.1">EDHOC consists of three messages (message_1, message_2, message_3) that maps directly to the three messages in SIGMA-I. All EDHOC messages consists of a CBOR array where the first element is an int specifying the message type (MSG_TYPE). After creating EDHOC message_3, Party U can derive the traffic key (master secret) and protected application data can therefore be sent in parallel with EDHOC message_3. The application data may e.g. be protected using the negotiated AEAD algorithm. EDHOC may be used with the media type application/edhoc defined in <a href="#iana">Section 7</a>.</p>
+<div id="rfc.figure.2"/>
+<div id="fig-flow"/>
+<pre>
+Party U                                                 Party V
+   |                                                       |
+   | ------------------ EDHOC message_1 -----------------&gt; |
+   |                                                       |
+   | &lt;----------------- EDHOC message_2 ------------------ |
+   |                                                       |
+   | ----------------- EDHOC message_3 ------------------&gt; |
+   |                                                       |
+   | &lt;----------- Protected Application Data ------------&gt; |
+   |                                                       |
+</pre>
+<p class="figure">Figure 2: EDHOC message flow</p>
+<p id="rfc.section.3.p.2">The EDHOC message exchange may be authenticated using pre-shared keys (PSK), raw public keys (RPK), or certificates (Cert). EDHOC assumes the existence of mechanisms (certification authority, manual distribution, etc.) for binding identities with authentication keys (public or pre-shared). EDHOC with symmetric key authentication is very similar to EDHOC with asymmetric key authentication, the differences are that information is only MACed (not signed) and that EDHOC with symmetric key authentication offers encryption, integrity protection, and key proof-of-possession already in message_1.</p>
+<p id="rfc.section.3.p.3">EDHOC allows application defined extensions (EXT_1, EXT_2, EXT_3) to be sent in the respective messages. When EDHOC are used with asymmetric key authentication, EXT_1 is unprotected, EXT_2 is protected (encrypted and integrity protected), but sent to an unauthenticated party, and EXT_3 is protected and mutually authenticated. When EDHOC is used with symmetric key authentication, all extensions are protected and mutually authenticated.</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#cose_key" id="cose_key">Formatting of the Ephemeral Public Keys</a></h1>
+<p id="rfc.section.3.1.p.1">The ECDH ephemeral public key SHALL be formatted as a COSE_Key of type EC2 or OKP according to section 13.1 and 13.2 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>. The curve X25519 is mandatory to implement. For Elliptic Curve Keys of type EC2, point compression is mandatory to implement.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#key-der" id="key-der">Key Derivation</a></h1>
+<p id="rfc.section.3.2.p.1">Key and IV derivation SHALL be done as specified in Section 11.1 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a> with the following input:</p>
+<p/>
+
+<ul>
+  <li>The PRF SHALL be the HKDF <a href="#RFC5869">[RFC5869]</a> in the ECDH-SS w/ HKDF negotiated during the message exchange (HKDF_V).</li>
+  <li>The secret SHALL be the ECDH shared secret as defined in Section 12.4.1 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>.</li>
+  <li>salt = PSK / nil</li>
+  <li>The context information SHALL be the serialized COSE_KDF_Context with the following values:  <ul><li>PartyInfo = ( nil, nil, nil )</li><li>SuppPubInfo SHALL contain:      <ul><li>protected SHALL be a zero length bstr</li></ul></li></ul></li>
+</ul>
+<pre>
+      +  other = aad_1  / aad_2  / aad_3 /
+                 H( H( message_1 | message_2 ) | message_3 ) | label
+</pre>
+<p id="rfc.section.3.2.p.3">The salt SHALL only be present in the symmetric case.</p>
+<p id="rfc.section.3.2.p.4">The symmetric key and IV used to protect message_i  is called K_i and IV_i,  and are derived using byte string aad_i defined for each EDHOC message i = 1, 2 or 3 that make use of a symmetric key.</p>
+<p id="rfc.section.3.2.p.5">K_1 and IV_1 are only used in EDHOC with symmetric key authentication and are derived with the exceptions that secret SHALL be empty and the PRF SHALL be HKDF-256 (or a HKDF decided by the application).</p>
+<p id="rfc.section.3.2.p.6">All other keys are derived with the negotiated PRF and with the secret set to the ECDH shared secret.</p>
+<p id="rfc.section.3.2.p.7">Application specific traffic keys and key identifiers are derived using the byte string H( H( H(message_1) | message_2 ) | message_3 ) | label, where H() is the hash function in HKDF_V, label is a byte string, and | denotes byte string concatenation. Each application making use of EDHOC defines its own labels and how they are used.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#asym" id="asym">EDHOC Authenticated with Asymmetric Keys</a></h1>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#overview" id="overview">Overview</a></h1>
+<p id="rfc.section.4.1.p.1">EDHOC supports authentication with raw public keys (RPK) and certificates (Cert) with the requirements that:</p>
+<p/>
+
+<ul>
+  <li>Party U&#8217;s SHALL be able to uniquely identify Party V&#8217;s public key using ID_V.</li>
+  <li>Party V&#8217;s SHALL be able to uniquely identify Party U&#8217;s public key using ID_U.</li>
+</ul>
+<p id="rfc.section.4.1.p.3">ID_U and ID_V either enable the other party to retrieve the public key (kid, x5t, x5u) or they contain the public key (x5c), see <a href="#I-D.schaad-cose-x509">[I-D.schaad-cose-x509]</a>. Party U and party V MAY use different type of credentials, e.g. one uses RPK and the other Cert. Party U and party V MAY use different signature algorithms.</p>
+<p id="rfc.section.4.1.p.4">EDHOC with asymmetric key authentication is illustrated in <a href="#fig-asym">Figure 3</a>.</p>
+<div id="rfc.figure.3"/>
+<div id="fig-asym"/>
+<pre>
+Party U                                                          Party V
+|                      S_U, N_U, E_U, ALG_1, EXT_1                     |
++---------------------------------------------------------------------&gt;|
+|                               message_1                              |
+|                                                                      |
+|S_U, S_V, N_V, E_V, ALG_2, Enc(K_2; EXT_2, ID_V, Sig(V; aad_2); aad_2)|
+|&lt;---------------------------------------------------------------------+
+|                               message_2                              |
+|                                                                      |
+|           S_V, Enc(K_3; EXT_3, ID_U, Sig(U; aad_3); aad_3)           |
++---------------------------------------------------------------------&gt;|
+|                               message_3                              |
+</pre>
+<p class="figure">Figure 3: EDHOC with asymmetric key authentication. </p>
+<h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> <a href="#asym-mti" id="asym-mti">Mandatory to Implement Algorithms</a></h1>
+<p id="rfc.section.4.1.1.p.1">For EDHOC authenticated with asymmetric keys, the COSE algorithms ECDH-SS + HKDF-256, AES-CCM-64-64-128, and EdDSA are mandatory to implement.</p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#asym-msg1" id="asym-msg1">EDHOC Message 1</a></h1>
+<h1 id="rfc.section.4.2.1"><a href="#rfc.section.4.2.1">4.2.1.</a> <a href="#asym-msg1-form" id="asym-msg1-form">Formatting of Message 1</a></h1>
+<p id="rfc.section.4.2.1.p.1">message_1 SHALL be a CBOR array as defined below</p>
+<pre>
+message_1 = [
+  MSG_TYPE : int,
+  S_U : bstr,  
+  N_U : bstr,  
+  E_U : serialized_COSE_Key,
+  HKDFs_U : alg_array,
+  AEADs_U : alg_array,
+  SIGs_V : alg_array,
+  SIGs_U : alg_array,  
+  ? EXT_1 : bstr
+]
+
+serialized_COSE_Key = bstr .cbor COSE_Key
+
+alg_array = [ + alg : int / tstr ]
+</pre>
+<p id="rfc.section.4.2.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 1</li>
+  <li>S_U - variable length session identifier</li>
+  <li>N_U - 64-bit random nonce</li>
+  <li>E_U - the ephemeral public key of Party U</li>
+  <li>HKDFs_U - supported ECDH-SS w/ HKDF algorithms</li>
+  <li>AEADs_U - supported AEAD algorithms</li>
+  <li>SIGs_V - signature algorithms, with which Party U supports verification</li>
+  <li>SIGs_U - signature algorithms, with which Party U supports signing</li>
+  <li>EXT_1 - application defined extensions</li>
+</ul>
+<h1 id="rfc.section.4.2.2"><a href="#rfc.section.4.2.2">4.2.2.</a> <a href="#asym-msg1-procU" id="asym-msg1-procU">Party U Processing of Message 1</a></h1>
+<p id="rfc.section.4.2.2.p.1">Party U SHALL compose message_1 as follows:</p>
+<p/>
+
+<ul>
+  <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> and format the ephemeral public key E_U as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
+  <li>Generate the pseudo-random nonce N_U</li>
+  <li>Chose a session identifier S_U and store it for the length of the protocol.</li>
+  <li>Format message_1 as specified in <a href="#asym-msg1-form">Section 4.2.1</a>.</li>
+</ul>
+<h1 id="rfc.section.4.2.3"><a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#asym-msg1-procV" id="asym-msg1-procV">Party V Processing of Message 1</a></h1>
+<p id="rfc.section.4.2.3.p.1">Party V SHALL process message_1 as follows:</p>
+<p/>
+
+<ul>
+  <li>Verify (OPTIONAL) that N_U has not been received before.</li>
+  <li>Verify that at least one of each kind of the proposed algorithms are supported.</li>
+</ul>
+<p id="rfc.section.4.2.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#asym-msg2" id="asym-msg2">EDHOC Message 2</a></h1>
+<h1 id="rfc.section.4.3.1"><a href="#rfc.section.4.3.1">4.3.1.</a> <a href="#asym-msg2-form" id="asym-msg2-form">Formatting of Message 2</a></h1>
+<p id="rfc.section.4.3.1.p.1">message_2 SHALL be a CBOR array as defined below</p>
+<pre>
+message_2 = [
+  data_2,
+  COSE_ENC_2 : COSE_Encrypt0
+]
+
+data_2 = (
+  MSG_TYPE : int,
+  S_U : bstr,
+  S_V : bstr,  
+  N_V : bstr,
+  E_V : serialized_COSE_Key,
+  HKDF_V : int / tstr,
+  AEAD_V : int / tstr,
+  SIG_V : int / tstr,
+  SIG_U : int / tstr
+)
+
+aad_2 = message_1 | [ data_2 ] | ? Cert_V
+</pre>
+<p id="rfc.section.4.3.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 2</li>
+  <li>S_V - variable length session identifier</li>
+  <li>N_V - 64-bit random nonce</li>
+  <li>E_V - the ephemeral public key of Party V</li>
+  <li>HKDF_V - a single chosen algorithm from HKDFs_U</li>
+  <li>AEAD_V - a single chosen algorithm from AEADs_U</li>
+  <li>SIG_V - a single chosen algorithm from SIGs_V with which Party V signs</li>
+  <li>SIG_U - a single chosen algorithm from SIGs_U with which Party U signs</li>
+  <li>COSE_ENC_2 has the following fields and values:  <ul><li>external_aad = aad_2</li><li>plaintext = [ COSE_SIG_V, ? EXT_2 ]</li></ul></li>
+  <li>COSE_SIG_V is a COSE_Sign1 object with the following fields and values:  <ul><li>unprotected = { xyz: ID_V }</li><li>detached payload = aad_2</li></ul></li>
+  <li>xyz - any COSE map label that can identify a public key</li>
+  <li>ID_V - identifier for the public key of Party V</li>
+  <li>EXT_2 - application defined extensions</li>
+  <li>Cert_V - The end-entity certificate of Party V encoded as a bstr</li>
+  <li>H() - the hash function in HKDF_V</li>
+</ul>
+<h1 id="rfc.section.4.3.2"><a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#asym-msg2-procV" id="asym-msg2-procV">Party V Processing of Message 2</a></h1>
+<p id="rfc.section.4.3.2.p.1">Party V SHALL compose message_2 as follows:</p>
+<p/>
+
+<ul>
+  <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> using same curve as used in E_U. Format the ephemeral public key E_V as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
+  <li>Generate the pseudo-random nonce N_V</li>
+  <li>Chose a session identifier S_V and store it for the length of the protocol.</li>
+  <li>Select HKDF_V, AEAD_V, SIG_V, and SIG_U from the algorithms proposed in HKDFs_U, AEADs_U, SIGs_V, and SIGs_U.</li>
+  <li>Format message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the private key of Party V.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.      <ul><li>If certificates are used then aad_2 MUST include Cert_V</li></ul></li></ul></li>
+</ul>
+<h1 id="rfc.section.4.3.3"><a href="#rfc.section.4.3.3">4.3.3.</a> <a href="#asym-msg2-procU" id="asym-msg2-procU">Party U Processing of Message 2</a></h1>
+<p id="rfc.section.4.3.3.p.1">Party U SHALL process message_2 as follows:</p>
+<p/>
+
+<ul>
+  <li>Use the session identifier S_U to retrieve the protocol state.</li>
+  <li>Verify that HKDF_V, AEAD_V, SIG_V, and SIG_U were proposed in HKDFs_U, AEADs_U, SIGs_V, and SIGs_U.</li>
+  <li>Verify (OPTIONAL) that N_V has not been received before.</li>
+  <li>Verify message_2 as specified in <a href="#asym-msg2-form">Section 4.3.1</a>:  <ul><li>COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_V and the public key of Party V.</li></ul></li>
+</ul>
+<p id="rfc.section.4.3.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.4.4"><a href="#rfc.section.4.4">4.4.</a> <a href="#asym-msg3" id="asym-msg3">EDHOC Message 3</a></h1>
+<h1 id="rfc.section.4.4.1"><a href="#rfc.section.4.4.1">4.4.1.</a> <a href="#asym-msg3-form" id="asym-msg3-form">Formatting of Message 3</a></h1>
+<p id="rfc.section.4.4.1.p.1">message_3 SHALL be a CBOR array as defined below</p>
+<pre>
+message_3 = [
+  data_3,
+  COSE_ENC_3 : COSE_Encrypt0
+]
+
+data_3 = (
+  MSG_TYPE : int,
+  S_V : bstr
+)
+
+aad_3 = H( message_1 | message_2 ) | [ data_3 ] | ? Cert_U
+</pre>
+<p id="rfc.section.4.4.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 3</li>
+  <li>COSE_ENC_3 has the following fields and values:  <ul><li>external_aad = aad_3</li><li>plaintext = [ COSE_SIG_U, ? EXT_3 ]</li></ul></li>
+  <li>COSE_SIG_U is a COSE_Sign1 object with the following fields and values:  <ul><li>unprotected = { xyz: ID_U }</li><li>detached payload = aad_3</li></ul></li>
+  <li>xyz - any COSE map label that can identify a public key</li>
+  <li>ID_U - identifier for the public key of Party U</li>
+  <li>EXT_3 - application defined extensions</li>
+  <li>Cert_U - The end-entity certificate of Party U encoded as a bstr</li>
+</ul>
+<h1 id="rfc.section.4.4.2"><a href="#rfc.section.4.4.2">4.4.2.</a> <a href="#asym-msg3-procU" id="asym-msg3-procU">Party U Processing of Message 3</a></h1>
+<p id="rfc.section.4.4.2.p.1">Party U SHALL compose message_3 as follows:</p>
+<p/>
+
+<ul>
+  <li>Format message_3 as specified in <a href="#asym-msg3-form">Section 4.4.1</a>:  <ul><li>COSE_Sign1 is computed as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_U and the private key of Party U.</li><li>COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3. The AEAD algorithm MUST NOT be replaced by plain encryption, see <a href="#sec-cons">Section 8</a>.      <ul><li>If certificates are used then aad_3 MUST include Cert_U</li></ul></li></ul></li>
+</ul>
+<h1 id="rfc.section.4.4.3"><a href="#rfc.section.4.4.3">4.4.3.</a> <a href="#asym-msg3-procV" id="asym-msg3-procV">Party V Processing of Message 3</a></h1>
+<p id="rfc.section.4.4.3.p.1">Party V SHALL process message_3 as follows:</p>
+<p/>
+
+<ul>
+  <li>Use the session identifier S_V to retrieve the protocol state.</li>
+  <li>Verify message_3 as specified in <a href="#asym-msg3-form">Section 4.4.1</a>.  <ul><li>COSE_Encrypt0 is decrypted as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3.</li><li>COSE_Sign1 is verified as defined in section 4.4 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, using algorithm SIG_U and the public key of Party U;</li></ul></li>
+</ul>
+<p id="rfc.section.4.4.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#sym" id="sym">EDHOC Authenticated with Symmetric Keys</a></h1>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#overview-1" id="overview-1">Overview</a></h1>
+<p id="rfc.section.5.1.p.1">EDHOC supports authentication with pre-shared keys. Party U and V are assumed to have a pre-shared uniformly random key (PSK) with the requirement that:</p>
+<p/>
+
+<ul>
+  <li>Party V SHALL be able to uniquely identify the PSK using KID.</li>
+</ul>
+<p id="rfc.section.5.1.p.3">KID either enable the other party to retrieve the PSK or contain the PSK (e.g. CBOR Web Token).</p>
+<p id="rfc.section.5.1.p.4">EDHOC with symmetric key authentication is illustrated in <a href="#fig-sym">Figure 4</a>.</p>
+<div id="rfc.figure.4"/>
+<div id="fig-sym"/>
+<pre>
+Party U                                                       Party V
+|         S_U, N_U, E_U, ALG_1, KID, Enc(K_1; EXT_1; aad_1)         |
++------------------------------------------------------------------&gt;|
+|                             message_1                             |
+|                                                                   |
+|         S_U, S_V, N_V, E_V, ALG_2, Enc(K_2; EXT_2; aad_2)         |
+|&lt;------------------------------------------------------------------+
+|                             message_2                             |
+|                                                                   |
+|                    S_V, Enc(K_3; EXT_3; aad_3)                    |
++------------------------------------------------------------------&gt;|
+|                             message_3                             |
+</pre>
+<p class="figure">Figure 4: EDHOC with symmetric key authentication. </p>
+<h1 id="rfc.section.5.1.1"><a href="#rfc.section.5.1.1">5.1.1.</a> <a href="#sym-mti" id="sym-mti">Mandatory to Implement Algorithms</a></h1>
+<p id="rfc.section.5.1.1.p.1">For EDHOC authenticated with symmetric keys, the COSE algorithms ECDH-SS + HKDF-256 and AES-CCM-64-64-128 are mandatory to implement.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#sym-msg1" id="sym-msg1">EDHOC Message 1</a></h1>
+<h1 id="rfc.section.5.2.1"><a href="#rfc.section.5.2.1">5.2.1.</a> <a href="#sym-msg1-form" id="sym-msg1-form">Formatting of Message 1</a></h1>
+<p id="rfc.section.5.2.1.p.1">message_1 SHALL be a CBOR array as defined below</p>
+<pre>
+message_1 = [
+  data_1,
+  COSE_ENC_1 : COSE_Encrypt0
+]
+
+data_1 = (
+  MSG_TYPE : int,
+  S_U : bstr,  
+  N_U : bstr,    
+  E_U : serialized_COSE_Key,
+  HKDFs_U : alg_array,
+  AEADs_U : alg_array,
+  KID : bstr
+)
+
+aad_1 = [ data_1 ]
+
+serialized_COSE_Key = bstr .cbor COSE_Key
+
+alg_array = [ + alg : int / tstr ]
+</pre>
+<p id="rfc.section.5.2.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 4</li>
+  <li>S_U - variable length session identifier</li>
+  <li>N_U - 64-bit random nonce</li>
+  <li>E_U - the ephemeral public key of Party U</li>
+  <li>HKDFs_U - supported ECDH-SS w/ HKDF algorithms</li>
+  <li>AEADs_U - supported AEAD algorithms</li>
+  <li>KID - identifier of the pre-shared key</li>
+  <li>COSE_ENC_1 has the following fields and values:  <ul><li>external_aad = aad_1</li><li>plaintext = ? EXT_1</li></ul></li>
+  <li>EXT_1 - bstr containing application defined extensions</li>
+</ul>
+<h1 id="rfc.section.5.2.2"><a href="#rfc.section.5.2.2">5.2.2.</a> <a href="#sym-msg1-procU" id="sym-msg1-procU">Party U Processing of Message 1</a></h1>
+<p id="rfc.section.5.2.2.p.1">Party U SHALL compose message_1 as follows:</p>
+<p/>
+
+<ul>
+  <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> and format the ephemeral public key E_U as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
+  <li>Generate the pseudo-random nonce N_U</li>
+  <li>Chose a session identifier S_U and store it for the length of the protocol.</li>
+  <li>Format message_1 as specified in <a href="#sym-msg1-form">Section 5.2.1</a> where COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AES-CCM-64-64-128 (or an AEAD decided by the application), K_1, and IV_1.</li>
+</ul>
+<h1 id="rfc.section.5.2.3"><a href="#rfc.section.5.2.3">5.2.3.</a> <a href="#sym-msg1-procV" id="sym-msg1-procV">Party V Processing of Message 1</a></h1>
+<p id="rfc.section.5.2.3.p.1">Party V SHALL process message_1 as follows:</p>
+<p/>
+
+<ul>
+  <li>Verify (OPTIONAL) that N_U has not been received before.</li>
+  <li>Verify that at least one of each kind of the proposed algorithms are supported.</li>
+  <li>Verify message_1 as specified in <a href="#sym-msg1-form">Section 5.2.1</a> where COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AES-CCM-64-64-128 (or an AEAD decided by the application), K_1, and IV_1.</li>
+</ul>
+<p id="rfc.section.5.2.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#sym-msg2" id="sym-msg2">EDHOC Message 2</a></h1>
+<h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#sym-msg2-form" id="sym-msg2-form">Formatting of Message 2</a></h1>
+<p id="rfc.section.5.3.1.p.1">message_2 SHALL be a CBOR array as defined below</p>
+<pre>
+message_2 = [
+  data_2,
+  COSE_ENC_2 : COSE_Encrypt0
+]
+
+data_2 = (
+  MSG_TYPE : int,
+  S_U : bstr,  
+  S_V : bstr,  
+  N_V : bstr,
+  E_V : serialized_COSE_Key,
+  HKDF_V : int / tstr,
+  AEAD_V : int / tstr
+)
+
+aad_2 = message_1 | [ data_2 ]
+</pre>
+<p id="rfc.section.5.3.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 5</li>
+  <li>S_V - variable length session identifier</li>
+  <li>N_V - 64-bit random nonce</li>
+  <li>E_V - the ephemeral public key of Party V</li>
+  <li>HKDF_V - an single chosen algorithm from HKDFs_U</li>
+  <li>AEAD_V - an single chosen algorithm from AEADs_U</li>
+  <li>COSE_ENC_2 has the following fields and values:  <ul><li>external_aad = aad_2</li><li>plaintext = ? EXT_2</li></ul></li>
+  <li>EXT_2 - bstr containing application defined extensions</li>
+  <li>H() - the hash function in HKDF_V</li>
+</ul>
+<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#sym-msg2-procV" id="sym-msg2-procV">Party V Processing of Message 2</a></h1>
+<p id="rfc.section.5.3.2.p.1">Party V SHALL compose message_2 as follows:</p>
+<p/>
+
+<ul>
+  <li>Generate a fresh ephemeral ECDH key pair as specified in Section 5 of <a href="#SP-800-56a">[SP-800-56a]</a> using same curve as used in E_U. Format the ephemeral public key E_V as a COSE_key as specified in <a href="#cose_key">Section 3.1</a>.</li>
+  <li>Generate the pseudo-random nonce N_V</li>
+  <li>Chose a session identifier S_V and store it for the length of the protocol.</li>
+  <li>Select HKDF_V and AEAD_V from the algorithms proposed in HKDFs_U and AEADs_U.</li>
+  <li>Format message_2 as specified in <a href="#sym-msg2-form">Section 5.3.1</a> where COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li>
+</ul>
+<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#sym-msg2-procU" id="sym-msg2-procU">Party U Processing of Message 2</a></h1>
+<p id="rfc.section.5.3.3.p.1">Party U SHALL process message_2 as follows:</p>
+<p/>
+
+<ul>
+  <li>Use the session identifier S_U to retrieve the protocol state.</li>
+  <li>Verify message_2 as specified in <a href="#sym-msg2-form">Section 5.3.1</a> where COSE_Encrypt0 is decrypted defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_2, and IV_2.</li>
+</ul>
+<p id="rfc.section.5.3.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4.</a> <a href="#sym-msg3" id="sym-msg3">EDHOC Message 3</a></h1>
+<h1 id="rfc.section.5.4.1"><a href="#rfc.section.5.4.1">5.4.1.</a> <a href="#sym-msg3-form" id="sym-msg3-form">Formatting of Message 3</a></h1>
+<p id="rfc.section.5.4.1.p.1">message_3 SHALL be a CBOR array as defined below</p>
+<pre>
+message_3 = [
+  data_3,
+  COSE_ENC_3 : COSE_Encrypt0
+]
+
+data_3 = (
+  MSG_TYPE : int,
+  S_V : bstr 
+)
+
+aad_3 = H( message_1 | message_2 ) | [ data_3 ]
+</pre>
+<p id="rfc.section.5.4.1.p.2">where:</p>
+<p/>
+
+<ul>
+  <li>MSG_TYPE = 6</li>
+  <li>COSE_ENC_3 has the following fields and values:  <ul><li>external_aad = aad_3</li><li>plaintext = ? EXT_3</li></ul></li>
+  <li>EXT_3 - bstr containing application defined extensions</li>
+</ul>
+<h1 id="rfc.section.5.4.2"><a href="#rfc.section.5.4.2">5.4.2.</a> <a href="#sym-msg3-procU" id="sym-msg3-procU">Party U Processing of Message 3</a></h1>
+<p id="rfc.section.5.4.2.p.1">Party U SHALL compose message_3 as follows:</p>
+<p/>
+
+<ul>
+  <li>Format message_3 as specified in <a href="#sym-msg3-form">Section 5.4.1</a> where COSE_Encrypt0 is computed as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3.</li>
+</ul>
+<h1 id="rfc.section.5.4.3"><a href="#rfc.section.5.4.3">5.4.3.</a> <a href="#sym-msg3-procV" id="sym-msg3-procV">Party V Processing of Message 3</a></h1>
+<p id="rfc.section.5.4.3.p.1">Party V SHALL process message_3 as follows:</p>
+<p/>
+
+<ul>
+  <li>Use the session identifier S_V to retrieve the protocol state.</li>
+  <li>Verify message_3 as specified in <a href="#sym-msg3-form">Section 5.4.1</a> where COSE_Encrypt0 is decrypted and verified as defined in section 5.3 of <a href="#I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</a>, with AEAD_V, K_3, and IV_3.</li>
+</ul>
+<p id="rfc.section.5.4.3.p.3">If any verification step fails, the message MUST be discarded and the protocol discontinued.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#error" id="error">Error Handling</a></h1>
+<p id="rfc.section.6.p.1">TODO: One error is e.g. if the ephemeral key is unsupported.</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<h1 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1.</a> <a href="#media-types-registry" id="media-types-registry">Media Types Registry</a></h1>
+<p id="rfc.section.7.1.p.1">IANA has added the media type &#8216;application/edhoc&#8217; to the Media Types registry:</p>
+<pre>
+    Type name: application
+
+    Subtype name: edhoc
+
+    Required parameters: N/A
+
+    Optional parameters: N/A
+
+    Encoding considerations: binary
+
+    Security considerations: See Section 7 of this document.
+
+    Interoperability considerations: N/A
+
+    Published specification: [[this document]] (this document)
+
+    Applications that use this media type: To be identified
+
+    Fragment identifier considerations: N/A
+
+    Additional information:
+
+    * Magic number(s): N/A
+
+    * File extension(s): N/A
+
+    * Macintosh file type code(s): N/A
+
+    Person &amp; email address to contact for further information:
+       G&#246;ran Selander &lt;goran.selander@ericsson.com&gt;
+
+    Intended usage: COMMON
+
+    Restrictions on usage: N/A
+
+    Author: G&#246;ran Selander &lt;goran.selander@ericsson.com&gt;
+
+    Change Controller: IESG
+</pre>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#sec-cons" id="sec-cons">Security Considerations</a></h1>
+<p id="rfc.section.8.p.1">EDHOC builds on the SIGMA-I family of theoretical protocols that provides perfect forward secrecy and identity protection with a minimal number of messages. The encryption algorithm of the SIGMA-I protocol provides identity protection, but the security of the protocol requires the MAC to cover the identity of the signer. Hence the message authenticating functionality of the authenticated encryption in EDHOC is critical: authenticated encryption MUST NOT be replaced by plain encryption only, even if authentication is provided at another level or through a different mechanism.</p>
+<p id="rfc.section.8.p.2">EDHOC adds an explicit message type and expands the authentication coverage to additional elements such as algorithms, extensions, and previous messages. EDHOC uses the same Sign-then-MAC approach as TLS 1.3.</p>
+<p id="rfc.section.8.p.3">Party U and V must make sure that unprotected data and metadata do not reveal any sensitive information. This also applies for encrypted data sent to an unauthenticated party. In particular, it applies to EXT_1 and EXT_2 in the asymmetrical case, and KID in the symmetrical case. The communicating parties may therefore anonymize KID.</p>
+<p id="rfc.section.8.p.4">Using the same KID or unprotected extension in several EDHOC sessions allows passive eavesdroppers to correlate the different sessions. Another consideration is that the list of supported algorithms may be used to identify the application.</p>
+<p id="rfc.section.8.p.5">Party U and V must make sure that unprotected data does not trigger any harmful actions. In particular, this applies to EXT_1 in the asymmetrical case, and KID in the symmetrical case. Party V should be aware that replays of EDHOC message_1 cannot be detected unless unless previous nonces are stored.</p>
+<p id="rfc.section.8.p.6">The availability of a secure pseudorandom number generator and truly random seeds are essential for the security of EDHOC. If no true random number generator is available, a truly random seed must be provided from an external source. If ECDSA is supported, &#8220;deterministic ECDSA&#8221; as specified in RFC6979 is RECOMMENDED.</p>
+<p id="rfc.section.8.p.7">Nonces MUST NOT be reused, both parties MUST generate fresh random nonces. Ephemeral keys SHOULD NOT be reused, both parties SHOULD generate fresh random ephemeral key pairs.</p>
+<p id="rfc.section.8.p.8">The referenced processing instructions in <a href="#SP-800-56a">[SP-800-56a]</a> must be complied with, including deleting the intermediate computed values along with any ephemeral ECDH secrets after the key derivation is completed.</p>
+<p id="rfc.section.8.p.9">Party U and V are responsible for verifying the integrity of certificates. The selection of trusted CAs should be done very carefully and certificate revocation should be supported.</p>
+<p id="rfc.section.8.p.10">The choice of key length used in the different algorithms needs to be harmonized, so that a sufficient security level is maintained for certificates, EDHOC, and the protection of application data. Party U and V should enforce a minimum security level.</p>
+<p id="rfc.section.8.p.11">Note that, depending on the application, the keys established through the EDHOC protocol will need to be renewed, in which case the communicating parties need to run the protocol again.</p>
+<p id="rfc.section.8.p.12">Implementations should provide countermeasures to side-channel attacks such as timing attacks.</p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a></h1>
+<p id="rfc.section.9.p.1">The authors want to thank Jim Schaad, Ilari Liusvaara and Ludwig Seitz for reviewing previous versions of the draft.</p>
+<p id="rfc.section.9.p.2">TODO: This section should be after Appendixes and before Author&#8217;s address according to RFC7322.</p>
+<h1 id="rfc.references"><a href="#rfc.references">10.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">10.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-cose-msg">[I-D.ietf-cose-msg]</b>
+      </td>
+      <td class="top"><a>Schaad, J.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-cose-msg-24">CBOR Object Signing and Encryption (COSE)</a>", Internet-Draft draft-ietf-cose-msg-24, November 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.schaad-cose-x509">[I-D.schaad-cose-x509]</b>
+      </td>
+      <td class="top"><a>Schaad, J.</a>, "<a href="http://tools.ietf.org/html/draft-schaad-cose-x509-00">CBOR Encoded Message Syntax (COSE): Headers for carrying and referencing X.509 certificates</a>", Internet-Draft draft-schaad-cose-x509-00, November 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7049">[RFC7049]</b>
+      </td>
+      <td class="top"><a>Bormann, C.</a> and <a>P. Hoffman</a>, "<a href="http://tools.ietf.org/html/rfc7049">Concise Binary Object Representation (CBOR)</a>", RFC 7049, DOI 10.17487/RFC7049, October 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="SIGMA">[SIGMA]</b>
+      </td>
+      <td class="top"><a>Krawczyk, H.</a>, "<a href="http://webee.technion.ac.il/~hugo/sigma-pdf.pdf">SIGMA - The 'SIGn-and-MAc' Approach to Authenticated Diffie-Hellman and Its Use in the IKE-Protocols (Long version)</a>", June 2003.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="SP-800-56a">[SP-800-56a]</b>
+      </td>
+      <td class="top"><a>Barker, E.</a>, <a>Chen, L.</a>, <a>Roginsky, A.</a> and <a>M. Smid</a>, "<a href="http://dx.doi.org/10.6028/NIST.SP.800-56Ar2">Recommendation for Pair-Wise Key Establishment Schemes Using Discrete Logarithm Cryptography</a>", NIST Special Publication 800-56A Revision 2, May 2013.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">10.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.greevenbosch-appsawg-cbor-cddl">[I-D.greevenbosch-appsawg-cbor-cddl]</b>
+      </td>
+      <td class="top"><a>Birkholz, H.</a>, <a>Vigano, C.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/draft-greevenbosch-appsawg-cbor-cddl-10">CBOR data definition language (CDDL): a notational convention to express CBOR data structures</a>", Internet-Draft draft-greevenbosch-appsawg-cbor-cddl-10, March 2017.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.hartke-core-e2e-security-reqs">[I-D.hartke-core-e2e-security-reqs]</b>
+      </td>
+      <td class="top"><a>Selander, G.</a>, <a>Palombini, F.</a> and <a>K. Hartke</a>, "<a href="http://tools.ietf.org/html/draft-hartke-core-e2e-security-reqs-02">Requirements for CoAP End-To-End Security</a>", Internet-Draft draft-hartke-core-e2e-security-reqs-02, January 2017.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</b>
+      </td>
+      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-06">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-06, March 2017.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</b>
+      </td>
+      <td class="top"><a>Selander, G.</a>, <a>Mattsson, J.</a>, <a>Palombini, F.</a> and <a>L. Seitz</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-object-security-02">Object Security of CoAP (OSCOAP)</a>", Internet-Draft draft-ietf-core-object-security-02, March 2017.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.seitz-ace-oscoap-profile">[I-D.seitz-ace-oscoap-profile]</b>
+      </td>
+      <td class="top"><a>Seitz, L.</a> and <a>F. Palombini</a>, "<a href="http://tools.ietf.org/html/draft-seitz-ace-oscoap-profile-01">OSCOAP profile of ACE</a>", Internet-Draft draft-seitz-ace-oscoap-profile-01, October 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5869">[RFC5869]</b>
+      </td>
+      <td class="top"><a>Krawczyk, H.</a> and <a>P. Eronen</a>, "<a href="http://tools.ietf.org/html/rfc5869">HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</a>", RFC 5869, DOI 10.17487/RFC5869, May 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7228">[RFC7228]</b>
+      </td>
+      <td class="top"><a>Bormann, C.</a>, <a>Ersue, M.</a> and <a>A. Keranen</a>, "<a href="http://tools.ietf.org/html/rfc7228">Terminology for Constrained-Node Networks</a>", RFC 7228, DOI 10.17487/RFC7228, May 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7252">[RFC7252]</b>
+      </td>
+      <td class="top"><a>Shelby, Z.</a>, <a>Hartke, K.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/rfc7252">The Constrained Application Protocol (CoAP)</a>", RFC 7252, DOI 10.17487/RFC7252, June 2014.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#examples" id="examples">Test Vectors</a></h1>
+<p id="rfc.section.A.p.1">TODO: This section needs to be updated.</p>
+<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#app-a" id="app-a">EDHOC with CoAP and OSCOAP</a></h1>
+<h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#app-a1" id="app-a1">Transferring EDHOC in CoAP</a></h1>
+<p id="rfc.section.B.1.p.1">EDHOC can be transferred as an exchange of CoAP <a href="#RFC7252">[RFC7252]</a> messages, with the CoAP client as party U and the CoAP server as party V. By default EDHOC is sent to the Uri-Path: &#8220;edhoc&#8221;.</p>
+<div id="rfc.figure.5"/>
+<div id="fig-edhoc-oscoap-det"/>
+<pre>
+Client    Server
+  |          |
+  +---------&gt;| Header: POST (Code=0.02)
+  |   POST   | Uri-Path: "edhoc"
+  |          | Content-Type: application/edhoc
+  |          | Payload: EDHOC message_1
+  |          |
+  |&lt;---------+ Header: 2.04 Changed
+  |   2.04   | Content-Type: application/edhoc
+  |          | Payload: EDHOC message_2
+  |          |
+  +---------&gt;| Header: POST (Code=0.02)
+  |   POST   | Uri-Path: "edhoc"
+  |          | Content-Type: application/edhoc
+  |          | Payload: EDHOC message_3
+  |          |
+  |&lt;---------+ Header: 2.04 Changed
+  |   2.04   | 
+  |          |
+</pre>
+<p class="figure">Figure 5: Transferring EDHOC in CoAP</p>
+<h1 id="rfc.appendix.B.2"><a href="#rfc.appendix.B.2">B.2.</a> <a href="#app-a2" id="app-a2">Deriving an OSCOAP context from EDHOC</a></h1>
+<p id="rfc.section.B.2.p.1">When EDHOC is use to derive parameters for OSCOAP <a href="#I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</a>, the parties must make sure that the EDHOC session identifiers are unique Recipient IDs in OSCOAP.  In case that the CoAP client is party U and the CoAP server is party V:</p>
+<p/>
+
+<ul>
+  <li>The AEAD Algorithm is AEAD_V, as defined in this document</li>
+  <li>The KDF algorithm is HKDF_V, as defined in this document</li>
+  <li>The Client&#8217;s Sender ID is S_V, as defined in this document</li>
+  <li>The Server&#8217;s Sender ID is S_U, as defined in this document</li>
+  <li>The Master Secret is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;EDHOC OSCOAP Master Secret&#8221;. The length is equal to the key length of AEAD_V.</li>
+  <li>The Master Salt is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;EDHOC OSCOAP Master Salt&#8221;. The length is 64 bits.</li>
+</ul>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">G&#246;ran Selander</span> 
+	  <span class="n hidden">
+		<span class="family-name">Selander</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Ericsson AB</span>
+	<span class="adr">
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
+
+	  <span class="vcardline">
+		<span class="locality">Kista</span>,  
+		<span class="region"></span>
+		<span class="code">SE-164 80 Stockholm</span>
+	  </span>
+	  <span class="country-name vcardline">Sweden</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:goran.selander@ericsson.com">goran.selander@ericsson.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">John Mattsson</span> 
+	  <span class="n hidden">
+		<span class="family-name">Mattsson</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Ericsson AB</span>
+	<span class="adr">
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
+
+	  <span class="vcardline">
+		<span class="locality">Kista</span>,  
+		<span class="region"></span>
+		<span class="code">SE-164 80 Stockholm</span>
+	  </span>
+	  <span class="country-name vcardline">Sweden</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:john.mattsson@ericsson.com">john.mattsson@ericsson.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Francesca Palombini</span> 
+	  <span class="n hidden">
+		<span class="family-name">Palombini</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Ericsson AB</span>
+	<span class="adr">
+	  <span class="vcardline">F&#228;r&#246;gatan 6</span>
+
+	  <span class="vcardline">
+		<span class="locality">Kista</span>,  
+		<span class="region"></span>
+		<span class="code">SE-164 80 Stockholm</span>
+	  </span>
+	  <span class="country-name vcardline">Sweden</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:francesca.palombini@ericsson.com">francesca.palombini@ericsson.com</a></span>
+
+  </address>
+</div>
+
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/EricssonResearch/EDHOC">Fork me on GitHub</a></div></div>
+</body>
+</html>
