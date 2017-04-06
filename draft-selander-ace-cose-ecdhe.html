@@ -314,7 +314,7 @@ address {
 
   <meta name="dct.creator" content="Selander, G., Mattsson, J., and F. Palombini" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-selander-ace-cose-ecdhe-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-3-06" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-4-06" />
   <meta name="dct.abstract" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
   <meta name="description" content="This document specifies Ephemeral Diffie-Hellman Over COSE (EDHOC), a compact, and lightweight authenticated Diffie-Hellman key exchange with ephemeral keys that can be used over any layer. EDHOC messages are encoded with CBOR and COSE, allowing reuse of existing libraries." />
 
@@ -338,12 +338,12 @@ address {
   <td class="right">F. Palombini</td>
 </tr>
 <tr>
-  <td class="left">Expires: September 7, 2017</td>
+  <td class="left">Expires: October 8, 2017</td>
   <td class="right">Ericsson AB</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">March 06, 2017</td>
+  <td class="right">April 06, 2017</td>
 </tr>
 
     	
@@ -363,7 +363,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 7, 2017.</p>
+<p>This Internet-Draft will expire on October 8, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -493,13 +493,13 @@ Party U                                                 Party V
 </ul>
 <pre>
       +  other = aad_1  / aad_2  / aad_3 /
-                 H( H( H(message_1) | message_2 ) | message_3 ) | label
+                 H( H( message_1 | message_2 ) | message_3 ) | label
 </pre>
 <p id="rfc.section.3.2.p.3">The salt SHALL only be present in the symmetric case.</p>
 <p id="rfc.section.3.2.p.4">The symmetric key and IV used to protect message_i  is called K_i and IV_i,  and are derived using byte string aad_i defined for each EDHOC message i = 1, 2 or 3 that make use of a symmetric key.</p>
 <p id="rfc.section.3.2.p.5">K_1 and IV_1 are only used in EDHOC with symmetric key authentication and are derived with the exceptions that secret SHALL be empty and the PRF SHALL be HKDF-256 (or a HKDF decided by the application).</p>
 <p id="rfc.section.3.2.p.6">All other keys are derived with the negotiated PRF and with the secret set to the ECDH shared secret.</p>
-<p id="rfc.section.3.2.p.7">Application specific traffic keys and key identifiers are derived using the byte string H( H( H(message_1) | message_2 ) | message_3 ) | label, where H() is the hash function in HKDF_V, label is a byte string, and | denotes byte string concatenation. Each application making use of EDHOC defines its own labels and how they are used.</p>
+<p id="rfc.section.3.2.p.7">Application specific traffic keys and key identifiers are derived using the byte string H( H( message_1 | message_2 ) | message_3 ) | label, where H() is the hash function in HKDF_V, label is a byte string, and | denotes byte string concatenation. Each application making use of EDHOC defines its own labels and how they are used.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#asym" id="asym">EDHOC Authenticated with Asymmetric Keys</a></h1>
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#overview" id="overview">Overview</a></h1>
 <p id="rfc.section.4.1.p.1">EDHOC supports authentication with raw public keys (RPK) and certificates (Cert) with the requirements that:</p>
@@ -604,7 +604,7 @@ data_2 = (
   SIG_U : int / tstr
 )
 
-aad_2 = H(message_1) | [ data_2 ] | ? Cert_V
+aad_2 = message_1 | [ data_2 ] | ? Cert_V
 </pre>
 <p id="rfc.section.4.3.1.p.2">where:</p>
 <p/>
@@ -662,7 +662,7 @@ data_3 = (
   S_V : bstr
 )
 
-aad_3 = H( H(message_1) | message_2 ) | [ data_3 ] | ? Cert_U
+aad_3 = H( message_1 | message_2 ) | [ data_3 ] | ? Cert_U
 </pre>
 <p id="rfc.section.4.4.1.p.2">where:</p>
 <p/>
@@ -799,7 +799,7 @@ data_2 = (
   AEAD_V : int / tstr
 )
 
-aad_2 = H(message_1) | [ data_2 ]
+aad_2 = message_1 | [ data_2 ]
 </pre>
 <p id="rfc.section.5.3.1.p.2">where:</p>
 <p/>
@@ -849,7 +849,7 @@ data_3 = (
   S_V : bstr 
 )
 
-aad_3 = H( H(message_1) | message_2 ) | [ data_3 ]
+aad_3 = H( message_1 | message_2 ) | [ data_3 ]
 </pre>
 <p id="rfc.section.5.4.1.p.2">where:</p>
 <p/>
@@ -985,7 +985,7 @@ aad_3 = H( H(message_1) | message_2 ) | [ data_3 ]
       <td class="reference">
         <b id="I-D.greevenbosch-appsawg-cbor-cddl">[I-D.greevenbosch-appsawg-cbor-cddl]</b>
       </td>
-      <td class="top"><a>Vigano, C.</a> and <a>H. Birkholz</a>, "<a href="http://tools.ietf.org/html/draft-greevenbosch-appsawg-cbor-cddl-09">CBOR data definition language (CDDL): a notational convention to express CBOR data structures</a>", Internet-Draft draft-greevenbosch-appsawg-cbor-cddl-09, September 2016.</td>
+      <td class="top"><a>Birkholz, H.</a>, <a>Vigano, C.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/draft-greevenbosch-appsawg-cbor-cddl-10">CBOR data definition language (CDDL): a notational convention to express CBOR data structures</a>", Internet-Draft draft-greevenbosch-appsawg-cbor-cddl-10, March 2017.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -997,13 +997,13 @@ aad_3 = H( H(message_1) | message_2 ) | [ data_3 ]
       <td class="reference">
         <b id="I-D.ietf-ace-oauth-authz">[I-D.ietf-ace-oauth-authz]</b>
       </td>
-      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-05">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-05, February 2017.</td>
+      <td class="top"><a>Seitz, L.</a>, <a>Selander, G.</a>, <a>Wahlstroem, E.</a>, <a>Erdtman, S.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-ietf-ace-oauth-authz-06">Authentication and Authorization for Constrained Environments (ACE)</a>", Internet-Draft draft-ietf-ace-oauth-authz-06, March 2017.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.ietf-core-object-security">[I-D.ietf-core-object-security]</b>
       </td>
-      <td class="top"><a>Selander, G.</a>, <a>Mattsson, J.</a>, <a>Palombini, F.</a> and <a>L. Seitz</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-object-security-01">Object Security of CoAP (OSCOAP)</a>", Internet-Draft draft-ietf-core-object-security-01, December 2016.</td>
+      <td class="top"><a>Selander, G.</a>, <a>Mattsson, J.</a>, <a>Palombini, F.</a> and <a>L. Seitz</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-object-security-02">Object Security of CoAP (OSCOAP)</a>", Internet-Draft draft-ietf-core-object-security-02, March 2017.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1069,8 +1069,8 @@ Client    Server
   <li>The KDF algorithm is HKDF_V, as defined in this document</li>
   <li>The Client&#8217;s Sender ID is S_V, as defined in this document</li>
   <li>The Server&#8217;s Sender ID is S_U, as defined in this document</li>
-  <li>The Master Secret is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;OSCOAP Master Secret&#8221;. The length is equal to the key length of AEAD_V.</li>
-  <li>The Master Salt is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;OSCOAP Master Salt&#8221;. The length is 64 bits.</li>
+  <li>The Master Secret is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;EDHOC OSCOAP Master Secret&#8221;. The length is equal to the key length of AEAD_V.</li>
+  <li>The Master Salt is derived as specified in <a href="#key-der">Section 3.2</a> of this document, with label = &#8220;EDHOC OSCOAP Master Salt&#8221;. The length is 64 bits.</li>
 </ul>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
